@@ -1,0 +1,105 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/index.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/indexpop.css" />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/pageManage/activeManage.js"></script>
+<style>
+    .right {
+        margin: 0 10px 0 111px;
+    }
+</style>
+
+<!--right start-->
+<div class="right">
+    <div class="right_tit clearfix">
+        <p>
+            页面管理/
+            <b>CND Purge</b>
+        </p>
+    </div>
+    <div class="commodities_list">
+        <div class="sp_tit clearfix">
+            #*<div class="tit_btn">
+                <a id="showAddActiveWin"  class="dr_btn dr_btn_2 btn_4">新增活动页</a>
+            </div>*#
+            <span>CDN Purge</span></div>
+        <div class="table_2 no_bor">
+            <table style="margin: 0;">
+                <tbody>
+                    <tr>
+                        <td class="poptablename">输入URL&nbsp;：</td>
+                        <td class="poptabletd">&nbsp;
+                            <textarea placeholder="请输入URL,多个用英文逗号 &quot;,&quot; 分割。" name="url" style="width: 300px; height: 150px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr class="resultMessage" style="display: none;">
+                        <td class="poptablename">返回信息&nbsp;：</td>
+                        <td class="poptabletd">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button style="float: left;margin-left: 138px;"
+                                    class="poptrue" type="button" onclick="doPurge()">确&nbsp;定</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h4>清除sku</h4></td>
+                        <td class="poptabletd">&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="poptablename">输入skuIds&nbsp;：</td>
+                        <td class="poptabletd">&nbsp;
+                            <textarea placeholder="请输入skuIds,多个用英文逗号 &quot;,&quot; 分割。" name="skuIds" style="width: 300px; height: 150px;"></textarea>
+                        </td>
+                    </tr>
+                    <tr class="resultMessage" style="display: none;">
+                        <td class="poptablename">返回信息&nbsp;：</td>
+                        <td class="poptabletd">
+                            <div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button style="float: left;margin-left: 138px;"
+                                    class="poptrue" type="button" onclick="doSkuIds()">确&nbsp;定</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function doPurge(){
+        var url = $("[name='url']").val();
+        $.post("/mall/CdnDir/doPurge",{urls:url},function(obj){
+            if (obj.isSuccess){
+                layer.alert("操作成功！");
+                $(".resultMessage").removeAttr("style")
+                $(".resultMessage div").text(obj.data);
+            } else {
+                layer.alert("操作失败！请重试");
+            }
+        },"json");
+    }
+
+    function doSkuIds() {
+        var skuIds = $("[name='skuIds']").val();
+        skuIds  =  skuIds.replace(/[\r\n]/g, "");
+        $.post("/item/deleteSkuIds",{skuIds:skuIds},function(obj){
+            if (obj.isSuccess){
+                layer.alert("操作成功！");
+                $(".resultMessage").removeAttr("style")
+                $(".resultMessage div").text(obj.data);
+            } else {
+                layer.alert("操作失败！请重试");
+            }
+        },"json");
+    }
+</script>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallFeedbackMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallFeedback">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="contact" jdbcType="VARCHAR" property="contact" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tenant_id, user_id, client_type, content, contact, state, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="contact != null">
+                contact = #{contact,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            state = 1
+            <if test="id != null">and id=#{id,jdbcType=BIGINT}</if>
+            <if test="tenantId != null">and tenant_id=#{tenantId,jdbcType=BIGINT}</if>
+            <if test="userId != null">and user_id = #{userId,jdbcType=BIGINT}</if>
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="content != null">and content=#{content,jdbcType=VARCHAR}</if>
+            <if test="contact != null">and contact=#{contact,jdbcType=VARCHAR}</if>
+            <!--<if test="state != null">and state=#{state,jdbcType=TINYINT}</if>-->
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallFeedback" useGeneratedKeys="true" keyProperty="id">
+        insert into
+            mall_feedback (<include refid="Base_Column_List"/>)
+        values (#{tenantId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT},
+            #{content,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR}, 1,
+            #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallFeedback">
+        update mall_feedback
+              <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallFeedback">
+        update mall_feedback
+        set state = #{state,jdbcType=TINYINT},
+            modified = now()
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallFeedback" resultMap="BaseResultMap">
+        select
+            id, <include refid="Base_Column_List" />
+        from mall_feedback
+            <include refid="Where_Condition"/>
+        <if test="pageIndex != null and pageSize != null" >
+            limit #{offset}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="queryCount" parameterType="com.jcloud.b2c.mall.service.domain.MallFeedback" resultType="int">
+        select count(1)
+        from mall_feedback
+        <include refid="Where_Condition"/>
+    </select>
+</mapper>

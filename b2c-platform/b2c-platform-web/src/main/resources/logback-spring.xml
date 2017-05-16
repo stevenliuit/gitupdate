@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>platform</contextName>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/platform.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+        </encoder>
+    </appender>-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/platform_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/platform_info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 如果按天来回滚，则最大保存时间为30天，30天之前的都将被清理掉 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/platform_error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/platform_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="RELATED-ITEM-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/related_item_info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/related_item_info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <springProfile name="local">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE" />
+        </logger>
+        <logger name="com.jcloud.b2c.platform.web.controller.mall.MallRelatedItemController.info" level="INFO">
+            <appender-ref ref="RELATED-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="dev">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE" />
+        </logger>
+        <logger name="com.jcloud.b2c.platform.web.controller.mall.MallRelatedItemController.info" level="INFO">
+            <appender-ref ref="RELATED-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="online">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE" />
+        </logger>
+        <logger name="com.jcloud.b2c.platform.web.controller.mall.MallRelatedItemController.info" level="INFO">
+            <appender-ref ref="RELATED-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <logger name="com.jcloud.b2c" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="org.springframework" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>

@@ -1,0 +1,137 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/index.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/pop.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/bootstrap-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/article_c.css" />
+<script type="text/javascript" src="$!{basePath}/static/js/mall/imgUpload.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/articleManage/articleCategory.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/My97DatePicker/WdatePicker.js"></script>
+
+<style>
+    .articletable{
+        width: 97%;
+    }
+</style>
+<!--right start-->
+<div class="right_tit clearfix">
+    <p>
+        文章管理/
+        <b>文章管理</b>
+    </p>
+</div>
+<div class="commodities_list">
+
+    <div class="sp_tit clearfix">
+
+        <div class="tit_btn">
+            <a href="/mall/mallArticle/toArticleInsert" class="dr_btn">新建文章</a>
+        </div>
+        <span class="bugspan">文章管理</span>
+    </div>
+
+    <div class="select_box">
+        <form action="/mall/mallArticle/toArticleManage" method="get" id="selectForm">
+            <div class="select_btn article_btn">
+                <a href="javascript:document.getElementById('selectForm').submit();" onclick="toSelect()" class="cx_btn">查 询</a>
+                <a href="javascript:void(0);" onclick="reloadForm()" class="cz_btn">重 置</a>
+            </div>
+            <div class="select_left">
+
+                <ul>
+                    <li>
+                <span>一级分类：
+                <select class="sel_1" id="one" name="parentId">
+                    <option value="">--请选择--</option>
+                    #foreach($category in $categorys)
+                        #if($article.parentId == $category.Id)
+                            <option value ="$!{category.Id}" selected="selected">$!{category.Name}</option>
+                        #else
+                            <option value ="$!{category.Id}" >$!{category.Name}</option>
+                        #end
+                    #end
+                </select>
+                </span>
+                    </li>
+
+                    <li>
+                <span>二级分类：
+                <select class="sel_1" id="two" name="categoryId">
+                    <option value ="">--请选择--</option>
+                </select>
+                </span>
+                    </li>
+
+                </ul>
+
+
+                <div class="select_time">
+                    <div class="settime">创建时间：</div>
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input onclick="WdatePicker({skin:'twoer'})" class="form-control" size="16" type="text" value="$!date.format('yyyy-MM-dd',$!article.Created)"
+                               name="created" eadonly=""><span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+
+                    <div class="selectto">至</div>
+                    <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input onclick="WdatePicker({skin:'twoer'})" class="form-control" size="16" type="text" value="$!date.format('yyyy-MM-dd',$!article.AfterDate)"
+                               name="afterDate" readonly="">
+
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        <input type="hidden" name="childId" value="$!{article.CategoryId}"/>
+    </div>
+    <!--select_box end-->
+
+    <!-- article start -->
+    <table class="articletable">
+        <thead class="articleth">
+        <tr>
+            <td>文章ID</td>
+            <td>文章标题</td>
+            <td>一级分类</td>
+            <td>二级分类</td>
+            <td>排序序号</td>
+            <td>创建时间</td>
+            <td>发布时间</td>
+            <td>状态</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach($art in $articles)
+            <tr>
+                <td>$!{art.Id}</td>
+                <td>$!{art.Title}</td>
+                <td>$!{art.CategoryParent}</td>
+                <td>$!{art.CategoryName}</td>
+                <td>$!{art.SortNum}</td>
+                <td>$!date.format('yyyy-MM-dd',$!art.Created)</td>
+                <td>$!date.format('yyyy-MM-dd',$!art.Newstime)</td>
+                <td>#if($!{art.State}==1)
+                        未发布
+                    #elseif($!{art.State}==2)
+                        已发布
+                    #elseif($!{art.State}==3)
+                        已下架
+                    #end
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="text-blue pop-ask" id="j_category_delete"
+                       style="color: #2e8ded" onclick="editArticle($!{art.Id})" name="del_current_category">编辑</a> <span class="table-line">|</span>
+                    #if($!{art.state}==1||$!{art.state}==3)
+                        <a href="javascript:void(0);" class="text-blue" onclick="publishArticle($!{art.Id},2)" name="view-item" style="color: #2e8ded">发布</a>
+                    #elseif($!{art.state}==2)
+                        <a href="javascript:void(0);" class="text-blue" name="view-item" onclick="publishArticle($!{art.Id},3)" style="color: #2e8ded">下架</a>
+                    #end
+                </td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+    <!-- article end -->
+</div>
+

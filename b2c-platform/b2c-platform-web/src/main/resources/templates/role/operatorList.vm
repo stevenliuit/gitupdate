@@ -1,0 +1,36 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/bootstrap-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" />
+
+<div class="right_tit clearfix">
+    <p>
+        权限管理/
+        <b>操作员管理</b>
+    </p>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		操作员列表
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>姓名</th>
+				<th>是否停用</th>
+				<th>角色</th>
+				<th>新建时间</th>
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($operator in $list)
+				<tr>
+					<td>$!{velocityCount}</td>
+					<td>$!{operator.name}</td>
+					<td>$!{operator.stateName}</td>
+					<td>$!{operator.roles}</td>
+					<td>$!{operator.created}</td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+</div>

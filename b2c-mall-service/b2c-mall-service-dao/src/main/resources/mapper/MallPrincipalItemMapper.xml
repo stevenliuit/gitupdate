@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallPrincipalItemMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallPrincipalItem">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="principal_id" jdbcType="BIGINT" property="principalId"/>
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="item_id" jdbcType="BIGINT" property="itemId"/>
+        <result column="principal_type" jdbcType="TINYINT" property="principalType"/>
+        <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, tenant_id, principal_id, client_type, item_id, principal_type, sort_num, state, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="principalId != null">
+                principal_id = #{principalId,jdbcType=BIGINT},
+            </if>
+            <if test="clientType != null">
+                client_type = #{clientType,jdbcType=TINYINT},
+            </if>
+            <if test="itemId != null">
+                item_id = #{itemId,jdbcType=BIGINT},
+            </if>
+            <if test="principalType != null">
+                principal_type = #{principalType,jdbcType=TINYINT},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=TINYINT},
+            </if>
+            <if test="state != null">
+                state=#{state,jdbcType=TINYINT},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="principalId != null">and principal_id=#{principalId,jdbcType=BIGINT}</if>
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="itemId != null">and item_id=#{itemId,jdbcType=BIGINT}</if>
+            <if test="principalType != null">and principal_type=#{principalType,jdbcType=TINYINT}</if>
+            <if test="sortNum != null">and sort_num=#{sortNum,jdbcType=TINYINT}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+            <if test="created != null">and created=#{created,jdbcType=TIMESTAMP}</if>
+            <if test="modified != null">and modified=#{modified,jdbcType=TIMESTAMP}</if>
+
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallPrincipalItem" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_principal_item
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallPrincipalItem" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_principal_item (tenant_id,principal_id, client_type,
+        item_id, principal_type, sort_num, state, created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{principalId,jdbcType=BIGINT},#{clientType,jdbcType=TINYINT},
+        #{itemId,jdbcType=BIGINT},#{principalType,jdbcType=TINYINT},#{sortNum,jdbcType=TINYINT},
+        1,#{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_principal_item (tenant_id,principal_id, client_type,
+        item_id, principal_type, sort_num, state, created, modified)
+        values
+        <foreach collection ="list" item="mpItem" index= "index" separator =",">
+            (#{mpItem.tenantId,jdbcType=BIGINT}, #{mpItem.principalId,jdbcType=BIGINT},#{mpItem.clientType,jdbcType=TINYINT},
+            #{mpItem.itemId,jdbcType=BIGINT},#{mpItem.principalType,jdbcType=TINYINT},#{mpItem.sortNum,jdbcType=TINYINT},
+            1,#{mpItem.created,jdbcType=TIMESTAMP}, #{mpItem.modified,jdbcType=TIMESTAMP})
+        </foreach >
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallPrincipalItem">
+        update mall_principal_item
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallPrincipalItem">
+        update mall_principal_item
+        set state = #{state,jdbcType=TINYINT},modified=#{modified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallPrincipalItem" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_principal_item
+        <include refid="Where_Condition"/>
+        ORDER BY sort_num,modified desc
+        <if test="pageIndex != null and pageSize != null" >
+            limit #{pageIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="queryCountSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallPrincipalItem" resultType="int">
+        select
+        count(1)
+        from mall_principal_item
+        <include refid="Where_Condition"/>
+    </select>
+
+    <select id="queryBySukIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_principal_item
+        where tenant_id=#{tenantId,jdbcType=BIGINT}
+        <if test="state != null"> and state=#{state,jdbcType=TINYINT}</if>
+        <if test="skuIds != null">
+            and item_id IN
+            <foreach collection="skuIds" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryDistinctItemIds" resultType="long">
+        select DISTINCT item_id from mall_principal_item where tenant_id = #{tenantId} order by item_id limit #{pageIndex}, #{pageSize}
+    </select>
+
+    <select id="countDistinctItemId" resultType="long">
+        select count(DISTINCT item_id) from mall_principal_item where tenant_id = #{tenantId}
+    </select>
+    <update id="batchDelete">
+        update mall_principal_item set state = -1, modified = now()
+        where tenant_id=#{tenantId,jdbcType=BIGINT}
+        <if test="skuIds != null">
+            and item_id IN
+            <foreach collection="skuIds" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+        </if>
+    </update>
+
+</mapper>

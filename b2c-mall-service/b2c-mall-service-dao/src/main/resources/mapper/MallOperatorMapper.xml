@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallOperatorMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallOperator">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="user_erp" jdbcType="VARCHAR" property="userErp" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap1" type="com.jcloud.b2c.mall.service.domain.MallOperator" extends="BaseResultMap">
+        <collection  property="roleList"  ofType="com.jcloud.b2c.mall.service.domain.MallRole">
+            <id column="id" jdbcType="BIGINT" property="id" />
+            <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="description" jdbcType="VARCHAR" property="description" />
+            <result column="state" jdbcType="TINYINT" property="state" />
+            <result column="created" jdbcType="TIMESTAMP" property="created" />
+            <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="BaseResultFunctionMap" type="com.jcloud.b2c.mall.service.domain.MallOperator" extends="BaseResultMap">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="func_url" jdbcType="VARCHAR" property="funcUrl"/>
+        <result column="func_type_id" jdbcType="TINYINT" property="funcTypeID"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        so.id,so.tenant_id, so.user_erp, so.real_name, so.state, so.created, so.modified,
+        sr.id, sr.tenant_id, sr.name, sr.description, sr.state, sr.created, sr.modified,
+    </sql>
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="userErp != null">
+                user_erp = #{userErp,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state=#{state,jdbcType=TINYINT},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+    <sql id="Base_Column_ALL_List">
+        id，tenant_id, user_erp, real_name, status, created, modified
+    </sql>
+    <sql id="Where_Condition">
+        <where>
+            <if test="tenantId != null">and tenant_id = #{tenantId,jdbcType=VARCHAR}</if>
+            <if test="userErp != null">and user_erp = #{userErp,jdbcType=VARCHAR}</if>
+            <if test="realName != null">and real_name = #{realName,jdbcType=VARCHAR}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+            <if test="created != null">and created=#{created,jdbcType=TIMESTAMP}</if>
+            <if test="modified != null">and modified=#{modified,jdbcType=TIMESTAMP}</if>
+        </where>
+    </sql>
+    <sql id="Base_Column_Function_List">
+        sf.id, sf.tenant_id, sf.name, sf.code, sf.func_type_ic, sf.description, sf.state,
+         sf.created, sf.modified
+    </sql>
+
+
+
+
+    <select id="getByOperatorKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallOperator" resultMap="BaseResultMap1">
+        select
+        <include refid="Base_Column_List" />
+        from sys_operator so
+        JOIN sys_operator_role sor ON  so.id = sor.operator_id
+        JOIN sys_role sr  ON  sr.id = sor.role_id
+        where so.id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and so.tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+        <if test="userErp != null">
+            and so.user_erp = #{userErp,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <update id="updateByOperatorKey" parameterType="com.jcloud.b2c.mall.service.domain.MallOperator">
+        update sys_operator
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <delete id="deleteByOperatorOrleKey" parameterType="com.jcloud.b2c.mall.service.domain.MallOperator">
+        delete from sys_operator_role where operator_id=#{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </delete>
+
+    <insert id="addOrUpdateOperatorRole" parameterMap="map">
+        insert into sys_operator_role (operator_id,role_id)
+        values
+        <foreach collection="roleIds" item="roleId" index="index" separator="," >
+            (#{operatorId,jdbcType=BIGINT},#{roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallOperator" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_ALL_List" />
+        from sys_operator
+        <include refid="Where_Condition"/>
+    </select>
+
+    <insert id="insertOperator" parameterType="com.jcloud.b2c.mall.service.domain.MallOperator" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_operator (tenant_id，user_erp, real_name,
+        state, created, modified)
+        values (#{tenantId,jdbcType=BIGINT},#{userErp,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT},
+        #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="queryFunction"  parameterType="com.jcloud.b2c.mall.service.domain.MallOperator" resultMap="BaseResultFunctionMap">
+        select
+        <include refid="Base_Column_Function_List" />
+        from sys_operator so
+        JOIN sys_operator_role sor ON  so.id=sor.operator_id
+        JOIN sys_role sr  ON  sr.id=sor.role_id
+        JOIN sys_role_function srf  ON  sr.id=srf.role_id
+        JOIN sys_function sf  ON  sf.id=srf.function_id
+        where so.id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and so.tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+        <if test="userErp != null">
+            and so.user_erp = #{userErp,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <update id="deleteByOperatorKey" parameterType="com.jcloud.b2c.mall.service.domain.MallOperator">
+        update sys_operator
+        set state = #{state,jdbcType=TINYINT},modified=#{modified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+</mapper>

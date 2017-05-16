@@ -1,0 +1,7 @@
+###set($layout="layout/default.vm")
+<span>Time:</span>
+<ul>
+    <li>From controller: $time</li>
+    <li>From velocity: $dateTool</li>
+</ul>
+<span>Message: $message</span>

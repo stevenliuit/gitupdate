@@ -1,0 +1,473 @@
+<script type="text/javascript"  src="$!{basePath}/static/js/common/laypage/laypage.js"></script>
+<!--content start-->
+<div class="right_tit clearfix">
+    <p>
+        页面管理 /
+        #if($!{clientTypeValue}==1)
+            PC
+        #elseif($!{clientTypeValue}==2)
+            M站
+        #elseif($!{clientTypeValue}==3)
+            APP
+        #end
+
+        #if($!{principalTypeValue}==1)
+            类目
+        #elseif($!{principalTypeValue}==3)
+            #if($!{isIndex}==1)
+                首页
+            #elseif($!{isIndex}==0)
+                频道
+            #end
+            楼层
+        #elseif($!{principalTypeValue}==4)
+            专题
+        #end
+        /
+        <b>关联商品</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+        <div class="tit_btn">
+            <a href="#" class="down_btn btn6">选择商品</a></div>
+        <span>$!{categoryName}&nbsp;--&nbsp;关联商品</span>
+    </div>
+    <form action="/mall/relatedItem/query/$!{clientType}/$!{principalType}" id="search_form">
+    </form>
+    <div class="table_2 no_bor">
+        <table>
+            <thead>
+            <tr>
+                <th width="10%">ID</th>
+                <th width="15%">商品SKU</th>
+                <th width="45%">商品名称</th>
+                <!-- <th width="30%">广告排序</th> -->
+                <th width="10%">操作</th></tr>
+            </thead>
+            <tbody id="itemContainer">
+                #foreach($item in $itemList)
+                    <tr>
+                        <td width="25%">$item.skuId</td>
+                        <td width="35%">
+                            <img src="$item.skuImg">$item.skuName</td>
+                        <td width="30%">
+                            <input type="text" name="sortNum" value="" placeholder="" class="text_1"></td>
+                        <td width="10%" class="cz_a">
+                            #*<a href="javascript:void(0);" class="chooseItem" onclick="chooseItem()">更换</a>|*#
+                            <a href="javascript:void(0);" class="delItem" onclick="delItem()" data="$item.id">删除</a>
+                        </td>
+                    </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+    <div class="page">
+        <p id="pages">
+            <a href="#" class="no_click">&lt;</a>
+            <a href="#" class="act">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">&gt;</a>
+        </p>
+    </div>
+    <!--table_2 end-->
+</div>
+<!--commodities_list end-->
+<div class="bgpop" >
+
+</div>
+<div class="pop popgoods" style="top:25%">
+    <div class="poptop">
+        <span class="popname">$!{categoryName}&nbsp;--&nbsp;选择商品</span>
+        #if($!{relatedLimit})
+            <span class="popgoodstips">（请至少选择$!{relatedLimit[0]}个商品，最多$!{relatedLimit[1]}个）</span>
+        #end
+        <span class="popnameclose">×</span>
+    </div>
+    <div class="select_box clearfix">
+        <div class="select_btn select_btn_pop">
+            <a href="#" class="cx_btn cx_btn_pop">查 询</a>
+
+        </div>
+        <div class="select_left">
+            <form name="chooseForm" id="chooseForm">
+                <input type="hidden" name="principalId" value="$!{principalId}">
+                <input type="hidden" name="pageIndex" value="1">
+                <input type="hidden" name="pageSize" value="10">
+                <input type="hidden" name="category" value="">
+                <p class="select_leftp">
+                    <span>商品类目：</span>
+                    <select class="sel_2 sel_2pop" id="J_first_category">
+                        <option value="">一级分类</option>
+                    </select>
+                    <select class="sel_2 sel_2pop" id="J_second_category">
+                        <option value="">二级分类</option>
+                    </select>
+                    <!-- <select class="sel_2 sel_2pop" name="category">
+                        <option value="">三级分类</option>
+                    </select> -->
+                </p>
+                <ul>
+
+                    <li class="popselectli">
+                        <span>商品名称：<input type="text" name="skuName" class="input_1 input_1pop">
+                        </span>
+                    </li>
+
+                    <li class="popselectli">
+                        <span>商品SKU：<input type="text" name="jdSkuId" id="jdSkuId" class="input_1 input_1pop">
+                        </span>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <table class="poptable">
+        <thead class="poptable_thead">
+        <tr>
+            <td style="width:13%;">
+                <label class="checkbox-inline">
+                    <div class="icheckbox_polaris all_checked" ><input type="checkbox" checked="" id="j_category_homeshow" ><ins class="iCheck-helper" ></ins></div>
+                </label>
+                <span>全选</span>
+            </td>
+            <td style="width:10%;">商品SKU</td>
+            <td style="width:33%;">商品名称</td>
+        </tr>
+        </thead>
+
+        <tbody class="poptable_tbody" style="height: 254px;" id="poptable_tbody">
+
+        </tbody>
+
+    </table>
+    <div class="popfooter">
+        <button class="poptrue poptable_confirm saveItem">确&nbsp;定</button>
+        <button class="poptrue poptable_confirm loadMore">加载更多...</button>
+        <button class="popcancle poptable_confirm">取消</button>
+    </div>
+</div>
+
+<!-- pop end -->
+<script type="text/javascript">
+    var query=function(pageIndex){
+        var container = $('.table_2 table tbody');
+        container.empty();
+        $("#pages").empty();
+        var trmsg="<tr>"
+                +"<td colspan=4>加载中...</td>"
+                +"</tr>";
+        container.append(trmsg);
+        $("#search_form").ajaxSubmit({
+            type: "post",
+            dataType:'json',
+            data:{"pageIndex":pageIndex, "principalId":"$!{principalId}"},
+            iframe: false,
+            success:function(data) {
+                container.empty();
+                if(data.success == true){
+                    if(jQuery.isArray(data.itemList)&&data.itemList.length>0){
+                        jQuery.each(data.itemList,function(i,item){
+                            var imgUrl = "";
+                            if(item.skuImg != null && item.skuImg.length > 0){
+                                imgUrl = imageFormat_sys(item.skuImg,59,59);
+                            }
+                            var tr='<tr>'
+                                    +'<td width="10%">'+item.id+'</td>'
+                                    +'<td width="15%">'+item.skuId+'</td>'
+                                    +'<td width="45%"><img src="'+imgUrl+'" width="59" height="59">'+item.skuName+'</td>'
+                                    //+'<td width="30%"><input type="text" name="sortNum" value="" placeholder="" class="text_1"></td>'
+//                                    +'<td width="10%" class="cz_a"><a href="javascript:void(0);" class="chooseItem" onclick="chooseItem()">更换</a>|'
+                                    +'<td width="10%" class="cz_a"><a href="javascript:void(0);" class="delItem" data="'+item.id+'" onclick="delItem(this)" >删除</a></td>'
+                                +"</tr>";
+                            container.append(tr);
+                        });
+
+                        laypage({
+                            cont: 'pages', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                            pages: data.pageInfo.totalPage, //通过后台拿到的总页数
+                            curr: data.pageInfo.currentPage+1, //当前页
+                            last: data.pageInfo.totalPage,
+                            prev: '<',
+                            next: '>',
+                            skin: '',
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    query(obj.curr);
+                                }
+                            }
+                        });
+                    }else{
+                        var tr="<tr>"
+                                +"<td colspan=4 >没有关联商品</td>"
+                                +"</tr>";
+                        container.append(tr);
+                    }
+                }else{
+                    var tr="<tr>"
+                            +"<td colspan=4 >"+data.message+"</td>"
+                            +"</tr>";
+                    container.append(tr);
+                }
+            },
+            error:function(obj1,obj2,obj3) {
+                container.empty();
+                var tr="<tr>"
+                        +"<td colspan=4 >网络传输异常，请重试</td>"
+                        +"</tr>";
+                container.append(tr);
+            }
+        });
+    };
+
+    var chooseItem = function(){
+        $(".down_btn").trigger("click");
+    };
+
+    var delItem = function (obj) {
+        var id = $(obj).attr("data");
+        layer.confirm('确定删除关联商品?', {title:'提示'},function(){
+            var url = "/mall/relatedItem/del/$!{clientType}/$!{principalType}";
+            $.ajax({
+                url:  url + "?time=" + (new Date()).getTime(),
+                cache: false,
+                dataType: "json",
+                type: "POST",
+                data: {"id":id, "principalId":"$!{principalId}"},
+                success: function(data){
+                    if (data.success == 1) {
+                        window.location.reload(true);
+                    } else {
+                        layer.alert("删除失败");
+                        window.location.reload(true);
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("服务端异常:" + textStatus);
+                }
+            });
+        });
+    };
+    var itemCheck = function(obj){
+        $(obj).toggleClass("checked");
+    };
+    // 收缩展开效果
+    $(document).ready(function() {
+        query(1);
+        queryCategorys(-1,"#J_first_category");
+
+        $(".list_tit h2").click(function() {
+            $(this).next(".list_menu").slideToggle(300);
+        });
+        $(".cx_btn_pop").click(function() {
+            $("#poptable_tbody").empty();
+            $("form input[name='pageIndex']").val(1);
+            $(".loadMore").trigger("click");
+        });
+        $('.list_tit h2').click(function(ev) {
+            $(this).children('.angle-down').toggleClass('hidden');
+            $(this).children('.angle-up').toggleClass('hidden');
+        });
+        $(".down_btn").click(function(){
+            $(".bgpop").css("display","block");
+        })
+        $(".btn6").click(function(){
+            $(".popgoods").css("display","block");
+        });
+        $(".popcancle").click(function(){
+            $(".bgpop").css("display","none");
+            $(".pop").css("display","none");
+        });
+        $(".popnameclose").click(function(){
+            $(".bgpop").css("display","none");
+            $(".pop").css("display","none");
+        });
+
+        $("#jdSkuId").on("keyup", function(){
+            var val = $(this).val();
+            if(!checkSkuId(val)){
+                layer.msg("京东SKU只能为1-25位的数字", {skin: 'layer-ext-b2b layer-b2b-hui'});
+                var n_val = val.substring(0, val.length - 1);
+                $(this).val(n_val);
+            }
+        });
+
+        $(".all_checked").click(function(){
+            $(this).toggleClass("checked");
+            if($(this).hasClass("checked")){
+                $(".icheckbox_polaris").addClass("checked");
+            }else{
+                $(".icheckbox_polaris").removeClass("checked");
+            }
+        });
+
+        $(".loadMore").on("click", function () {
+            var url = "/mall/relatedItem/queryItem/$!{clientType}/$!{principalType}";
+            var pageIndex = 1;
+            var pageSize = 10;
+            var firstCategory = $.trim($("#J_first_category").val()); //一级类目
+            var secondCategory = $.trim($("#J_second_category").val()); //二级类目
+            var thirdCategory = $.trim($("#J_third_category").val()); //三级类目
+            var cateArray = [];
+            if(firstCategory!=null && firstCategory!=''){
+                cateArray.push(firstCategory);
+            }
+            if(secondCategory!=null && secondCategory!=''){
+                cateArray.push(secondCategory);
+            }
+            if(thirdCategory!=null && thirdCategory!=''){
+                cateArray.push(thirdCategory);
+            }
+            var category = cateArray.join(',');
+            $("form input[name='category']").val(category);
+            $.ajax({
+                url:  url + "?time=" + (new Date()).getTime(),
+                cache: false,
+                dataType: "json",
+                type: "GET",
+                data: $("form[name='chooseForm']").serializeJson(),
+                success: function(data){
+                    if (data.success == 1) {
+                        //加载完
+                        if(data.pageInfo.currentPage >=data.pageInfo.totalPage){
+                            $(".loadMore").hide();
+                        }else{
+                            $(".loadMore").show();
+                        }
+                        for(var i in data.itemList){
+                            var item = data.itemList[i];
+                            $("form input[name='pageIndex']").val(data.pageInfo.currentPage+1);
+
+                            var imgUrl = "";
+                            if(item['skuImg'] != null && item['skuImg'].length > 0){
+                                imgUrl = imageFormat_sys(item['skuImg'],59,59);
+                            }
+                            var itemTrHtml = '<tr>'+
+                                    '<td style="width:13%">'+
+                                    '<label class="checkbox-inline">'+
+                                    '<div class="icheckbox_polaris '+(item['choosed']?'checked':'')+'" data="'+(item['id']==null?'':item['id'])+'" onclick="itemCheck(this)" skuId="'+item['skuId']+'">'+
+                                    '<input type="checkbox" checked="" id="j_category_homeshow" ><ins class="iCheck-helper" ></ins></div>'+
+                                    '</label>'+
+                                    '</td>'+
+                                    '<td style="width:10%">'+item['skuId']+'</td>'+
+                                    '<td style="width:33%"><img src="'+imgUrl+'" width="59" height="59"/><span style="vertical-align: top;">'+item['skuName']+'</span></td>'+
+                                    '</tr>';
+                            $("#poptable_tbody").append(itemTrHtml);
+                        }
+
+                    } else {
+                        layer.alert("加载失败");
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    layer.alert("服务端异常:" + textStatus);
+                }
+            });
+        });
+
+        $(".loadMore").trigger("click");
+
+        $(".saveItem").on("click", function () {
+            var items = [];
+            var checkArr = $(".icheckbox_polaris");
+            for(var i =0; i<checkArr.length; i++){
+                var ele = $(checkArr[i]);
+                if(ele.hasClass("all_checked")) continue;
+                var relatedItem = {};
+                relatedItem["choosed"]=ele.hasClass("checked");
+                relatedItem["id"]=ele.attr("data");
+                relatedItem["skuId"]=ele.attr("skuId");
+                items.push(relatedItem);
+            }
+            if(items.length==0){
+                layer.msg("请选择商品", {skin: 'layer-ext-b2b layer-b2b-hui'});
+            }
+            var url = "/mall/relatedItem/saveBatch/$!{clientType}/$!{principalType}";
+            $.ajax({
+                url:  url + "?time=" + (new Date()).getTime(),
+                cache: false,
+                dataType: "json",
+                type: "POST",
+                data: { "principalId":"$!{principalId}", "items":JSON.stringify(items)},
+                success: function(data){
+                    if (data.success == 1) {
+                        layer.alert("保存成功");
+                        for(var i =0; i<checkArr.length; i++){
+                            var ele = $(checkArr[i]);
+                            if(ele.hasClass("all_checked")) continue;
+                            if(data.newItemIds[ele.attr("skuId")]){
+                                ele.attr("data",data.newItemIds[ele.attr("skuId")]);
+                            }
+                        }
+                        query(1);
+                    } else {
+                        layer.alert("保存失败");
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("服务端异常:" + textStatus);
+                }
+            });
+        });
+
+        $("#J_first_category").on("change", function(){
+            queryCategorys($(this).val(),"#J_second_category");
+        });
+        $("#J_second_category").on("change", function(){
+            queryCategorys($(this).val(),"#J_third_category");
+        });
+    });
+
+
+    /**
+     * 验证sku格式
+     * @param val
+     * @returns {boolean}
+     */
+    var checkSkuId = function(val){
+        var reg = /^\d{1,25}$/;
+        var ret = reg.test(val);
+        if(!ret){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    var queryCategorys = function (parentId, showId) {
+        if(parentId == null || parentId == ""){
+            return;
+        }
+        tool.ajax({
+            type: "post",
+            url: "/platcategory/queryCategoryList",
+            data: {
+                parentId: parentId
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data && data.isSuccess) {
+                    var categorys = data.categorys;
+                    if (categorys && categorys.length > 0) {
+                        $(showId).html("");
+                        if(showId == "#J_first_category"){
+                            $(showId).append("<option value =''>一级分类</option>");
+                        }else if(showId == "#J_second_category"){
+                            $(showId).append("<option value =''>二级分类</option>");
+                        }else if(showId == "#J_third_category"){
+                            $(showId).append("<option value =''>三级分类</option>");
+                        }
+                        for(var i=0;i<categorys.length;i++){
+                            var category = categorys[i];
+                            var html = "<option value =" + category.cid + ">" + category.categoryName + "</option>";
+                            $(showId).append(html);
+                        }
+                    }
+                }
+            }
+        });
+    };
+</script>

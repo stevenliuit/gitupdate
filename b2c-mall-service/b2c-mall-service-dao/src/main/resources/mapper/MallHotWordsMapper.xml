@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallHotWordsMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="total_item" jdbcType="INTEGER" property="totalItem" />
+        <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+        <result column="words_type" jdbcType="TINYINT" property="wordsType" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, `name`, total_item, sort_num, words_type, state, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="totalItem != null">
+                total_item = #{totalItem,jdbcType=INTEGER},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=TINYINT},
+            </if>
+            <if test="wordsType != null">
+                words_type = #{wordsType,jdbcType=TINYINT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="name != null">and `name`=#{name,jdbcType=VARCHAR}</if>
+            <if test="totalItem != null">and total_item=#{totalItem,jdbcType=INTEGER}</if>
+            <if test="sortNum != null">and sort_num=#{sortNum,jdbcType=TINYINT}</if>
+            <if test="wordsType != null">and words_type=#{wordsType,jdbcType=TINYINT}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_hot_words
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_hot_words (tenant_id,client_type, `name`,
+        total_item, sort_num, words_type, state, created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT},#{name,jdbcType=VARCHAR},
+        #{totalItem,jdbcType=INTEGER},#{sortNum,jdbcType=TINYINT},#{wordsType,jdbcType=TINYINT},
+        1,#{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        update mall_hot_words
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        update mall_hot_words
+        set state = #{state,jdbcType=TINYINT},modified=#{modified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_hot_words
+        <include refid="Where_Condition"/>
+        ORDER BY sort_num
+    </select>
+    <!-- 清空默认 -->
+    <update id="updateByWordsType" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        UPDATE mall_hot_words SET words_type=1,modified=#{modified,jdbcType=TIMESTAMP} WHERE words_type=2
+        <if test="tenantId != null">
+            AND tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+    <!-- 互换排序 -->
+    <update id="updateBySort">
+        UPDATE mall_hot_words hw1 JOIN mall_hot_words hw2
+        ON (hw1.id=#{id,jdbcType=BIGINT} AND hw2.id=#{changeId,jdbcType=BIGINT})
+        OR (hw1.id=#{changeId,jdbcType=BIGINT} AND hw2.id=#{id,jdbcType=BIGINT})
+        SET hw1.`sort_num`=hw2.`sort_num`,hw2.`sort_num`=hw1.`sort_num`,hw1.`modified`=#{now,jdbcType=TIMESTAMP}
+        WHERE hw1.`tenant_id`=#{tenantId,jdbcType=BIGINT} AND hw2.`tenant_id`=#{tenantId,jdbcType=BIGINT}
+    </update>
+    <!-- 删除后重置排序 -->
+    <update id="clearToSort" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        UPDATE mall_hot_words SET sort_num=sort_num-1,modified=#{modified,jdbcType=TIMESTAMP}
+        WHERE sort_num>#{sortNum,jdbcType=TINYINT} AND tenant_id=#{tenantId,jdbcType=BIGINT}
+    </update>
+    <!--添加前查询可用排序最大值 -->
+        <select id="selectMaxSort" resultType="java.lang.Integer" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        SELECT MAX(sort_num) FROM mall_hot_words
+        WHERE tenant_id=#{tenantId,jdbcType=BIGINT} AND state=1
+    </select>
+
+    <!--将小于置顶排序的加1-->
+    <update id="updateLittleStick" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        UPDATE mall_hot_words SET sort_num=sort_num+1,modified=#{modified,jdbcType=TIMESTAMP}
+        WHERE sort_num &lt;#{sortNum,jdbcType=TINYINT} AND tenant_id=#{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <!--将置顶的排序改为1-->
+    <update id="updateToStick" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        UPDATE mall_hot_words SET sort_num=1,modified=#{modified,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT} AND tenant_id=#{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <!--将大于将要置尾的排序减1-->
+    <update id="updateBigFinally" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        UPDATE mall_hot_words SET sort_num=sort_num-1,modified=#{modified,jdbcType=TIMESTAMP}
+        WHERE sort_num >#{sortNum,jdbcType=TINYINT} AND tenant_id=#{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <!--根据id修改排序数-->
+    <update id="updateToFinally" parameterType="com.jcloud.b2c.mall.service.domain.MallHotWords">
+        UPDATE mall_hot_words SET sort_num=#{sortNum,jdbcType=TINYINT},modified=#{modified,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT} AND tenant_id=#{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <!-- 上一个排序修改-->
+    <update id="updateUp">
+        UPDATE mall_hot_words
+        SET sort_num=#{sort,jdbcType=TINYINT},modified=#{now,jdbcType=TIMESTAMP}
+        WHERE tenant_id=#{tenantId,jdbcType=BIGINT} AND sort_num = #{num,jdbcType=TINYINT}
+    </update>
+
+
+
+</mapper>

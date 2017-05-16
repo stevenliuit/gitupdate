@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>运营后台</title>
+    #parse("common/common.vm")
+</head>
+<body>
+    #parse("layout/header.vm")
+    #parse("layout/leftmenu.vm")
+<script type="text/javascript">
+    function logout() {
+        window.location.href = '$!{basePath}/logout?v'+ new Date().getTime();
+    }
+</script>
+</body>
+</html>

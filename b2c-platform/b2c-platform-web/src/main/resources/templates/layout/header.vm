@@ -1,0 +1,11 @@
+<div class="header clearfix">
+    <div class="user_login">
+        你好，$!{userName}
+        <a href="$!{basePath}/logout">【退出】</a>
+    </div>
+    <div class="logo">
+        <a href="#">
+            <img src="/static/images/logo.png" height="43" width="153" alt=""></a>
+    </div>
+    <span class="admin_tit">后台管理</span>
+</div>

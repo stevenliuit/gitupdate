@@ -1,0 +1,20 @@
+<div class="content clearfix">
+    <div class="left_list">
+        <div class="list_tit">
+            <h2><span class="spgl"></span>系统管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/super/cache/index">缓存管理</a></li>
+                <li><a href="/super/oss/index">存储管理</a></li>
+                <li><a href="/super/kpl/index">更新商品</a></li>
+                <li><a href="/super/static/index">静态化管理</a></li>
+                <li><a href="/super/kpl/itemManage">商品管理</a></li>
+                <li><a href="/mall/mallActive/query?clientType=1">活动页管理</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--left_list end-->
+    <div class="right">
+        $screen_content
+       #parse("layout/footer.vm")
+    </div>
+</div>

@@ -1,0 +1,150 @@
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/layer/layer.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/hotWords/hotWordsManage.js"></script>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/indexpop.css" source="widget"/>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/index.css" source="widget"/>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+
+
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/iconfont1/iconfont.css" />
+
+
+
+<style>
+    .right {
+        margin: 0 10px 0 111px;
+    }
+</style>
+<!--content start-->
+<div class="content clearfix">
+    <!--left_list end-->
+    <!--right start-->
+    <div class="right">
+        <div class="right_tit clearfix">
+            <p>搜索管理 /
+                <b>搜索热搜词</b>
+            </p>
+        </div>
+        <div class="commodities_list">
+            <div class="sp_tit clearfix">
+                <div class="tit_btn">
+                    #if($hotWordsList.size() >= 5)
+                        <a class="dr_btn" name="notAddMsg">新增热词</a>
+                    #else
+                    <a class="dr_btn dr_btn_2 btn_4">新增热词</a>
+                    #end
+                </div>
+                <span>页头搜索热词设置</span></div>
+            <div class="table_2 no_bor" name="hotwordsList">
+                <table>
+                    <thead>
+                    <tr>
+                        <th width="40%">热词</th>
+                        <th width="40%">操作</th>
+                        <th width="20%">排序</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        #if(""!=$hotWordsList && $hotWordsList.size()>0)
+                            #foreach($hotWords in $hotWordsList)
+                            <tr id="$!{hotWords.id}" name="number">
+                                <td width="40%">
+                                    #if($!{hotWords.wordsType}==2)
+                                    <font color="red" >
+                                    #else
+                                    <font>
+                                    #end
+                                    $!{hotWords.name}
+                                    </font>
+                                </td>
+                                <td width="40%" class="cz_a" id="hotWordsList">
+                                    <a onclick="updateHotWords('$!{hotWords.id}','$!{hotWords.name}','$!{hotWords.wordsType}')" name="editHotWords">编辑</a>
+                                    <a onclick="deleteHotWords('$!{hotWords.id}','$!{hotWords.sortNum}')">删除</a></td>
+                                <td width="20%">
+
+                            <a onclick="toStick('$!{hotWords.id}','$!{hotWords.sortNum}')"><i class="iconfont text-blue icon-jiantouzhiding"></i></a>
+                            <a onclick="moveUp('$!{hotWords.id}','$!{hotWords.sortNum}')"><i class="iconfont text-blue icon-arrowup"></i></a>
+                            <a onclick="toFinally('$!{hotWords.id}','$!{hotWords.sortNum}')"><i class="iconfont text-blue icon-jiantouzhidi"></i></a>
+                            <a onclick="moveDown('$!{hotWords.id}','$!{hotWords.sortNum}')"><i class="iconfont text-blue icon-arrowdown"></i></a>
+
+                                </td>
+                            </tr>
+                            #end
+                        #end
+                    </tbody>
+                </table>
+            </div>
+            <!--table_2 end--></div>
+    </div>
+</div>
+<!--commodities_list end-->
+</div>
+<!--right end--></div>
+<!--content end-->
+<div class="bgpop">
+
+</div>
+<!-- 新增热搜词 -->
+<div class="pop popend ser_hot" id="addHotWordswin">
+    <div class="poptop">
+        <span class="popname">新增热搜词</span>
+        <span class="popnameclose" onclick="popnameclose()">×</span>
+    </div>
+    <form id="addHotWordsForm">
+        <div class="popcontent add_hot">
+            <table>
+                <tbody>
+                <tr id="add_name_tr" flag="new">
+                    <td><input type="text" value="" class="tex_hot" id="hotWords_name" placeholder="不能超过10个中文" name="hotWords_name">
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr id="add_check_tr">
+                    <td><input type="checkbox" class="mr_check" value="2" id="addHotWordsCheckbox"><b>设为默认</b>默认热词会显示在搜索框中
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="popfooter">
+            <button class="poptrue" type="submit">确&nbsp;定</button>
+            <button class="popcancle" onclick="popnameclose()" type="button">取&nbsp;消</button>
+        </div>
+    </form>
+</div>
+<!-- 修改热搜词 -->
+<div class="pop popend ser_hot" id="updateHotWordswin">
+    <div class="poptop">
+        <span class="popname">修改热搜词</span>
+        <span class="popnameclose" onclick="popnameclose()">×</span>
+    </div>
+    <form id="updateHotWordsForm">
+        <div class="popcontent add_hot">
+            <table>
+                <tbody>
+                <tr id="add_name_r">
+                    <input type="hidden" id="hotWordsId" value="">
+                    <td><input type="text" value="" class="tex_hot" placeholder="不能超过10个中文" id="update_hotWords_name"
+                               name="update_hotWords_name">
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr id="add_check_tr">
+                    <td><input type="checkbox" id="updateCheckbox" value="2" class="mr_check"><b>设为默认</b>默认热词会显示在搜索框中
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="popfooter">
+            <button class="poptrue" type="submit">确&nbsp;定</button>
+            <button class="popcancle" onclick="popnameclose()" type="button">取&nbsp;消</button>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,53 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName">
+    <bean id="commonInterceptor" class="com.jcloud.b2c.common.common.web.interceptor.CommonInterceptor"/>
+    <bean id="loggingInterceptor" class="com.jcloud.b2c.common.common.web.interceptor.LoggingInterceptor"/>
+    <bean id="platformRoleInterceptor" class="com.jcloud.b2c.platform.interceptor.PlatformRoleInterceptor" />
+    
+    
+    <bean id="platformInterceptor" class="com.jcloud.b2c.platform.common.PlatformInterceptor"/>
+    
+    <!-- 权限 xml 解析 -->
+    <bean id="roleXmlParser" class="com.jcloud.b2c.platform.util.RoleXmlParser" scope="singleton" init-method="init" />
+    
+    <mvc:interceptors>
+    
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <ref bean="commonInterceptor"/>
+        </mvc:interceptor>
+        
+        <mvc:interceptor>
+        	<mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <ref bean="platformRoleInterceptor" />
+        </mvc:interceptor>
+        
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <mvc:exclude-mapping path="/mall/mallAd/uploadImg"/>
+            <ref bean="platformInterceptor"/>
+        </mvc:interceptor>
+        <!---->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**" />-->
+            <!--<mvc:exclude-mapping path="/images/**"/>-->
+            <!--<mvc:exclude-mapping path="/js/**"/>-->
+            <!--<mvc:exclude-mapping path="/css/**"/>-->
+            <!--<ref bean="loggingInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    </mvc:interceptors>
+</beans>

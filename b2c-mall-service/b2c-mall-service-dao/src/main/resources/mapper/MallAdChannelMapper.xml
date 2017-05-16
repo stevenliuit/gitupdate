@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallAdChannelMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallAdChannel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="ad_id" jdbcType="BIGINT" property="adId" />
+        <result column="channel_id" jdbcType="BIGINT" property="channelId" />
+        <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+        <association property="mallAd" javaType="com.jcloud.b2c.mall.service.domain.MallAd">
+            <id property="id" column="ad_id" />
+            <result property="adWords" column="ad_words" />
+            <result property="itemId" column="item_id" />
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, ad_id, channel_id, sort_num, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=BIGINT},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=BIGINT},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="adId != null">and ad_id=#{adId,jdbcType=BIGINT}</if>
+            <if test="channelId != null">and channel_id=#{channelId,jdbcType=BIGINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad_channel
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_ad_channel (tenant_id,client_type,ad_id,
+        channel_id, sort_num,
+        created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, #{adId,jdbcType=BIGINT},
+        #{channelId,jdbcType=BIGINT}, #{sortNum,jdbcType=TINYINT},
+        #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel">
+        update mall_ad_channel
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateUniqueSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        update mall_ad_channel
+        <include refid="Update_Selective_Column_Set" />
+        where floor_id = #{floorId,jdbcType=BIGINT} and ad_id = #{adId,jdbcType=BIGINT}
+        and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel">
+        delete from mall_ad_channel
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteUnique" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        delete from mall_ad_channel
+        where floor_id = #{floorId,jdbcType=BIGINT} and ad_id = #{adId,jdbcType=BIGINT}
+        and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad_channel
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 自定义 -->
+    <select id="queryByChannel" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel">
+        SELECT adch.`id`,adch.`ad_id`,adch.`sort_num`,ad.`ad_words`,ad.`item_id`,adch.`channel_id`
+        FROM mall_ad ad LEFT JOIN mall_ad_channel adch ON adch.`ad_id`=ad.`id`
+        WHERE adch.tenant_id=#{tenantId,jdbcType=BIGINT} AND adch.`channel_id`=#{channelId,jdbcType=BIGINT}
+        AND ad.`state`=#{mallAd.state,jdbcType=INTEGER}
+        ORDER BY adch.`sort_num`,adch.modified desc
+    </select>
+
+    <!-- 顺序后移 -->
+    <update id="updateSortToMoveDown">
+        UPDATE mall_ad_channel SET sort_num=sort_num+1,modified=#{mallAdChannel.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num&gt;=#{mallAdChannel.sortNum,jdbcType=TINYINT} AND tenant_id=#{mallAdChannel.tenantId,jdbcType=BIGINT}
+        <if test="beforeSort != null">
+            AND sort_num&lt;#{beforeSort,jdbcType=TINYINT}
+        </if>
+    </update>
+
+    <!-- 顺序上移 -->
+    <update id="updateSortToMoveUp">
+        UPDATE mall_ad_channel SET sort_num=sort_num-1,modified=#{mallAdChannel.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num&gt;=#{mallAdChannel.sortNum,jdbcType=TINYINT} AND tenant_id=#{mallAdChannel.tenantId,jdbcType=BIGINT}
+        <if test="afterSort != null">
+            AND sort_num&lt;#{afterSort,jdbcType=TINYINT}
+        </if>
+    </update>
+
+    <!-- 单个查询 -->
+    <select id="getAdChannelById"  resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallAdChannel">
+        SELECT adch.`id`,adch.`ad_id`,adch.`sort_num`,ad.`ad_words`,ad.`item_id`,adch.`channel_id`
+        FROM mall_ad ad LEFT JOIN mall_ad_channel adch ON adch.`ad_id`=ad.`id`
+        WHERE adch.tenant_id=#{tenantId,jdbcType=BIGINT}
+        AND adch.id=#{id,jdbcType=BIGINT}
+    </select>
+</mapper>

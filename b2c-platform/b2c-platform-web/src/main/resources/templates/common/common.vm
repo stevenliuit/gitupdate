@@ -1,0 +1,26 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/bootstrap-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/index.css" source="widget"/>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/style.css" source="widget"/>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/calendar.css" source="widget"/>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/pop.css" source="widget"/>
+
+<script type="text/javascript"  src="$!{basePath}/static/js/common/jquery-1.7.2.min.js"></script>
+
+<script type="text/javascript"  src="$!{basePath}/static/js/common/upload/vendor/jquery.ui.widget.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/upload/jquery.iframe-transport.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/upload/jquery.fileupload.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/upload/jquery.fileupload-process.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/upload/jquery.fileupload-validate.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/DateFormat.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/jquery.form.min.js"></script>
+
+<script type="text/javascript"  src="$!{basePath}/static/js/common/default.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/util.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/jdf-ui.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/placeholder.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/common.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/form2json.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/common/layer/layer.js"></script>
+
+
+

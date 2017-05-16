@@ -1,0 +1,138 @@
+{
+  "type-search-item": {
+    "properties": {
+      "itemName": {
+        "type": "multi_field",
+        "fields": {
+          "itemName_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "itemName_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "itemName_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "brandName": {
+        "type": "multi_field",
+        "fields": {
+          "brandName_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "brandName_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "brandName_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "cat1Name": {
+        "type": "multi_field",
+        "fields": {
+          "cat1Name_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "cat1Name_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "cat1Name_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "cat2Name": {
+        "type": "multi_field",
+        "fields": {
+          "cat2Name_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "cat2Name_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "cat2Name_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "cat3Name": {
+        "type": "multi_field",
+        "fields": {
+          "cat3Name_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "cat3Name_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "cat3Name_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "appCat1Name": {
+        "type": "multi_field",
+        "fields": {
+          "appCat1Name_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "appCat1Name_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "appCat1Name_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "appCat2Name": {
+        "type": "multi_field",
+        "fields": {
+          "appCat2Name_ik": {
+            "type": "string",
+            "analyzer": "ik"
+          },
+          "appCat2Name_not": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "appCat2Name_standard": {
+            "type": "string"
+          }
+        }
+      },
+      "channelCategories": {
+        "type": "string",
+        "analyzer": "pattern_analyzer"
+      },
+      "categoryString": {
+        "type": "string",
+        "analyzer": "pattern_analyzer"
+      },
+      "appCatString": {
+        "type": "string",
+        "analyzer": "pattern_analyzer"
+      },
+      "price" :{"type" : "float"},
+      "marketPrice" :{"type" : "float"},
+      "brandId" : {"type":"long"},
+      "cat1Id" : {"type":"long"},
+      "cat2Id" : {"type":"long"},
+      "cat3Id" : {"type":"long"},
+      "appCat1Id" : {"type":"long"},
+      "appCat2Id" : {"type":"long"}
+    }
+  }
+}

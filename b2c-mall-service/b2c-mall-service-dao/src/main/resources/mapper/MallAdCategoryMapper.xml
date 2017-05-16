@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallAdCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallAdCategory">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="ad_id" jdbcType="BIGINT" property="adId" />
+        <result column="category_id" jdbcType="BIGINT" property="categoryId" />
+        <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+        <association property="mallAd" javaType="com.jcloud.b2c.mall.service.domain.MallAd">
+            <id property="id" column="ad_id" />
+            <result property="adWords" column="ad_words" />
+            <result property="itemId" column="item_id" />
+            <result property="link" column="link" />
+            <result property="imgSrc" column="img_src" />
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, ad_id, category_id, sort_num, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="adId != null">and ad_id=#{adId,jdbcType=BIGINT}</if>
+            <if test="categoryId != null">and category_id=#{categoryId,jdbcType=BIGINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallAdCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad_category
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallAdCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_ad_category (tenant_id,client_type,ad_id,
+        category_id, sort_num,
+        created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, #{adId,jdbcType=BIGINT},
+        #{categoryId,jdbcType=BIGINT}, #{sortNum,jdbcType=TINYINT},
+        #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdCategory">
+        update mall_ad_category
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateUniqueSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        update mall_ad_category
+        <include refid="Update_Selective_Column_Set" />
+        where floor_id = #{floorId,jdbcType=BIGINT} and ad_id = #{adId,jdbcType=BIGINT}
+        and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAdCategory">
+        delete from mall_ad_category
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteUnique" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        delete from mall_ad_category
+        where floor_id = #{floorId,jdbcType=BIGINT} and ad_id = #{adId,jdbcType=BIGINT}
+        and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad_category
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 自定义查询 -->
+    <select id="queryByCategory">
+        SELECT mac.`id`,mac.`ad_id`,mac.`sort_num`,mac.`category_id`,ma.`ad_words`,ma.`img_src`,ma.`link`
+        FROM mall_ad_category mac LEFT JOIN mall_ad ma ON mac.`ad_id`=ma.`id`
+        WHERE mac.`category_id`=#{categoryId,jdbcType=BIGINT} AND mac.tenant_id=#{tenantId,jdbcType=BIGINT}
+        AND ma.`state`=#{state,jdbcType=TINYINT} ORDER BY mac.`sort_num`,mac.modified desc
+    </select>
+
+    <!-- 顺序后移 -->
+    <update id="updateSortToMoveDown">
+        UPDATE mall_ad_category SET sort_num=sort_num+1,modified=#{mallAdCategory.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num &gt;= #{mallAdCategory.sortNum,jdbcType=TINYINT} AND tenant_id=#{mallAdCategory.tenantId,jdbcType=BIGINT}
+        <if test="beforeSort != null">
+            AND sort_num &lt; #{beforeSort,jdbcType=TINYINT}
+        </if>
+    </update>
+
+    <!-- 顺序上移 -->
+    <update id="updateSortToMoveUp">
+        UPDATE mall_ad_category SET sort_num=sort_num-1,modified=#{mallAdCategory.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num &gt;= #{mallAdCategory.sortNum,jdbcType=TINYINT} AND tenant_id=#{mallAdCategory.tenantId,jdbcType=BIGINT}
+        <if test="afterSort != null">
+            AND sort_num &lt; #{afterSort,jdbcType=TINYINT}
+        </if>
+    </update>
+    
+    <!-- 单个查询 -->
+    <select id="queryAdCategoryById" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallAdCategory">
+        SELECT mac.`id`,mac.`ad_id`,mac.`sort_num`,mac.`category_id`,ma.`ad_words`,ma.`img_src`,ma.`link`
+        FROM mall_ad_category mac LEFT JOIN mall_ad ma ON mac.`ad_id`=ma.`id`
+        WHERE mac.`id`=#{id,jdbcType=BIGINT} AND mac.tenant_id=#{tenantId,jdbcType=BIGINT}
+    </select>
+</mapper>

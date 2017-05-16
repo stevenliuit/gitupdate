@@ -1,0 +1,63 @@
+.classify-line {
+	display: inline-block;
+	width: 15px;
+	height: 20px;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd
+}
+
+.icon-disabled {
+	color: #e5e5e5
+}
+
+.classify-tbl td i {
+	cursor: pointer;
+	color: #c6c6c6;
+	margin: 0 2px
+}
+
+.classify-tbl td i:hover {
+	color: #009afe
+}
+
+.classify-tbl td i.i-disabled {
+	cursor: default;
+	color: #e5e5e5
+}
+
+.classify-tbl>tbody>tr {
+	background: #fcfcfd
+}
+
+.classify-tbl>tbody>tr.tr-level-1 {
+	background: #fff
+}
+
+.classify-tbl>tbody>tr.tr-level-1:hover {
+	background: #f8f9fb
+}
+
+.classify-tbl .caret {
+	cursor: pointer;
+	display: block;
+	border-top: 4px solid transparent;
+	border-left: 4px solid;
+	border-bottom: 4px solid transparent
+}
+
+.classify-tbl .caret.develop {
+	border-top: 4px solid;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	margin-left: 0;
+	margin-top: 2px
+}
+
+.classify-tbl .caret:before {
+	content: '';
+	position: absolute;
+	top: 8px;
+	left: -3px;
+	width: 16px;
+	height: 16px
+}

@@ -1,0 +1,38 @@
+<script>
+    isMobile();
+    function isMobile(){
+        if(navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)!=null){
+            var url = location.search;
+            if (url.indexOf("itemId") != -1){
+                location.href="//m.i360mall.com/item.html"+url;
+            } else {
+                location.href="//m.i360mall.com/";
+            }
+        }
+    }
+</script>
+<meta http-equiv="X-UA-Compatible" content="edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="Keywords" content="360商城，智能硬件，免费试用，智能家居，智能手表，智能家电"/>
+<meta name="Description" content="360商城是一家智能硬件体验平台。这里能免费试用智能硬件，查看全方位试用报告，还可以预约、抢购并体验新上市的智能产品。"/>
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<title>360商城</title>
+<link rel="shortcut icon"href="${staticWebDomain}/mall/images/favicon.ico">
+<script src="${staticWebDomain}/mall/js/common/jquery-1.12.4.min.js?v=${staticVersion}"></script>
+##<script src="https://jspassport.ssl.qhimg.com/5.0.3.js"></script>
+<script src="${staticWebDomain}/mall/js/common/jq-suggest.js?v=${staticVersion}"></script>
+<script src="${staticWebDomain}/mall/js/index/jsstorage.js?v=${staticVersion}"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="https://s.ssl.qhmsg.com/static/c3c3cb852a8db688/htmlshiv.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="${staticWebDomain}/mall/css/qikoo-v.css?v=${staticVersion}"/>
+#*<link rel="stylesheet" type="text/css" href="${staticWebDomain}/mall/css/index/index-style.css?v=${staticVersion}">*#
+
+#*<link rel="stylesheet" type="text/css" href="http://localhost/mall/css/index/index-style.css">*#
+
+<script src="${staticWebDomain}/mall/js/index/index.js?v=${staticVersion}"></script>
+<script src="${staticWebDomain}/mall/js/common/common.js?v=${staticVersion}"></script>
+<script src="${staticWebDomain}/mall/js/index/index_common.js?v=${staticVersion}"></script>
+
+<script>$(function(){indexPage.init()})</script>
+<!--commonHeaderFragment.vm end-->

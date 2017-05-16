@@ -1,0 +1,246 @@
+.bgpop{
+    position: fixed;
+    background: #000;
+    filter: alpha(opacity=40);
+    opacity: .4;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 100;
+    display: none;
+}
+
+.pop{
+    width: 594px;
+    height: 368px;
+    background: #FFFFFF;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -297px;
+    margin-top: -184px;
+    z-index: 101;
+    display: none;
+    border: 1px solid #F3F3F3;
+    border-radius: 5px;
+}
+.poptop{
+    width: 100%;
+    height: 48px;
+    background: #FAFAFA;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+}
+.popname{
+    float: left;
+    font-size: 16px;
+
+    color: #3F3F3F; 
+    margin-left: 25px;
+    line-height: 48px;
+}
+.popcontent{
+    width: 100%;
+    height: 220px;
+}
+.popnameclose{
+    float: right;
+    margin-right: 16px;
+    font-size: 29px;
+    line-height: 48px;
+    color: #7A7A7A;
+    cursor: pointer;
+}
+.addfileclose{
+    float: right;
+    margin-right: 6px;
+    font-size: 10px;
+    color: #A0A0A0;
+    cursor: pointer;
+}
+.popfooter{
+    height: 58px;
+    background: #FAFAFA;
+    border-top: #E5E5E5 solid 1px;
+    overflow: hidden;
+
+}
+.poptrue,.popcancle{
+    float: right;
+    width: 86px;
+    height: 36px;
+    border: solid 1px #D9D9D9;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 36px;
+    margin-top: 9px;
+    margin-right: 10px;
+}
+.poptrue{
+    background: #009AFE;
+    color: white;
+}
+.popcancle{
+    background: white;
+    color: #009AFE;
+}
+.poploading{
+    z-index: 102;
+}
+.loadingdiv div{
+    position: absolute;
+    width: 365px;
+    height: 3px; 
+    top: 145px;
+    left: 43px;
+}
+.loadingbg{
+    background: #EEEEEE;
+}
+.loading{
+    width: 150px !important;
+    background: #009AFE;
+}
+.popend{
+    z-index: 103;
+}
+.popcontent table{
+    font-size: 13px;
+    margin-top: 43px;
+    margin-left: 120px;
+}
+tbody tr{
+    height: 50px;
+}
+tr input{
+    padding-left: 10px;
+    margin-left: 16px;
+    width: 260px;
+    height: 30px;
+    line-height: 30px;
+}
+.poptablename{
+    color: #A8A8A8;
+    text-align: right;
+}
+.carousel{
+    width: 506px;
+    height: 442px;
+    z-index: 104;
+    margin-left: -238px;
+    margin-top: -184px;
+}
+.fileaddv{
+    width: 120px;
+    height: 120px;
+    background: url(../images/filed.png) no-repeat;
+    margin-left: 16px;
+    margin-bottom: 8px;
+}
+.ao{
+    height: auto;
+}
+.spantips{
+    margin-left: 16px;
+    color: #999999;
+
+}
+.pop_ad{
+    height:600px;
+    margin-top:-300px;
+
+}
+.pop_ad .popcontent{
+    height:470px;
+    *height:490px;
+}
+.pop_ad .popcontent table{
+    margin:20px 0 0 20px;
+}
+.pop_ad .poptabletd{
+    color:#A8A8A8;
+}
+.pop_ad tbody tr.h_30 {
+    height:30px;
+}
+.sclogo_bg{
+    background:url(../images/sclogo_bg.jpg) no-repeat;
+    display:block;
+    width:121px; 
+    height:120px;
+    margin-left: 18px;
+    margin-bottom: 5px;
+
+}
+.sclogo_bg:hover{
+    background:url(../images/sclogo_bg.jpg) no-repeat 0 -120px;
+    display:block;
+    width:121px; 
+    height:120px;
+    margin-left: 18px;
+    margin-bottom:5px;
+}
+.cxsc{
+    margin-left: 18px;
+    position:relative;
+    display:none;
+
+}
+.cxsc img{
+     border:1px solid #DAD5D3;
+}
+.cxsc .sc_btn{
+    position:absolute;
+    left:0;
+    bottom:3px;
+    height:28px;
+    background: #000;
+    filter: alpha(opacity=40);
+    opacity: .4;
+    color:#fff;
+    width:100%;
+    line-height: 28px;
+    text-align: center;
+}
+.ser_hot{
+    height:260px;
+    margin-top: -130px;
+}
+.add_hot{
+    height:109px;
+}
+.tex_hot{
+    width:323px;
+    height:30px;
+    border:1px solid #e7e7eb;
+    line-height: 30px;
+}
+.add_hot tr{
+    height:30px;
+    line-height: 30px;
+    color:#999;
+
+}
+.mr_check{
+    width:30px;
+    height:15px;
+    margin-left: 10px;
+    vertical-align: middle;
+
+}
+.add_hot tr td b{
+    font-size: 14px;
+    color:#666;
+    margin-right: 10px;
+    font-weight: normal;
+}
+.rc_set{
+    background:url(../images/ico.png) no-repeat 60px 0;
+    padding-left: 95px;
+    font-size: 14px;
+    color:#666;
+
+
+}

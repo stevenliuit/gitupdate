@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="$!{basePath}/static/icon/iconfont/iconfont.css" />
+<link rel="stylesheet" href="$!{basePath}/static/iconjian/iconfont.css" />
+<link rel="stylesheet" href="$!{basePath}/static/iconfontadd/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/iconfont/iconfont.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/goodslist.css">
+<link rel="stylesheet" href="$!{basePath}/static/css/classifyDB.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/pop.css">
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/base.css" source="widget" />
+<link type="text/css"  rel="stylesheet" href="$!{basePath}/static/css/icheck.css"  />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/common.css" source="widget" />
+<div class="right_tit clearfix">
+    <p>
+        商品管理/
+        <b>设置商品类目</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+        <span>设置商品类目</span>
+    </div>
+    <div class="gr-bd" id="categoryList" style="margin:0 10px 0 0;border:none">
+        <table class="table classify-tbl" id="categoryListTable">
+            <colgroup>
+                <col width="1%">
+                <col width="30%">
+                <col width="25%">
+                <col width="25%">
+                <col width="10%">
+            </colgroup>
+            <thead>
+            <tr class="table-btnbox">
+                <th colspan="6">
+                    <a class="btn btn-blue btn-sm" id="j_save_category_add1" name="save_category_data">保存更改</a>
+                    <button type="button" class="btn btn-default btn-sm" id="j_expand_all" name="expand_category_all">全部展开</button>
+                    <button type="button" class="btn btn-default btn-sm" id="j_unexpand_all" name="unexpand_category_all">全部收起</button>
+                    <button type="button" class="btn btn-black btn-sm pull-right" id="J_add_category1" name="add_new_category"><i class="iconfont icon-jia"></i>添加新类目</button>
+                </th>
+            </tr>
+            <tr>
+                <th></th>
+                <th class="text-center">类目名称</th>
+                <th class="text-center">类目编码</th>
+                <th class="text-center">移动</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody id="j_category_body">
+            </tbody>
+        </table>
+        <!--/ /widget/classifyDP/classifyDP.vm -->
+    </div>
+</div>
+<!--right end-->
+<!--content end-->
+<script type="text/javascript"  src="$!{basePath}/static/js/category/categoryManage.js"></script>

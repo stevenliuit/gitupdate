@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallBannerMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallBanner">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="link" jdbcType="VARCHAR" property="link" />
+        <result column="img_src" jdbcType="VARCHAR" property="imgSrc" />
+        <result column="banner_type" jdbcType="TINYINT" property="bannerType" />
+        <result column="channel_id" jdbcType="BIGINT" property="channelId" />
+        <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, link, img_src, banner_type, channel_id, sort_num, state, begin_time, end_time, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="link != null">
+                link = #{link,jdbcType=VARCHAR},
+            </if>
+            <if test="imgSrc != null">
+                img_src = #{imgSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="bannerType != null">
+                banner_type = #{bannerType,jdbcType=TINYINT},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=BIGINT},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=TINYINT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="beginTime != null">
+                begin_time = #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="name != null">and name=#{name,jdbcType=VARCHAR}</if>
+            <if test="bannerType != null">and banner_type=#{bannerType,jdbcType=TINYINT}</if>
+            <if test="channelId != null">and channel_id = #{channelId,jdbcType=BIGINT}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallBanner" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_banner
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+        <if test="channelId != null">
+          and channel_id=#{channelId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_banner (tenant_id,client_type, name,
+        link, img_src, banner_type, channel_id, sort_num,
+        state,begin_time,end_time, created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR},
+        #{link,jdbcType=VARCHAR},#{imgSrc,jdbcType=VARCHAR}, #{bannerType,jdbcType=TINYINT},#{channelId,jdbcType=BIGINT},
+        #{sortNum,jdbcType=TINYINT},1,#{beginTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},
+         #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner">
+        update mall_banner
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner">
+        update mall_banner
+        set state = #{state,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_banner
+        <include refid="Where_Condition"/>
+        ORDER BY sort_num,modified desc
+    </select>
+
+    <!-- 顺序后移 -->
+    <update id="updateSortToMoveDown"  parameterType="com.jcloud.b2c.mall.service.domain.MallBanner">
+        UPDATE mall_banner SET sort_num=sort_num+1,modified=#{mallBanner.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num&gt;=#{mallBanner.sortNum,jdbcType=TINYINT} AND tenant_id=#{mallBanner.tenantId,jdbcType=BIGINT}
+    </update>
+
+    <!-- 顺序上移 -->
+    <update id="updateSortToMoveUp" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner">
+        UPDATE mall_banner SET sort_num=sort_num-1,modified=#{mallBanner.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num&gt;=#{mallBanner.sortNum,jdbcType=TINYINT} AND tenant_id=#{mallBanner.tenantId,jdbcType=BIGINT}
+
+    </update>
+
+    <!-- 查询当前闪图 -->
+    <select id="queryFlashByNow" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner">
+        SELECT <include refid="Base_Column_List" /> FROM mall_banner
+        WHERE tenant_id=#{tenantId,jdbcType=BIGINT} AND client_type=#{clientType,jdbcType=TINYINT}
+        AND state=1 AND channel_id=#{channelId,jdbcType=BIGINT} AND banner_type=#{bannerType,jdbcType=TINYINT}
+        AND DATE_FORMAT(#{beginTime,jdbcType=TIMESTAMP},'%Y-%m-%d %H:%i:%s') BETWEEN begin_time AND end_time
+        ORDER BY begin_time DESC LIMIT 0,1
+    </select>
+
+    <select id="checkByBeginTime" resultType="int" parameterType="com.jcloud.b2c.mall.service.domain.MallBanner">
+        SELECT COUNT(id) FROM mall_banner WHERE tenant_id=#{tenantId,jdbcType=BIGINT}
+        AND client_type=#{clientType,jdbcType=TINYINT} AND state=1
+        AND channel_id=#{channelId,jdbcType=BIGINT} AND banner_type=#{bannerType,jdbcType=TINYINT}
+        AND end_time &gt; DATE_FORMAT(#{beginTime,jdbcType=TIMESTAMP},'%Y-%m-%d %H:%i:%s');
+    </select>
+</mapper>

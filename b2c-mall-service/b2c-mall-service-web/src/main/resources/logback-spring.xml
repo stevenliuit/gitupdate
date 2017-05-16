@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>mall-web</contextName>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/mall-service.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/mall-service-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/mall-service-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="ES-ITEM-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/es-item-info-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/es-item-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{yyyy-MMM-dd HH:mm:ss.SSS} – [%7r] – [%6p] – [%t] – [%X{sessionId}] - [%X{platformId}] - [%X{domain}] - [%X{requestIp}] - [%X{localIp}] – [%C:%M] - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!--<logger name="com.jcloud.b2c.mall.service.mapper" level="DEBUG"/>-->
+    <springProfile name="local">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="com.jcloud.b2c.mall.service.service.impl.EsItemServiceImpl" level="INFO">
+            <appender-ref ref="ES-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="dev_b2c">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="com.jcloud.b2c.mall.service.service.impl.EsItemServiceImpl" level="INFO">
+            <appender-ref ref="ES-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="gray_b2c">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="com.jcloud.b2c.mall.service.service.impl.EsItemServiceImpl" level="INFO">
+            <appender-ref ref="ES-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <springProfile name="pre_b2c">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="com.jcloud.b2c.mall.service.service.impl.EsItemServiceImpl" level="INFO">
+            <appender-ref ref="ES-ITEM-INFO" />
+        </logger>
+    </springProfile>
+    <springProfile name="prod_b2c">
+        <logger name="com.jcloud" level="INFO">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="org.springframework" level="WARN">
+            <appender-ref ref="FILE-INFO" />
+        </logger>
+        <logger name="com.jcloud.b2c.mall.service.service.impl.EsItemServiceImpl" level="INFO">
+            <appender-ref ref="ES-ITEM-INFO" />
+        </logger>
+    </springProfile>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>

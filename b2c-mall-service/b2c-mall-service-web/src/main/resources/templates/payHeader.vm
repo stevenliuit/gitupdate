@@ -1,0 +1,49 @@
+
+<!-- ${createTime}-->
+<!--payHeader start -->
+<div class="payhead">
+    <div class="wrapper">
+        <div class="logo" onclick="window.location.href='${mallWebDomain}'">
+            <img src="${staticWebDomain}/mall/images/360malllogo.png" width="150px">
+        </div>
+        <ul class="tip">
+            <li>
+                <a href="javascript:;" class="_user_name_"> <img src="${staticWebDomain}/mall/images/payheadicon.png" width="10" height="13" alt=""></a>
+                <ul class="tippop">
+                    <li>
+                        <a href="javascript:;" class="_user_name_"></a>
+                    </li>
+                    <li><a href="//buyer.i360mall.com/user/myorder">我的订单</a></li>
+                    <li><a href="//buyer.i360mall.com/user/mycoupon">我的优惠券</a></li>
+                    <li><a href="//buyer.i360mall.com/user/myfavorite">我的喜欢</a></li>
+                    <li><a href="//buyer.i360mall.com/userAddress/show">收货地址</a></li>
+                    <li><a href="//i.360.cn/">账号设置</a></li>
+                    <li><a href="javascript:;" onclick="logout()">退出登录</a></li>
+                </ul>
+            </li>
+            <li><a href="//buyer.i360mall.com/user/myorder">我的订单</a></li>
+            #*<li><a href="">帮助中心</a></li>*#
+        </ul>
+    </div>
+</div>
+<script>
+    (function () {
+        $.ajax({
+            url: "${mallWebDomain}/getLoginInfo",
+            data: {},
+            dataType : 'jsonp',
+            jsonp:'jsoncallback',
+            success: function(data) {
+                if(data.login && data.login == 'y'){
+                    $('._user_name_').each(function(index,item){
+                        $(item).text(data.nickName || data.userName);
+                    });
+                }
+            },
+            error : function() {
+                //alert('fail');
+            }
+        });
+    })();
+</script>
+<!--payHeader.vm end-->

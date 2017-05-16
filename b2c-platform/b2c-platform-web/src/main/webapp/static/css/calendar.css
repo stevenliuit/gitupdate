@@ -1,0 +1,118 @@
+/* jdf-1.0.0/ calendar.css Date:2015-09-15 18:39:14 */
+.ui-calendar{
+    position:absolute;
+    float:left;
+    color:#000;
+    border:1px solid #e7e7eb;
+    background-color:#fff
+}
+.ui-calendar-table tfoot tr{
+    text-align:center
+}
+.ui-calendar-table td, .ui-calendar-table th{
+    padding:1px 3px;
+    text-align:center;
+}
+.ui-calendar-table thead th{
+    padding:1px 9px;
+    height:28px;
+    line-height:28px;
+}
+.ui-calendar-table tfoot th{
+    padding:0 9px;
+}
+
+
+.ui-calendar-table thead tr:first-child th{
+    background:#f5f5f5;
+    border-bottom:1px solid #e7e7eb;
+}
+
+.ui-calendar-table tbody a:hover{
+    text-decoration:none
+}
+.ui-calendar-table .festival{
+    color:#E4393C
+}
+.ui-calendar-table .day, .ui-calendar-table .new, .ui-calendar-table .next, .ui-calendar-table .old, .ui-calendar-table .prev, .ui-calendar-table .today{
+    cursor:pointer
+}
+.ui-calendar-table .day:hover, .ui-calendar-table .new:hover, .ui-calendar-table .old:hover, .ui-calendar-table .today:hover{
+    background:#fce7e4
+}
+
+.ui-calendar-table td a{
+    display:block
+}
+.ui-calendar-table td{
+    width:24px;
+    height:28px
+}
+.ui-calendar-table .active, .ui-calendar-table .active .festival, .ui-calendar-table .active a, .ui-calendar-table .active:hover, .ui-calendar-table .active:hover a{
+    background:#4F9FDC;
+    color:#fff
+}
+.ui-calendar-table .new, .ui-calendar-table .new .festival, .ui-calendar-table .old, .ui-calendar-table .old .festival{
+    color:#999
+}
+.ui-calendar-table .next i, .ui-calendar-table .prev i{
+    display:inline-block;
+    *display:inline;
+    *zoom:1;
+    width:20px;
+    height:14px;
+    margin-top:1px;
+    line-height:14px;
+    vertical-align:text-top;
+    background:url(calendar.png?2) no-repeat 4px 3px
+}
+.ui-calendar-table .next i{
+    background-position:-20px 3px
+}
+.ui-calendar-table .next:hover i{
+    background-position:-20px -31px;
+}
+.ui-calendar-table .prev:hover i{
+    background-position:4px -31px;
+}
+.ui-calendar-table tbody .range, .ui-calendar-table tbody .range .festival{
+    color:#f1f1f1;
+    cursor:default
+}
+.ui-calendar-table tbody .range:hover{
+    color:#f1f1f1;
+    cursor:default;
+}
+.ui-calendar-table thead th.range:hover{
+    background:#f5f5f5;
+    cursor:default;
+}
+.ui-calendar-table thead .prev .range{
+    background-position:4px -14px
+}
+.ui-calendar-table thead .next .range{
+    background-position:-20px -14px
+}
+.ui-calendar-double .ui-calendar-table{
+    float:left
+}
+.ui-calendar-double .ui-calendar-left{
+    border-right:1px solid #ccc
+}
+.ui-calendar-table .special, .ui-calendar-table .special .festival, .ui-calendar-table .special a{
+    background:#E4393C;
+    color:#fff
+}
+.ui-calendar-footer{
+    width:100%;
+    text-align:center;
+    padding:5px 0;
+}
+.ui-calendar-footer .confirm-but{
+    margin-left:10px;
+    color:#000
+}
+
+
+
+

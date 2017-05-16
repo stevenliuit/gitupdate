@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallArticleCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallArticleCategory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+    <result column="client_type" jdbcType="TINYINT" property="clientType" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sort_num" jdbcType="INTEGER" property="sortNum" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tenant_id, client_type, parent_id, name, sort_num, state, created, modified
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      <if test="tenantId != null">and tenant_id = #{tenantId,jdbcType=BIGINT}</if>
+      <if test="clientType != null">and client_type = #{clientType,jdbcType=TINYINT}</if>
+      <if test="parentId != null">and parent_id = #{parentId,jdbcType=BIGINT}</if>
+      <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
+      <if test="sortNum != null">and sort_num = #{sortNum,jdbcType=INTEGER}</if>
+      <if test="state != null">and state = #{state,jdbcType=TINYINT}</if>
+      <if test="created != null">and created = #{created,jdbcType=TIMESTAMP}</if>
+      <if test="modified != null">and modified = #{modified,jdbcType=TIMESTAMP}</if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_article_category
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory">
+    delete from mall_article_category
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory">
+    insert into mall_article_category (id, tenant_id, client_type, 
+      parent_id, name, sort_num, 
+      state, created, modified
+      )
+    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, 
+      #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER}, 
+      #{state,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory">
+    insert into mall_article_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="clientType != null">
+        client_type,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sortNum != null">
+        sort_num,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="modified != null">
+        modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="clientType != null">
+        #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null">
+        #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified != null">
+        #{modified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory">
+    update mall_article_category
+    <set>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="clientType != null">
+        client_type = #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null">
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified != null">
+        modified = #{modified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory">
+    update mall_article_category
+    set tenant_id = #{tenantId,jdbcType=BIGINT},
+      client_type = #{clientType,jdbcType=TINYINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      sort_num = #{sortNum,jdbcType=INTEGER},
+      state = #{state,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      modified = #{modified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallArticleCategory" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_article_category
+    <include refid="Where_Condition"/>
+  </select>
+</mapper>

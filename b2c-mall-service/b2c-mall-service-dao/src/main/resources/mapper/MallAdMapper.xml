@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallAdMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallAd">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="ad_type" jdbcType="TINYINT" property="adType" />
+        <result column="ad_words" jdbcType="VARCHAR" property="adWords" />
+        <result column="item_id" jdbcType="BIGINT" property="itemId" />
+        <result column="link" jdbcType="VARCHAR" property="link" />
+        <result column="img_src" jdbcType="VARCHAR" property="imgSrc" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap2" type="com.jcloud.b2c.mall.service.domain.MallAd">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="ad_type" jdbcType="TINYINT" property="adType" />
+        <result column="ad_words" jdbcType="VARCHAR" property="adWords" />
+        <result column="item_id" jdbcType="BIGINT" property="itemId" />
+        <result column="link" jdbcType="VARCHAR" property="link" />
+        <result column="img_src" jdbcType="VARCHAR" property="imgSrc" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+        <result column="sort_num" jdbcType="BIGINT" property="sortNum" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, tenant_id, client_type, ad_type, ad_words, item_id, link, img_src, state, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="adType != null">
+                ad_type = #{adType,jdbcType=TINYINT},
+            </if>
+            <if test="adWords != null">
+                ad_words = #{adWords,jdbcType=VARCHAR},
+            </if>
+            <if test="itemId != null">
+                item_id = #{itemId,jdbcType=BIGINT},
+            </if>
+            <if test="link != null">
+                link = #{link,jdbcType=VARCHAR},
+            </if>
+            <if test="imgSrc != null">
+                img_src = #{imgSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="adType != null">and ad_type=#{adType,jdbcType=TINYINT}</if>
+            <if test="adWords != null">and ad_words=#{adWords,jdbcType=VARCHAR}</if>
+            <if test="itemId != null">and item_id=#{itemId,jdbcType=BIGINT}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallAd" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallAd" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_ad (tenant_id,client_type, ad_words,
+        item_id, ad_type, link, img_src, state, created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, #{adWords,jdbcType=VARCHAR},
+        #{itemId,jdbcType=BIGINT},#{adType,jdbcType=TINYINT}, #{link,jdbcType=VARCHAR}, #{imgSrc,jdbcType=VARCHAR},
+        1, #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAd">
+        update mall_ad
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAd">
+        update mall_ad
+        set state = #{state,jdbcType=TINYINT}
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAd" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad
+        <include refid="Where_Condition"/>
+    </select>
+
+    <select id="queryByFloor"  resultMap="BaseResultMap2">
+        select
+        mr.id, ma.tenant_id, mr.sort_num, ma.ad_type, ma.ad_words, ma.item_id, ma.link, ma.img_src, ma.state, ma.created, ma.modified
+        from mall_ad ma join mall_ad_floor mr on ma.id = mr.ad_id
+        where mr.tenant_id=#{mallAd.tenantId,jdbcType=BIGINT} and mr.floor_id = #{principalId,jdbcType=BIGINT}
+        <if test="mallAd.adType != null">and ad_type=#{mallAd.adType,jdbcType=TINYINT}</if>
+        order by mr.sort_num asc,mr.modified desc
+    </select>
+
+    <select id="queryByChannel"  resultMap="BaseResultMap2">
+        select
+        mr.id, ma.tenant_id, mr.sort_num, ma.ad_type, ma.ad_words, ma.item_id, ma.link, ma.img_src, ma.state, ma.created, ma.modified
+        from mall_ad ma join mall_ad_channel mr on ma.id = mr.ad_id
+        where mr.tenant_id=#{mallAd.tenantId,jdbcType=BIGINT} and mr.channel_id = #{principalId,jdbcType=BIGINT} order by mr.sort_num asc,mr.modified desc
+    </select>
+
+    <select id="queryByCategory"  resultMap="BaseResultMap2">
+        select
+        mr.id, ma.tenant_id, mr.sort_num, ma.ad_type, ma.ad_words, ma.item_id, ma.link, ma.img_src, ma.state, ma.created, ma.modified
+        from mall_ad ma join mall_ad_category mr on ma.id = mr.ad_id
+        where mr.tenant_id=#{mallAd.tenantId,jdbcType=BIGINT} and mr.category_id = #{principalId,jdbcType=BIGINT} order by mr.sort_num asc,mr.modified desc
+    </select>
+</mapper>

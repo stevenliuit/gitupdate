@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallTopnewsArticleMapper">
+  <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+    <result column="client_type" jdbcType="TINYINT" property="clientType" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="article_url" jdbcType="VARCHAR" property="articleUrl" />
+    <result column="sort_num" jdbcType="INTEGER" property="sortNum" />
+    <result column="state" jdbcType="TINYINT" property="state" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tenant_id, client_type, title, article_id, article_url, sort_num, state, created, 
+    modified
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      tenant_id=#{tenantId,jdbcType=BIGINT}
+      <if test="clientType != null">
+        and client_type = #{clientType,jdbcType=TINYINT}
+      </if>
+      <if test="title != null">
+        and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="articleId != null">
+        and article_id = #{articleId,jdbcType=BIGINT}
+      </if>
+      <if test="articleUrl != null">
+        and article_url = #{articleUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="sortNum != null">
+        and sort_num = #{sortNum,jdbcType=INTEGER}
+      </if>
+      <if test="state != null">
+        and state = #{state,jdbcType=TINYINT}
+      </if>
+      <if test="created != null">
+        and created = #{created,jdbcType=TIMESTAMP}
+      </if>
+      <if test="modified != null">
+        and modified = #{modified,jdbcType=TIMESTAMP}
+      </if>
+
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_topnews_article
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    delete from mall_topnews_article
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    insert into mall_topnews_article (id, tenant_id, client_type, 
+      title, article_id, article_url, 
+      sort_num, state, created, 
+      modified)
+    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, 
+      #{title,jdbcType=VARCHAR}, #{articleId,jdbcType=BIGINT}, #{articleUrl,jdbcType=VARCHAR}, 
+      #{sortNum,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
+      #{modified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    insert into mall_topnews_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="clientType != null">
+        client_type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="articleUrl != null">
+        article_url,
+      </if>
+      <if test="sortNum != null">
+        sort_num,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="modified != null">
+        modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="clientType != null">
+        #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null">
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="articleUrl != null">
+        #{articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null">
+        #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified != null">
+        #{modified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    update mall_topnews_article
+    <set>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="clientType != null">
+        client_type = #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="articleId != null">
+        article_id = #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="articleUrl != null">
+        article_url = #{articleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null">
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified != null">
+        modified = #{modified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    update mall_topnews_article
+    set tenant_id = #{tenantId,jdbcType=BIGINT},
+      client_type = #{clientType,jdbcType=TINYINT},
+      title = #{title,jdbcType=VARCHAR},
+      article_id = #{articleId,jdbcType=BIGINT},
+      article_url = #{articleUrl,jdbcType=VARCHAR},
+      sort_num = #{sortNum,jdbcType=INTEGER},
+      state = #{state,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      modified = #{modified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </update>
+
+  <select id="query" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallTopnewsArticle">
+    select <include refid="Base_Column_List" />
+    from mall_topnews_article <include refid="Where_Condition"/>
+    order by sort_num,modified desc
+  </select>
+</mapper>

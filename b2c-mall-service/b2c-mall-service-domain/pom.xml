@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.jcloud.b2c</groupId>
+        <artifactId>jcloud-b2c-mall-service</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <name>b2c-mall-service-domain</name>
+    <url>http://maven.apache.org</url>
+
+    <artifactId>b2c-mall-service-domain</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.40</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.governator</groupId>
+            <artifactId>governator-core</artifactId>
+            <version>1.12.10</version>
+        </dependency>
+    </dependencies>
+
+</project>

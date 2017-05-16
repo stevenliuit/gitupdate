@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallRole">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,tenant_id, name, description, state, created, modified
+    </sql>
+    <sql id="Where_Condition">
+        <where>
+            <if test="tenantId != null">and tenant_id = #{tenantId,jdbcType=VARCHAR}</if>
+            <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
+            <if test="description != null">and description = #{description,jdbcType=VARCHAR}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+            <if test="created != null">and created=#{created,jdbcType=TIMESTAMP}</if>
+            <if test="modified != null">and modified=#{modified,jdbcType=TIMESTAMP}</if>
+        </where>
+    </sql>
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state=#{state,jdbcType=TINYINT},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallOperator" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_role
+        <include refid="Where_Condition"/>
+    </select>
+
+    <insert id="insertRole" parameterType="com.jcloud.b2c.mall.service.domain.MallRole" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role (tenant_id,name, description,
+        state, created, modified)
+        values (#{tenantId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT},
+        #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <delete id="deleteByRoleFunction" parameterMap="com.jcloud.b2c.mall.service.domain.MallRole">
+        delete from sys_role_function where role_id=#{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </delete>
+
+    <insert id="addOrUpdateRoleFunction" parameterMap="map">
+        insert into sys_role_function (role_id,function_id)
+        values
+        <foreach collection="functionIds" item="functionId" index="index" separator="," >
+            (#{roleId,jdbcType=BIGINT},#{functionId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+
+    <update id="updateRole" parameterMap="com.jcloud.b2c.mall.service.domain.MallRole">
+        update sys_role
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+</mapper>

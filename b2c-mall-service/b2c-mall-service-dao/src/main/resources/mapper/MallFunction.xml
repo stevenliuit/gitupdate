@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallFunctionMapper">
+
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallFunction">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="func_url" jdbcType="VARCHAR" property="funcUrl"/>
+        <result column="func_type_id" jdbcType="TINYINT" property="funcTypeID"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,tenant_id, name, code, func_url, func_type_id, description, state, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="funcUrl != null">
+                func_url = #{funcUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="funcTypeID != null">
+                func_type_id = #{funcTypeID,jdbcType=TINYINT},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state=#{state,jdbcType=TINYINT},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
+            <if test="code != null">and code = #{code,jdbcType=VARCHAR}</if>
+            <if test="funcUrl != null">and func_url = #{funcUrl,jdbcType=VARCHAR}</if>
+            <if test="funcTypeID != null">and func_type_id = #{funcTypeID,jdbcType=TINYINT}</if>
+            <if test="description != null">and description = #{description,jdbcType=VARCHAR}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+            <if test="created != null">and created=#{created,jdbcType=TIMESTAMP}</if>
+            <if test="modified != null">and modified=#{modified,jdbcType=TIMESTAMP}</if>
+        </where>
+    </sql>
+
+    <select id="getByFunctionKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallFunction" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_function
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insertFunction" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_function (tenant_id,name, code,func_url,func_type_id,description,
+        state, created, modified)
+        values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{funcUrl,jdbcType=VARCHAR},
+          #{funcTypeID,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},
+        #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByFunctionKey" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction">
+        update sys_function
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <update id="deleteByFunctionKey" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction">
+        update sys_function
+        set state = #{state,jdbcType=TINYINT},modified=#{modified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+        <if test="tenantId != null">
+            and tenant_id = #{tenantId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sys_function
+        <include refid="Where_Condition"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,102 @@
+#set($layout="layout/unescape_empty.vm")
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>360商城</title>
+    <link rel="stylesheet" type="text/css" href="http://m.i360mall.com/css/m_base_v.css" />
+    <link rel="stylesheet" type="text/css" href="http://m.i360mall.com/css/swiper.css" />
+    <link rel="stylesheet" type="text/css" href="http://m.i360mall.com/css/index-v.css" />
+    <link rel="stylesheet" type="text/css" href="http://m.i360mall.com/css/search.css" />
+    <script src="https://s.ssl.qhmsg.com/lib/jquery/1102.js"></script>
+    <script src="http://m.i360mall.com/js/m_base.js?v=2017030609"></script>
+</head>
+<body>
+<div id="body_div">
+    $stringEscapeUtils.unescapeHtml($html)
+</div>
+<!--漂浮-->
+
+<div class="menu-box mod-header">
+    <ul class="flexBox">
+        <li class="flex m1">
+            <a href="/" data-monitor="h5_v1home_menu_newhome"> <em class="layer-home"></em><span>首页</span></a>
+        </li>
+        <li class="flex m2 on">
+            <a href="/allproduct" data-monitor="h5_v1home_menu_allproduct"> <em class="layer-category"></em><span>分类</span></a>
+        </li>
+        <li class="flex m3 ">
+            <a class="header-cart" href="/shop/shopcart" data-monitor="h5_v1home_menu_shopcart"> <em class="layer-cart"></em><span>购物车</span> </a>
+        </li>
+        <li class="flex m4 ">
+            <a class="header-user" href="/user/usercenter" data-monitor="h5_home_menu_user"> <em class="layer-center"></em><span id="nickname_" data-monitor="h5_v1home_menu_user">我</span></a>
+        </li>
+    </ul>
+</div>
+<div style="height:53px;"></div>
+<script src="http://m.i360mall.com/js/countdown.list.js"></script>
+<script src="http://m.i360mall.com/js/swiper.jquery.js"></script>
+<script src="http://m.i360mall.com/js/index-v.js"></script>
+<script src="http://m.i360mall.com/js/echo.js"></script>
+<script src="http://m.i360mall.com/js/m_appdownload.js"></script>
+<script src="http://m.i360mall.com/js/search.js"></script>
+<script>
+    $(document).ready(function () {
+        indexPage && indexPage.init();
+        var page_type = 'h5index';
+    });
+    function IndexPage() {
+        this.config_url={
+            "INIT_BODY":"http://m.i360mall.com/index/body",
+            "COUNT_CART_NUM":"http://m.i360mall.com/cart/getSkuNum"
+        }
+    }
+    IndexPage.prototype.init_body=function () {
+        var self=this;
+        $.ajax({
+            url:self.config_url.INIT_BODY,
+            type:"get",
+            dataType:"html",
+            success:function (data) {
+                $("#body_div").html(data);
+                init_lunbotu();
+            }
+        });
+        var init_lunbotu=function () {
+            var mySwiper = new Swiper ('.swiper-container-2', {
+                loop: true,
+                autoplay: 2000,
+                // 如果需要分页器
+                pagination: '.swiper-pagination',
+            })
+        }
+    }
+    IndexPage.prototype.getCartNum=function () {
+        var self=this;
+        $.ajax({
+            url:self.config_url.COUNT_CART_NUM,
+            type:'get',
+            dataType:"json",
+            success:function (data) {
+                if(data.isSuccess){
+                    $("a.header-cart").append('<i class="cartnum" style="display: inline">'+data.data+'</i>');
+                }else{
+                    $("a.header-cart").append('<i class="cartnum" style="display: inline">0</i>');
+                }
+            }
+        });
+    }
+
+
+    var indexPage=new IndexPage();
+    indexPage.init_body();
+    indexPage.getCartNum();
+
+</script>
+</body>
+</html>

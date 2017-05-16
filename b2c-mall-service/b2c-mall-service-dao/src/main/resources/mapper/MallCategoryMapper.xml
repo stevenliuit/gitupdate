@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallCategory">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="link" jdbcType="VARCHAR" property="link" />
+        <result column="img_src" jdbcType="VARCHAR" property="imgSrc" />
+        <result column="heighlight" jdbcType="TINYINT" property="heighlight" />
+        <result column="channel_id" jdbcType="BIGINT" property="channelId" />
+        <result column="sort_num" jdbcType="INTEGER" property="sortNum" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, tenant_id, client_type, name, parent_id, link, img_src, heighlight, channel_id, sort_num, state, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="link != null">
+                link = #{link,jdbcType=VARCHAR},
+            </if>
+            <if test="imgSrc != null">
+                img_src = #{imgSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="heighlight != null">
+                heighlight = #{heighlight,jdbcType=TINYINT},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=BIGINT},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            and state=1
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="parentId != null">and parent_id=#{parentId,jdbcType=BIGINT}</if>
+            <if test="name != null">and name=#{name,jdbcType=VARCHAR}</if>
+            <if test="heighlight != null">and heighlight=#{heighlight,jdbcType=TINYINT}</if>
+            <if test="channelId != null">and channel_id=#{channelId,jdbcType=BIGINT}</if>
+            <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_category
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+        <if test="channelId != null">
+            and channel_id = #{channelId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <select id="get"  parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" resultType="MallCategory">
+        select
+        <include refid="Base_Column_List" />
+        from mall_category
+        where tenant_id = #{tenantId,jdbcType=BIGINT} and channel_id = #{channelId,jdbcType=BIGINT}
+        and parent_id = #{parentId,jdbcType=BIGINT} and name = #{name,jdbcType=VARCHAR} and state = #{state,jdbcType=TINYINT}
+        and client_type = #{clientType,jdbcType=TINYINT}
+    </select>
+
+    <select id="getBySortNum"  parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_category
+        where tenant_id = #{tenantId,jdbcType=BIGINT} and channel_id = #{channelId,jdbcType=BIGINT}
+        and parent_id = #{parentId,jdbcType=BIGINT} and sort_num = #{sortNum,jdbcType=INTEGER} and state = #{state,jdbcType=TINYINT}
+        and client_type = #{clientType,jdbcType=TINYINT}
+    </select>
+
+    <select id="getById"  parameterType="com.jcloud.b2c.mall.service.domain.MallCategory"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="getPurposeCate" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE modified = #{modified,jdbcType=TIMESTAMP}
+    </select>
+<!--查出序号相等，时间最小的数据-->
+    <select id="getMinTime"   parameterType="com.jcloud.b2c.mall.service.domain.MallCategory"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE tenant_id = #{tenantId,jdbcType=BIGINT} AND client_type = #{clientType,jdbcType=TINYINT}
+        AND parent_id =  #{parentId,jdbcType=BIGINT} AND channel_id =  #{channelId,jdbcType=BIGINT}
+        AND state = #{state,jdbcType=TINYINT} AND sort_num = #{sortNum,jdbcType=INTEGER}
+        AND modified > #{modified,jdbcType=TIMESTAMP}  ORDER BY modified  limit 1
+    </select>
+
+    <!--查出序号相等，时间最大的数据-->
+    <select id="getMaxTime"   parameterType="com.jcloud.b2c.mall.service.domain.MallCategory"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE tenant_id = #{tenantId,jdbcType=BIGINT} AND client_type = #{clientType,jdbcType=TINYINT}
+        AND parent_id =  #{parentId,jdbcType=BIGINT} AND channel_id =  #{channelId,jdbcType=BIGINT}
+        AND state = #{state,jdbcType=TINYINT} AND sort_num = #{sortNum,jdbcType=INTEGER}
+        AND modified &lt; #{modified,jdbcType=TIMESTAMP}  ORDER BY modified DESC limit 1
+    </select>
+<!--查出序号不等，时间最小的上一条数据-->
+    <select id="getLessSort" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE tenant_id = #{tenantId,jdbcType=BIGINT} AND client_type = #{clientType,jdbcType=TINYINT}
+        AND parent_id =  #{parentId,jdbcType=BIGINT} AND channel_id =  #{channelId,jdbcType=BIGINT}
+        AND state = #{state,jdbcType=TINYINT} AND sort_num &lt; #{sortNum,jdbcType=INTEGER}
+        ORDER BY sort_num DESC , modified  limit 1
+    </select>
+    <!--查出序号不等，时间最大的下一条数据-->
+    <select id="getDownSort" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE tenant_id = #{tenantId,jdbcType=BIGINT} AND client_type = #{clientType,jdbcType=TINYINT}
+        AND parent_id =  #{parentId,jdbcType=BIGINT} AND channel_id =  #{channelId,jdbcType=BIGINT}
+        AND state = #{state,jdbcType=TINYINT} AND sort_num > #{sortNum,jdbcType=INTEGER}
+        ORDER BY sort_num, modified DESC  limit 1
+    </select>
+    <!--获取最大序号数据-->
+    <select id="getMaxSortCategory"   parameterType="com.jcloud.b2c.mall.service.domain.MallCategory"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mall_category
+        WHERE tenant_id = #{tenantId,jdbcType=BIGINT} AND client_type = #{clientType,jdbcType=TINYINT}
+        AND parent_id =  #{parentId,jdbcType=BIGINT} AND channel_id =  #{channelId,jdbcType=BIGINT}
+        AND state = #{state,jdbcType=TINYINT} ORDER BY sort_num DESC limit 1
+    </select>
+
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_category (tenant_id,client_type, name,
+        parent_id, link, img_src, heighlight, channel_id,
+        sort_num, state, created, modified)
+        values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR},
+        #{parentId,jdbcType=BIGINT}, #{link,jdbcType=VARCHAR},#{imgSrc,jdbcType=VARCHAR}, #{heighlight,jdbcType=TINYINT},
+        #{channelId,jdbcType=BIGINT},#{sortNum,jdbcType=INTEGER}, 1, #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory">
+        update mall_category
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory">
+        update mall_category
+        set state = #{state,jdbcType=TINYINT}, modified = now()
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_category
+        <include refid="Where_Condition"/>
+        ORDER BY sort_num,modified desc
+    </select>
+
+    <!-- 自定义 -->
+    <select id="queryByParentId" parameterType="com.jcloud.b2c.mall.service.domain.MallCategory" resultMap="BaseResultMap">
+        SELECT id,parent_id,tenant_id,name,heighlight,img_src,link,sort_num,modified FROM mall_category
+        WHERE parent_id=#{parentId,jdbcType=INTEGER} AND tenant_id=#{tenantId,jdbcType=BIGINT}
+        <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+        <if test="channelId != null">and channel_id=#{channelId,jdbcType=BIGINT}</if>
+        <if test="state != null">and state=#{state,jdbcType=TINYINT}</if>
+
+        ORDER BY sort_num,modified desc
+    </select>
+
+    <update id="updateSort">
+        UPDATE mall_category SET sort_num=#{mallCategory.sortNum,jdbcType=INTEGER},modified=#{mallCategory.modified,jdbcType=TIMESTAMP}
+        WHERE  tenant_id=#{mallCategory.tenantId,jdbcType=BIGINT} AND id=#{mallCategory.id,jdbcType=INTEGER}
+    </update>
+    <!-- 顺序后移 -->
+    <update id="updateSortToMoveDown">
+        UPDATE mall_category SET sort_num=sort_num+1,modified=#{mallCategory.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num &gt;= #{mallCategory.sortNum,jdbcType=INTEGER} AND tenant_id=#{mallCategory.tenantId,jdbcType=BIGINT}
+        AND parent_id=#{mallCategory.parentId,jdbcType=INTEGER}
+        <if test="beforeSort != null">
+            AND sort_num &lt; #{beforeSort,jdbcType=INTEGER}
+        </if>
+    </update>
+    
+    <!-- 顺序上移 -->
+    <update id="updateSortToMoveUp">
+        UPDATE mall_category SET sort_num=sort_num-1,modified=#{mallCategory.modified,jdbcType=TIMESTAMP}
+        WHERE sort_num&gt;=#{mallCategory.sortNum,jdbcType=INTEGER} AND tenant_id=#{mallCategory.tenantId,jdbcType=BIGINT}
+        AND parent_id=#{mallCategory.parentId,jdbcType=INTEGER}
+        <if test="afterSort != null">
+            AND sort_num&lt;#{afterSort,jdbcType=INTEGER}
+        </if>
+    </update>
+</mapper>

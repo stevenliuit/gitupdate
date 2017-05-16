@@ -1,0 +1,376 @@
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/indexpop.css"/>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/pageManage/appChannelManage.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/layer/layer.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/imgUpload.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+<style>
+    .pindao{
+        height: auto;
+    }
+    .popcontent{
+        margin-top: 0px;height: auto;
+    }
+    .popcontent table{
+        margin: 0px;
+    }
+</style>
+<div class="right_tit clearfix">
+    <p>首页管理 / APP首页 /
+        <b>频道首页</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+        <span>频道内容设置</span></div>
+
+    <!-- 轮播图管理 -->
+    <div class="table_2">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a href="javascript:void(0)" class="dr_btn btn1">新建轮播图</a></div>
+            <span>轮播图管理
+                <i>(最多6张)</i>
+            </span>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th width="20%">图片ID</th>
+                <th width="20%">图片</th>
+                <th width="30%">图片链接</th>
+                <th width="15%">排序</th>
+                <th width="15%">操作</th></tr>
+            </thead>
+            <tbody>
+                #foreach($banner in $banners)
+                <tr>
+                    <td width="20%" name="bannerNum">$!{banner.Id}</td>
+                    <td width="20%">
+                        <img src="$!banner.ImgSrc" height="61" width="106" alt=""></td>
+                    <td width="30%">
+                        <p>$!{banner.Link}</p>
+                    </td>
+                    <td width="15%">$!{banner.SortNum}</td>
+                    <td width="15%" class="cz_a">
+                        <a href="javascript:void(0)" onclick="toUpdateBanner($!{banner.Id},1)">编辑</a>|
+                        <a href="javascript:void(0)" onclick="deleteBanner($!{banner.Id})">删除</a></td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+    <!-- 热门分类 -->
+    <div class="table_2">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a href="javascript:void(0)" class="dr_btn btn2">新建热门分类</a></div>
+            <span>热门分类管理</span></div>
+        <table>
+            <thead>
+            <tr>
+                <th width="15%">分类ID</th>
+                <th width="15%">分类排序</th>
+                <th width="20%">分类图片</th>
+                <th width="15%">分类名称</th>
+                <th width="20%">链接</th>
+                <th width="15%">操作</th></tr>
+            </thead>
+            <tbody>
+                #foreach($hotclass in $hotclasses)
+                <tr>
+                    <td width="15%">$!hotclass.Id</td>
+                    <td width="15%">$!hotclass.SortNum</td>
+                    <td width="20%">
+                        <img src="$!hotclass.ImgSrc" height="61" width="106" alt=""></td>
+                    <td width="15%">$!hotclass.Name</td>
+                    <td width="20%">
+                        <p>$!hotclass.Link</p>
+                    </td>
+                    <td width="15%" class="cz_a">
+                        <a href="javascript:void(0)" onclick="toUpdateBanner($!{hotclass.Id},7)">编辑</a>|
+                        <a href="javascript:void(0)" onclick="deleteHotclass($!{hotclass.Id})">删除</a></td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+    <!-- 专题 -->
+    <div class="table_2">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a href="javascript:void(0)" class="dr_btn btn3">新建专题</a></div>
+            <span>专题管理</span>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th width="10%">专题ID</th>
+                <th width="10%">专题序号</th>
+                <th width="15%">专题标题</th>
+                <th width="20%">专题图片</th>
+                <th width="20%">图片链接</th>
+                <th width="15%">操作</th></tr>
+            </thead>
+            <tbody>
+                #foreach($special in $specials)
+                <tr>
+                    <td width="10%">$!{special.Id}</td>
+                    <td width="10%">$!{special.SortNum}</td>
+                    <td width="15%">$!{special.MallFloor.Name}</td>
+                    <td width="20%"><img src="$!special.MallAd.ImgSrc" height="61" width="106" alt=""></td>
+                    <td width="20%"><p>$!{special.MallAd.Link}</p></td>
+                    <td width="15%" class="cz_a">
+                        <a href="javascript:void(0)" onclick="toUpdateSpecial($!{special.Id},$!{channelId})">编辑</a>|
+                        <a href="javascript:void(0)" onclick="deleteSpecial($!{special.Id},$!{special.adId},$!{special.floorId})">删除</a>|
+                        <a href="/mall/mallAd/toRecommendIndex?principalId=$!{special.MallFloor.Id}&type=2">设置推荐</a></td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+    <!-- 品牌 -->
+    <div class="table_2">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a href="javascript:void(0)" class="dr_btn btn4">新建品牌</a></div>
+            <span>品牌管理</span></div>
+        <table>
+            <thead>
+            <tr>
+                <th width="20%">品牌ID</th>
+                <th width="15%">序号</th>
+                <th width="20%">名称</th>
+                <th width="25%">图片</th>
+                <th width="20%">操作</th></tr>
+            </thead>
+            <tbody>
+                #foreach($brand in $brands)
+                <tr>
+                    <td width="20%">$!brand.Id</td>
+                    <td width="15%">$!brand.SortNum</td>
+                    <td width="20%">$!brand.Name</td>
+                    <td width="25%">
+                        <img src="$!brand.ImgSrc" height="61" width="106" alt=""></td>
+                    <td width="20%" class="cz_a">
+                        <a href="javascript:void(0)" onclick="toUpdateBanner($!{brand.Id},8)">编辑</a>|
+                        <a href="javascript:void(0)" onclick="deleteBanner($!{brand.Id})">删除</a></td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+    <!--table_2 end-->
+    <div class="index_btn">
+        <p>
+            #*<button type="button">预览PC首页</button>
+            <button type="button" class="act">发布PC首页</button>*#
+        </p>
+    </div>
+
+</div>
+
+<!-- 弹出窗口 -->
+<div class="bgpop">
+
+</div>
+
+<!-- 创建轮播 -->
+<div class="pop popend carousel" style="height: auto;margin-top: -260px;">
+    <div class="poptop">
+        <span class="popname">轮播图</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form action="" id="bannerForm">
+    <div class="popcontent ao">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="poptablename">轮播标题：</td><td class="poptabletd">
+                    <input type="text" name="name" placeholder="请输入标题"/>
+                    <div class="errorMessage"></div>
+                    <input type="text" name="id" value="" style="display:none;">
+                    <input type="hidden" name="channelId" value="$!{channelId}">
+                    <input type="hidden" name="clientType" value="3">
+                    <input type="hidden" name="bannerType" value="1"></td>
+                </tr>
+                <tr>
+                    <td class="poptablename">上传图片：</td><td class="poptabletd">
+                    <div class="fileaddv"><img width="120" height="120" style="display: none" name="imgView"></div>
+                    <input type="text" name="imgSrc"style="display:none;">
+                    <div class="errorMessage imgInput"></div>
+                    <span class="spantips">支持jpg、png格式，尺寸2050×448，大小不超过3M</span>
+                </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">排序：</td><td class="poptabletd">
+                    <input type="text" name="sortNum" placeholder="请输入大于0的数字"/>
+                    <div class="errorMessage"></div>
+                </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">图片链接：</td><td class="poptabletd">
+                    <input type="text" name="link" placeholder="请输入链接"/>
+                    <div class="errorMessage"></div>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="popfooter">
+        <button class="poptrue" type="submit">确&nbsp;定</button>
+        <button class="popcancle" type="button">取&nbsp;消</button>
+    </div>
+    </form>
+</div>
+<!-- 创建热门分类 -->
+<div class="pop popend hotclass" style="height: auto;margin-top: -260px;">
+    <div class="poptop">
+        <span class="popname">新建热门分类</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form action="" id="hotclassForm">
+    <div class="popcontent ao">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="poptablename">分类标题：</td><td class="poptabletd">
+                    <input type="text" name="name" placeholder="请输入标题"/>
+                    <div class="errorMessage"></div>
+                    <input type="text" name="id" value="" style="display:none;">
+                    <input type="hidden" name="channelId" value="$!{channelId}">
+                    <input type="hidden" name="clientType" value="3">
+                    <input type="hidden" name="bannerType" value="7"></td>
+                </tr>
+                <tr>
+                    <td class="poptablename">上传图片：</td><td class="poptabletd">
+                    <div class="fileaddv"><img width="120" height="120" style="display: none" name="imgView"></div>
+                    <input type="text" name="imgSrc" style="display:none;">
+                    <div class="errorMessage imgInput"></div>
+                    <span class="spantips">支持jpg、png格式，尺寸2050×448，大小不超过3M</span>
+                </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">排序：</td><td class="poptabletd">
+                    <input type="text" name="sortNum" placeholder="请输入大于0的数字"/>
+                    <div class="errorMessage"></div>
+                </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">跳转链接：</td><td class="poptabletd">
+                    <input type="text" name="link" placeholder="请输入链接"/>
+                    <div class="errorMessage"></div>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="popfooter">
+        <button class="poptrue" type="submit">确&nbsp;定</button>
+        <button class="popcancle" type="button">取&nbsp;消</button>
+    </div>
+    </form>
+</div>
+<!-- 创建专题 -->
+<div class="pop popend special" style="height: auto;margin-top: -260px;">
+    <div class="poptop">
+        <span class="popname">新建专题</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form action="" id="specialForm">
+    <div class="popcontent ao">
+        <table>
+            <tbody>
+            <tr>
+                <td class="poptablename">标题：</td><td class="poptabletd">
+                <input type="text" name="mallFloor.name" placeholder="请输入标题"/>
+                <div class="errorMessage"></div>
+                <input type="text" style="display:none;" name="id" value="">
+                <input type="text" style="display:none;" name="adId" value="">
+                <input type="text" style="display:none;" name="floorId" value="">
+                <input type="hidden" name="clientType" value="3">
+                <input type="hidden" name="mallAd.adType" value="4">
+                <input type="hidden" name="mallFloor.floorType" value="4">
+                <input type="hidden" name="mallFloor.channelId" value="$!{channelId}">
+            </td>
+            </tr>
+            <tr>
+                <td class="poptablename">上传图片：</td><td class="poptabletd">
+                <div class="fileaddv"><img width="120" height="120" style="display: none" name="imgView"></div>
+                <input type="text" name="mallAd.imgSrc" style="display:none;">
+                <div class="errorMessage imgInput"></div>
+                <span class="spantips">支持jpg、png格式，尺寸2050×448，大小不超过3M</span>
+            </td>
+            </tr>
+            <tr>
+                <td class="poptablename">序号：</td><td class="poptabletd">
+                <input type="text" name="sortNum" placeholder="请输入大于0的数字"/>
+                <div class="errorMessage"></div>
+            </td>
+            </tr>
+            <tr>
+                <td class="poptablename">跳转链接：</td><td class="poptabletd">
+                <input type="text" name="mallAd.link" placeholder="请输入链接"/>
+                <div class="errorMessage"></div>
+            </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="popfooter">
+        <button class="poptrue" id="specialTrue">确&nbsp;定</button>
+        <button class="popcancle">取&nbsp;消</button>
+    </div>
+    </form>
+</div>
+<!-- 创建品牌 -->
+<div class="pop popend brand" style="height: auto;margin-top: -220px;">
+    <div class="poptop">
+        <span class="popname">新建品牌</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form action="" id="brandForm">
+    <div class="popcontent ao">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="poptablename">品牌序号：</td><td class="poptabletd">
+                    <input type="text" name="sortNum" placeholder="请输入大于0的数字"/>
+                    <div class="errorMessage"></div>
+                </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">品牌名称：</td><td class="poptabletd">
+                    <input type="text" name="name" placeholder="请输入品牌名称"/>
+                    <div class="errorMessage"></div>
+                    <input type="text" name="id" value="" style="display:none;">
+                    <input type="hidden" name="channelId" value="$!{channelId}">
+                    <input type="hidden" name="clientType" value="3">
+                    <input type="hidden" name="bannerType" value="8"></td>
+                </tr>
+                <tr>
+                    <td class="poptablename">上传图片：</td><td class="poptabletd">
+                    <div class="fileaddv"><img width="120" height="120" style="display: none" name="imgView"></div>
+                    <input type="text" style="display:none;" name="imgSrc">
+                    <div class="errorMessage imgInput"></div>
+                    <span class="spantips">支持jpg、png格式，尺寸2050×448，大小不超过3M</span>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="popfooter">
+        <button class="poptrue" type="submit">确&nbsp;定</button>
+        <button class="popcancle" type="button">取&nbsp;消</button>
+    </div>
+    </form>
+</div>
+<!-- pop end -->
+
+<form>
+    <input type="file" name="fileImage" class="file-ipt" style="display: none">
+</form>
+
+
+

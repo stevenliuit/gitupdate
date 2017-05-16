@@ -1,0 +1,56 @@
+<div class="content clearfix">
+    <div class="left_list">
+        <div class="list_tit">
+            <h2><span class="spgl"></span>商品管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/item/toItemList">商品列表</a></li>
+                <li><a href="/platcategory/toCategoryManage">商品类目</a></li>
+                <li><a href="/importTask/findTask">商品导入结果</a></li>
+                <li><a href="/item/toBrandCusManager">品牌客服管理</a></li>
+            </ul>
+            <h2><span class="ymgl"></span>页面管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/mall/mallPcIndex/toManage">PC首页</a></li>
+                <li><a href="/mall/mallPcIndex/toAppManage">APP首页</a></li>
+                <li><a href="/mall/mallPcIndex/toMManage">M站首页</a></li>
+                <li><a href="/mall/mallPcIndex/toAppFlashManage">APP闪屏设置</a></li>
+            </ul>
+            <h2><span class="xmgl"></span>类目管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/mall/category/main/pc/0">PC首页类目</a></li>
+                #*<li><a href="">频道类别</a></li>*#
+                <li><a href="/mall/category/main/android/0">APP类目</a></li>
+            </ul>
+            <h2><span class="ssgl"></span>搜索管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/mall/hotWords/toHotWordsManage">搜索热搜词</a></li>
+            </ul>
+            <h2><span class="wzgl"></span>文章管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/mall/mallArticle/toCategoryManage">文章分类</a></li>
+                <li><a href="/mall/mallArticle/toArticleManage">文章管理</a></li>
+            </ul>
+            <h2><span class="odgl"></span>订单管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="/mall/order/index">订单查询</a></li>
+            </ul>
+            <h2><span class="wzgl"></span>权限管理<i class="angle-down"></i><i class="angle-up hidden"></i></h2>
+            <ul class="list_menu">
+            	<li><a href="/operator/toList">操作员管理</a></li>
+            	<li><a href="#">角色管理</a></li>
+            	<li><a href="#">功能管理</a></li>
+            </ul>
+            
+            #*<h2><span class="tjbb"></span>统计报表<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+            <ul class="list_menu">
+                <li><a href="#">销售统计</a></li>
+                <li><a href="#">运营统计</a></li>
+            </ul>*#
+        </div>
+    </div>
+    <!--left_list end-->
+    <div class="right">
+        $screen_content
+       #parse("layout/footer.vm")
+    </div>
+</div>

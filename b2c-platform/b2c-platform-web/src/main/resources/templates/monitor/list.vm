@@ -1,0 +1,60 @@
+<style type="text/css">
+    table { border-collapse: collapse; font-size: 12px;}
+    .tableStyle {border-bottom: 1px solid #bfbfbf; border-top: 1px solid #bfbfbf; color: #666; width:100%;}
+    .tableStyle td{border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-top:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-size:12px; padding:5px;}
+    .tableStyle .tdBottomBorder{border-bottom: 1px solid #bfbfbf;}
+    .clsTableHeader
+    {
+        background-color: #6dd0f7; /* blue */
+        font-size:14px;
+        color: #FFF;
+    }
+    .head{font-size:20px;margin-left:10px;}
+</style>
+<head>
+    <meta http-equiv="refresh" content="10">
+</head>
+<div id="content">
+    <h1 class="head">MQ性能监控</h1>
+    <br/>
+    <div style="text-align:left;margin-left:10px;margin-right:10px;">
+        <table class="tableStyle">
+            <colgroup>
+                <col width="20%" />
+                <col width="20%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+            </colgroup>
+            <thead>
+            <tr class="clsTableHeader" >
+                <td>IP地址</td>
+                <td>名称</td>
+                <td>状态</td>
+                <td>版本</td>
+                <td>存储空间占用</td>
+                <td>内存空间占用</td>
+                <td>临时空间占用</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+                #foreach($bean in $!mqInfo)
+                <tr>
+                    <td>$!bean.ip</td>
+                    <td>#if($bean.name != -1)$bean.name#else<font color=red>-</font>#end</td>
+                    <td>#if($bean.status == 1)<font color="green">运行正常</font>#else<font color="red">服务停止</font>#end</td>
+                    <td>#if($bean.version != -1)$bean.version#else<font color=red>-</font>#end</td>
+                    <td>#if($bean.storeUsed != -1)$bean.storeUsed#else<font color=red>-</font>#end</td>
+                    <td>#if($bean.memoryUsed != -1)$bean.memoryUsed#else<font color=red>-</font>#end</td>
+                    <td>#if($bean.tempUsed != -1)$bean.tempUsed#else<font color=red>-</font>#end</td>
+                    <td>#if($bean.status == 1)<a href="/monitor/detail?httpIP=$bean.ip" id="detailHref">详细</a>#end</td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+</div>

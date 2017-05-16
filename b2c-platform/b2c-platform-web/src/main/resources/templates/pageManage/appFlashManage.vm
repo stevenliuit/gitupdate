@@ -1,0 +1,156 @@
+
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/indexpop.css"/>
+
+<script type="text/javascript" src="$!{basePath}/static/js/mall/pageManage/appFlashManage.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/layer/layer.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/imgUpload.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/moment.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/My97DatePicker/WdatePicker.js"></script>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+
+<style>
+    .pindao{
+        height: auto;
+    }
+    .popcontent{
+        margin-top: 0px;height: auto;
+    }
+    .popcontent table{
+        margin: 0px;
+    }
+</style>
+<div class="right_tit clearfix">
+
+    <p>首页管理 /
+        <b>APP闪屏设置</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+        <span>APP闪屏设置</span></div>
+    <!-- 轮播图管理 -->
+    <div class="table_2">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a href="#" class="dr_btn btn1">新建闪图</a></div>
+            <span>轮播图管理
+            <i>(最多6张)</i>
+          </span>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th width="10%">广告ID</th>
+                <th width="16%">图片</th>
+                <th width="10%">标题</th>
+                <th width="17%">开始时间</th>
+                <th width="17%">结束时间</th>
+                <th width="20%">链接</th>
+                <th width="10%">操作</th></tr>
+            </thead>
+            <tbody>
+                #foreach($flash in $flashs)
+                <tr>
+                    <td width="10%">$!{flash.Id}</td>
+                    <td width="16%">
+                        <img src="$!flash.ImgSrc" height="61" width="106" alt="">
+                    </td>
+                    <td width="10%">
+                        <p>$!{flash.Name}</p>
+                    </td>
+                    <td width="17%">$!date.format('yyyy-MM-dd HH:mm:ss',$!flash.beginTime)</td>
+                    <td width="17%">$!date.format('yyyy-MM-dd HH:mm:ss',$!flash.endTime)</td>
+                    <td width="20%">
+                        <p>$!{flash.Link}</p>
+                    </td>
+                    <td width="10%" class="cz_a">
+                        <a href="#" onclick="toUpdateBanner($!{flash.Id})">编辑</a>|
+                        <a href="javascript:void(0)" onclick="deleteBanner($!{flash.Id})">删除</a>
+                    </td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="index_btn">
+    <p>
+    #*<button type="button">预览PC首页</button>
+        <button type="button" class="act">发布PC首页</button>*#
+    </p>
+</div>
+
+<!-- 弹出窗口 -->
+<div class="bgpop">
+
+</div>
+<!-- 创建轮播 -->
+<div class="pop popend carousel" style="height: auto;margin-top: -316px;">
+    <div class="poptop">
+        <span class="popname">新建闪图</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form id="bannerForm">
+        <div class="popcontent ao">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="poptablename">闪图标题：</td><td class="poptabletd">
+                    <input type="text" name="name" placeholder="请输入标题"/>
+                    <div class="errorMessage"></div>
+                    <input type="text" name="id" value="" style="display:none;">
+                    <input type="hidden" name="clientType" value="3">
+                    <input type="hidden" name="channelId" value="0">
+                    <input type="hidden" name="bannerType" value="9"></td>
+                </tr>
+                <tr>
+                    <td class="poptablename">上传图片：</td><td class="poptabletd">
+                    <div class="fileaddv"><img width="120" height="120" style="display: none" name="imgView"></div>
+                    <input type="text" name="imgSrc" style="display:none;">
+                    <div class="errorMessage imgInput"></div>
+                    <span class="spantips">支持jpg、png格式，尺寸2050×448，大小不超过3M</span>
+                </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">图片链接：</td><td class="poptabletd">
+                    <input type="text" name="link" placeholder="请输入链接"/>
+                    <div class="errorMessage"></div>
+                    </td>
+                <tr>
+                    <td class="poptablename">排序：</td><td class="poptabletd">
+                    <input type="text" name="sortNum" placeholder="请输入大于0的数字"/>
+                    <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">开始时间：</td>
+                    <td class="poptabletd">
+                        <input onclick="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" name="beginTime" class="form-datetime" readonly="readonly" placeholder="点击选择时间">
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">结束时间：</td>
+                    <td class="poptabletd">
+                        <input onclick="WdatePicker({skin:'twoer',dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" name="endTime" class="form-datetime" readonly="readonly" placeholder="点击选择时间">
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="popfooter">
+            <button class="poptrue" type="submit">确&nbsp;定</button>
+            <button class="popcancle" type="button">取&nbsp;消</button>
+
+        </div>
+    </form>
+</div>
+
+<form>
+    <input type="file" name="fileImage" class="file-ipt" style="display: none">
+</form>

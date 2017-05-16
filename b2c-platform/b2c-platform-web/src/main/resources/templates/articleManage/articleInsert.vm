@@ -1,0 +1,131 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/newarticle.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/pop.css"/>
+
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/static/js/common/fwb/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/static/js/common/fwb/ueditor.all.min.js"></script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="$!{basePath}/static/js/common/fwb/lang/zh-cn/zh-cn.js"></script>
+
+
+
+<div class="right_tit clearfix">
+
+    <p>
+        文章管理/
+        <b>新建文章</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+
+        <span>新建文章</span>
+    </div>
+    <div class="select_box clearfix" style="height: 120px;">
+
+        <form id="editForm">
+            <div class="select_left" style="width: 610px;">
+                <ul style="width: 700px;">
+
+                    <li style="width: 700px;">
+                <span>文章标题：<input type="text" name="title" class="input_1"/>
+                </span>
+                        <span>排序序号：<input type="text" name="sortNum" class="input_1"/>
+                </span>
+                    </li>
+                </ul>
+                <p class="af" style="width: 610px;">
+                    <span>文章分类：</span>
+                    <select class="sel_2" name="parentId" id="one">
+                        <option value="">--请选择--</option>
+                        #foreach($category in $categorys)
+                            <option value ="$!{category.Id}" >$!{category.Name}</option>
+                        #end
+                    </select>
+                    <select class="sel_2" name="categoryId" id="two">
+                        <option value="">--请选择--</option>
+                    </select>
+                    <a style="color:#26a2fe">新建分类</a>
+                </p>
+            </div>
+        </form>
+    </div>
+    <!--select_box end-->
+    <div class="commodities_information" >
+        <div class=".fwb" >
+            <script id="editor" type="text/plain" style="width:100%;height:285px;"></script>
+        </div>
+    </div>
+
+
+    <!--
+        作者：offline
+        时间：2017-02-24
+        描述：three button
+    -->
+    <div class="table-btnbox" style="margin-left: 39%;margin-bottom: 20px;">
+
+        <a style="line-height: 25px;" class="btn btn-blue btn-sm" href="/mall/mallArticle/toArticleManage" name="save_category_data">返回</a>
+        #*<button type="button" class="btn btn-default btn-sm" id="j_expand_all" name="expand_category_all">全部展开</button>
+        <button type="button" class="btn btn-default btn-sm" id="j_unexpand_all" name="unexpand_category_all">全部收起
+        </button>*#
+        <a style="line-height: 25px;" class="btn btn-blue btn-sm" id="j_save_category_add1" name="save_category_data">确定</a>
+
+    </div>
+</div>
+    <!--commodities_list end-->
+<script type="text/javascript">// 收缩展开效果
+var ue = null;
+$(function() {
+    $(".list_tit h2").click(function() {
+        $(this).next(".list_menu").slideToggle(300);
+    });
+    $('.list_tit h2').click(function(ev){
+        $(this).children('.angle-down').toggleClass('hidden');
+        $(this).children('.angle-up').toggleClass('hidden');
+    });
+    $(".dr_btn").click(function(){
+        $(".bgpop").css("display","block");
+        $(".pop").css("display","block");
+        $(".poploading").css("display","none");
+        $(".popend").css("display","none");
+    });
+    $(".popnameclose").click(function(){
+        $(".bgpop").css("display","none");
+        $(".pop").css("display","none");
+    });
+    //实例化编辑器
+    ue = UE.getEditor('editor');
+
+    $("#one").change(function(){
+        if ($(this).val()!=""){
+            getChildList($(this).val(),"");
+        } else {
+            $("#two").empty();
+            $("#two").append("<option value=''>--请选择--</option>");
+        }
+    });
+
+    $("#j_save_category_add1").click(function(){
+        var form = $("#editForm").serialize();
+        var content = ue.getContent();
+        $.post("/mall/mallArticle/add",$.param({content:content})+'&'+form,function(obj){
+            if (obj){
+                location.href="/mall/mallArticle/toArticleManage";
+            } else {
+                layer.alert("新建失败！");
+            }
+        },"json");
+    });
+});
+
+function getChildList(parentId){
+    $.post("/mall/mallArticleCategory/queryCategory",{parentId:parentId},function(obj){
+        $("#two").empty();
+        $("#two").append("<option value=''>--请选择--</option>");
+        for(var i in obj){
+            $("#two").append("<option value='"+obj[i].id+"'>"+obj[i].name+"</option>");
+        }
+    },"json");
+}
+</script>

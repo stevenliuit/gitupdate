@@ -1,0 +1,63 @@
+.icheckbox_polaris,.iradio_polaris{zoom:1;}
+
+
+/* iCheck plugin Polaris skin
+----------------------------------- */
+.icheckbox_polaris,
+.iradio_polaris {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0 5px 0 0;
+    padding: 0;
+    width: 14px;
+    height: 15px;
+    background: url(../../images/polaris.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+.icheckbox_polaris {
+    background-position: -7px -7px;
+}
+    .icheckbox_polaris.hover {
+        background-position: -38px -7px;
+    }
+    .icheckbox_polaris.checked {
+        background-position: -69px -7px;
+    }
+    .icheckbox_polaris.disabled {
+        background-position: -101px -7px;
+        cursor: default;
+    }
+    .icheckbox_polaris.checked.disabled {
+        background-position: -132px -7px;
+    }
+
+.iradio_polaris {
+    background-position: -162px -7px;
+}
+    .iradio_polaris.hover {
+        background-position: -193px -7px;
+    }
+    .iradio_polaris.checked {
+        background-position: -224px -7px;
+    }
+    .iradio_polaris.disabled {
+        background-position: -286px -7px;
+        cursor: default;
+    }
+    .iradio_polaris.checked.disabled {
+        background-position: -255px -7px;
+    }
+
+/* HiDPI support */
+/*@media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi), (min-resolution: 1.25dppx) {
+    .icheckbox_polaris,
+    .iradio_polaris {
+        background-image: url(polaris@2x.png);
+        -webkit-background-size: 310px 31px;
+        background-size: 310px 31px;
+    }
+}*/
+

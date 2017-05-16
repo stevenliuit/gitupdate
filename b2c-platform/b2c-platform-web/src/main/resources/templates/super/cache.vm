@@ -1,0 +1,283 @@
+#set($layout="super/layout.vm")
+<style>
+    textarea {
+        overflow: auto;
+        resize: none;
+        width: 500px;
+        height: 150px;
+    }
+    .select_btn a {
+        display: block;
+        width: 80px;
+        text-align: center;
+        line-height: 35px;
+        -webkit-border-radius: 4px;
+        margin-top: 7px;
+    }
+    .select_btn {
+        float: right;
+        padding-left: 15px;
+        border-left: 1px dotted #ccc;
+        height: 90px;
+    }
+    .select_box {
+        margin: 13px;
+        padding: 17px;
+        height: 80px;
+        background: #F4F5F9;
+    }
+    .select_left ul {
+        margin-left: 0px;
+    }
+    #shelper {
+        position: absolute;
+        display: none;
+        overflow: hidden;
+        z-index: 1;
+        width: 398px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        box-shadow: 1px 2px 1px rgba(0,0,0,.2);
+        margin-left: 32px;
+    }
+
+    #shelper li:hover {
+        background: #f5f5f5!important;
+    }
+    #shelper li {
+        overflow: hidden;
+        padding: 1px 6px;
+        line-height: 24px;
+        cursor: pointer;
+    }
+    li {
+        list-style: none;
+    }
+    #shelper .search-item {
+        float: left;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+<div class="right_tit">
+    <p>系统管理/
+        <b>缓存查询</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit">
+        <span>缓存查询</span>
+    </div>
+    <div class="select_box">
+        <input type="hidden" name="pageIndex" />
+        <input type="hidden" name="pageSize" />
+        <div class="select_btn">
+            <a  class="cx_btn" id="searchItemList">查 询</a>
+            <a  class="cz_btn" id="addSearchKey">添 加</a>
+        </div>
+        <div class="select_left">
+            <ul>
+                <li>
+                    <span>商户ID：
+                    <select class="sel_1" id="tenantId">
+                        <option value="1">1</option>
+                    </select>
+                    </span>
+                </li>
+                <li>
+                    <span>key：<input type="text" id="key_" class="input_1" maxlength="50"/></span>
+                    <ul id="shelper">
+                        #foreach($item in $keys)
+                            <li id="d_0" data="$item" style="background: rgb(255, 255, 255);">
+                                <div class="search-item" style="color:#005AA0">$item</div>
+                            </li>
+                        #end
+                    </ul>
+
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!--select_box end-->
+    <div class="commodities_information">
+        <div class="check_all">
+        #*<input type="checkbox" name="" value="">全选
+            <a href="#" class="qylm_btn">批量迁移类目</a>
+            <a href="#" class="hsz_btn">批量移入回收站</a>*#
+        </div>
+        <table border="none" width="100%" class="table_1">
+            <thead>
+                <tr>
+                    <th width="10%" align="left" class="p_20">
+                        商户ID
+                    </th>
+                    <th width="25%" align="left">
+                        key
+                    </th>
+                    <th width="35%" align="left">
+                        value
+                    </th>
+                    <th width="15%" align="left">
+                        剩余时间
+                    </th>
+                    <th width="15%"  align="left">
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="itemListTable"></tbody>
+        </table>
+    </div>
+    <div class="page" id="itemListPage">
+
+    </div>
+</div>
+
+<!-- pop start-->
+<div class="bgpop">
+
+</div>
+<div class="pop" id="add_cache">
+    <div class="poptop">
+        <span class="popname">添加缓存</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <div class="popcontent" style="margin-top:1px;margin-bottom: 200px;">
+        <br class="addsometh">
+            <span class="addtext" style="width: 70px;    display: inline-block;">商户ID：</span>
+            <input type="text" name="ID_" class="input_1" maxlength="30"/></br></br>
+            <span class="addtext" style="width: 70px;    display: inline-block;">过期时间：</span>
+            <input type="text" name="time_" class="input_1" placeholder="秒" maxlength="30"/></br></br>
+            <span class="addtext" style="width: 70px;    display: inline-block;">key：</span>
+            <input type="text" name="key_" class="input_1" maxlength="30"/></br></br>
+            <a class="addtext" style="width: 70px;    display: inline-block;">value：</a>
+        <textarea type="text" name="value_" class="input_1" rows="10" style="height:120px;width: 350px;"></textarea>
+        </br>
+    </div>
+
+    <div class="popfooter">
+        <button class="poptrue" id="add_btn">添加</button>
+        <button class="poptrue" onclick='javascript:$("textarea[name='value_']").val(""))'>重置</button>
+    </div>
+</div>
+
+
+<!-- pop end -->
+<script type="text/javascript" >
+    function CacheM(){
+
+    }
+    CacheM.prototype.select=function(from){
+        $("#itemListTable").html("");
+        var  self=this;
+        var tid=$("#tenantId").val();
+        var key=$("#key_").val();
+        $.ajax({
+            url:"/super/cache/select",
+            data:{
+                tenantId:tid,
+                 key:key
+            },
+            type:"get",
+            dataType:"json",
+            success:function (data) {
+                if(data.isSuccess){
+                    var tr='<tr>'
+                            +'<th width="10%" align="left" class="p_20">'
+                            +tid
+                            +'</th>'
+                            +'<th width="25%" align="left">'
+                            +key
+                            +'</th>'
+                            +'<th width="35%" align="left"><textarea type="text" rows="3" id="itemDescribe" placeholder="">' +data.data+'</textarea>'
+                            +'</th>'
+                            +'<th width="15%" align="left">'
+                            +'剩余时间'
+                            +'</th>'
+                            +'<th width="15%"  align="left">'
+                            +'<a href="javascript:void(0)" onclick="cache_.del('+tid+',\''+key+'\')">删除</a>'
+                            +'</th>'
+                        +'</tr>';
+                    $("#itemListTable").append(tr);
+                }else{
+                    if(from!='del'){
+                        alert('缓存不存在');
+                    }
+                }
+            }
+        });
+    }
+    CacheM.prototype.add=function(){
+        var  self=this;
+        $.ajax({
+            url:"/super/cache/save",
+            data:{
+                tenantId:$("input[name='ID_']").val(),
+                expireSecond:$("input[name='time_']").val(),
+                key:$("input[name='key_']").val(),
+                value:$("textarea[name='value_']").val()
+            },
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                if(data.isSuccess){
+                    alert('缓存成功');
+                    $("#add_cache").hide();
+                }else{
+                    alert(data.message);
+                }
+            }
+        });
+    }
+    CacheM.prototype.del=function(){
+        var  self=this;
+        $.ajax({
+            url:"/super/cache/delete",
+            data:{
+                tenantId:$("#tenantId").val(),
+                key:$("#key_").val()
+            },
+            type:"get",
+            dataType:"json",
+            success:function (data) {
+                if(data.isSuccess){
+                    alert('删除成功');
+                    self.select('del');
+                }else{
+                    alert('删除失败');
+                }
+            }
+        });
+    }
+    var cache_;
+    $(function () {
+        cache_=cache_||new CacheM();
+        $("#addSearchKey").click(function () {
+            $("#add_cache").show();
+        });
+        $("#key_").focus(function (e) {
+            e.stopPropagation();
+            $("#shelper").show();
+            $("#shelper").find("li").click(function(e){
+                e.stopPropagation();
+                $("#key_").val($(this).attr("data"));
+                $("#shelper").hide();
+            });
+        }).blur(function () {
+//            $("#shelper").hide();
+        }).click(function(e){
+            e.stopPropagation();
+        });
+        $("body").click(function () {
+            $("#shelper").hide();
+        });
+        $("#searchItemList").click(function () {
+            cache_.select();
+        });
+        $("#add_btn").click(function () {
+            cache_.add();
+        });
+    });
+</script>

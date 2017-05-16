@@ -1,0 +1,2 @@
+#set($layout="layout/unescape_empty.vm")
+$stringEscapeUtils.unescapeHtml($html)

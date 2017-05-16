@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallAdFloorMapper">
+    <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+        <result column="client_type" jdbcType="TINYINT" property="clientType" />
+        <result column="ad_id" jdbcType="BIGINT" property="adId" />
+        <result column="floor_id" jdbcType="BIGINT" property="floorId" />
+        <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+        <association property="mallAd" javaType="com.jcloud.b2c.mall.service.domain.MallAd">
+            <id property="id" column="ad_id" />
+            <result property="adWords" column="ad_words" />
+            <result property="itemId" column="item_id" />
+            <result property="imgSrc" column="img_src" />
+            <result property="link" column="link" />
+        </association>
+        <association property="mallFloor" javaType="com.jcloud.b2c.mall.service.domain.MallFloor">
+            <id property="id" column="floor_id" />
+            <result property="name" column="name" />
+            <result property="subName" column="sub_name"/>
+            <result property="sortNum" column="mf_sort_num"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, ad_id, floor_id, sort_num, created, modified
+    </sql>
+
+    <sql id="Update_Selective_Column_Set">
+        <set>
+            <if test="adId != null">
+                ad_id = #{adId,jdbcType=BIGINT},
+            </if>
+            <if test="floorId != null">
+                floor_id = #{floorId,jdbcType=BIGINT},
+            </if>
+            <if test="sortNum != null">
+                sort_num = #{sortNum,jdbcType=TINYINT},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modified != null">
+                modified = #{modified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Where_Condition">
+        <where>
+            tenant_id=#{tenantId,jdbcType=BIGINT}
+            <if test="clientType != null">and client_type=#{clientType,jdbcType=TINYINT}</if>
+            <if test="adId != null">and ad_id=#{adId,jdbcType=BIGINT}</if>
+            <if test="floorId != null">and floor_id=#{floorId,jdbcType=BIGINT}</if>
+        </where>
+    </sql>
+    <select id="getByPrimaryKey"  parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad_floor
+        <include refid="Where_Condition"/>
+    </select>
+
+    <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor" useGeneratedKeys="true" keyProperty="id">
+      insert into mall_ad_floor (tenant_id,client_type,ad_id,
+        floor_id, sort_num,
+        created, modified)
+      values (#{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, #{adId,jdbcType=BIGINT},
+        #{floorId,jdbcType=BIGINT}, #{sortNum,jdbcType=TINYINT},
+        #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        update mall_ad_floor
+        <include refid="Update_Selective_Column_Set" />
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateUniqueSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        update mall_ad_floor
+        <include refid="Update_Selective_Column_Set" />
+        where floor_id = #{floorId,jdbcType=BIGINT} and ad_id = #{adId,jdbcType=BIGINT}
+        and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        delete from mall_ad_floor
+        where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteUnique" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        delete from mall_ad_floor
+        where floor_id = #{floorId,jdbcType=BIGINT} and ad_id = #{adId,jdbcType=BIGINT}
+        and tenant_id = #{tenantId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="querySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mall_ad_floor
+        <include refid="Where_Condition"/>
+    </select>
+
+    <!-- 列表 -->
+    <select id="queryByFloorId" resultMap="BaseResultMap">
+        SELECT maf.`id`,maf.`ad_id`,maf.`sort_num`,ma.`ad_words`,ma.`item_id`,ma.`img_src`,ma.`link`
+        FROM mall_ad_floor maf LEFT JOIN mall_ad ma ON maf.`ad_id`=ma.`id`
+        WHERE maf.`floor_id`=#{floorId,jdbcType=BIGINT} AND maf.tenant_id=#{tenantId,jdbcType=BIGINT}
+        AND ma.tenant_id=#{tenantId,jdbcType=BIGINT} AND ma.`state`=1
+        AND ma.ad_type=#{adType,jdbcType=INTEGER}
+        ORDER BY maf.`sort_num`,maf.modified desc
+    </select>
+
+    <!-- 顺序后移 -->
+    <update id="updateSortToMoveDown">
+        UPDATE mall_ad_floor maf JOIN mall_ad ma ON maf.`ad_id`=ma.`id`
+        SET maf.sort_num=maf.sort_num+1,maf.modified=#{mallAdFloor.modified,jdbcType=TIMESTAMP}
+        WHERE maf.sort_num&gt;=#{mallAdFloor.sortNum,jdbcType=TINYINT} AND maf.tenant_id=#{mallAdFloor.tenantId,jdbcType=BIGINT}
+        <if test="beforeSort != null">
+          AND maf.sort_num&lt;#{beforeSort,jdbcType=TINYINT}
+        </if>
+        AND ma.`ad_type`=#{mallAdFloor.mallAd.adType,jdbcType=INTEGER}
+    </update>
+
+    <!-- 顺序前移 -->
+    <update id="updateSortToMoveUp">
+        UPDATE mall_ad_floor maf JOIN mall_ad ma ON maf.`ad_id`=ma.`id`
+        SET maf.sort_num=maf.sort_num-1,maf.modified=#{mallAdFloor.modified,jdbcType=TIMESTAMP}
+        WHERE maf.sort_num&gt;=#{mallAdFloor.sortNum,jdbcType=TINYINT} AND maf.tenant_id=#{mallAdFloor.tenantId,jdbcType=BIGINT}
+        <if test="afterSort != null">
+            AND maf.sort_num&lt;#{afterSort,jdbcType=TINYINT}
+        </if>
+        AND ma.`ad_type`=#{mallAdFloor.mallAd.adType,jdbcType=INTEGER}
+    </update>
+
+    <!-- 单个查询 -->
+    <select id="getAdFloorById" resultMap="BaseResultMap">
+        SELECT maf.`id`,maf.`ad_id`,maf.`sort_num`,ma.`ad_words`,ma.`item_id`,ma.`img_src`,ma.`link`
+        FROM mall_ad_floor maf LEFT JOIN mall_ad ma ON maf.`ad_id`=ma.`id`
+        WHERE maf.`id`=#{id,jdbcType=BIGINT} AND maf.tenant_id=#{tenantId,jdbcType=BIGINT}
+        AND ma.tenant_id=#{tenantId,jdbcType=BIGINT} AND ma.`state`=1
+    </select>
+
+    <select id="queryBySpecial" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallAdFloor">
+        SELECT maf.`id`,maf.`sort_num`,mf.`name`,mf.`sub_name`,mf.`sort_num` mf_sort_num,ma.`img_src`,ma.`link`,ma.`item_id`,ma.`id` ad_id,mf.`id` floor_id
+        FROM mall_ad_floor maf
+        INNER JOIN mall_ad ma ON maf.`ad_id`=ma.`id`
+        INNER JOIN mall_floor mf ON maf.`floor_id`=mf.`id`
+        WHERE maf.`client_type`=#{clientType,jdbcType=TINYINT} AND ma.`client_type`=#{clientType,jdbcType=TINYINT} AND mf.`client_type`=#{clientType,jdbcType=TINYINT}
+        AND maf.`tenant_id`=#{tenantId,jdbcType=BIGINT} AND ma.`tenant_id`=#{tenantId,jdbcType=BIGINT} AND mf.`tenant_id`=#{tenantId,jdbcType=BIGINT}
+        AND mf.`channel_id`=#{mallFloor.channelId,jdbcType=BIGINT}
+        AND ma.`state`=1 AND mf.`state`=1
+        AND ma.`ad_type`=#{mallAd.adType,jdbcType=TINYINT} AND mf.`floor_type`=#{mallFloor.floorType,jdbcType=TINYINT}
+        <if test="id != null" >
+            AND maf.`id` = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="floorId != null" >
+            AND maf.`floor_id` = #{floorId,jdbcType=BIGINT}
+        </if>
+        ORDER BY maf.`sort_num` ASC
+    </select>
+
+</mapper>

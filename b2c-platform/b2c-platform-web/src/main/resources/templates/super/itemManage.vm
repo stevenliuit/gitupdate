@@ -1,0 +1,168 @@
+#set($layout="super/layout.vm")
+<style>
+    input[type="checkbox"] {
+        margin: 4px 2px 4px;
+        line-height: normal;
+    }
+</style>
+
+<div class="right_tit">
+    <p>
+        商品管理/
+        <b>商品列表</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit">
+        <div class="tit_btn">
+            <a href="$!{basePath}/static/excle/import_item_template.xlsx" class="down_btn">下载导入京东商品模板</a>
+            <a href="#" class="dr_btn">商品导入</a>
+        </div>
+        <span>商品列表</span>
+    </div>
+    <div class="select_box">
+        <input type="hidden" name="pageIndex" />
+        <input type="hidden" name="pageSize" />
+        <div class="select_btn">
+            <a  class="cx_btn" id="searchItemList">查 询</a>
+            <a  class="cz_btn" name="resetSearchKey">重 置</a>
+        </div>
+        <div class="select_left">
+            <ul>
+                <li>
+                    <span>商品品牌：
+                    <select class="sel_1" id="brand">
+                        <option value="">请选择</option>
+                    </select>
+                    </span>
+                </li>
+                <li>
+                    <span>商品名称：<input type="text" id="skuName" class="input_1" maxlength="30"/></span>
+                </li>
+                <li>
+                    <span>商品状态：
+                    <select class="sel_1" id="itemStatus">
+                        <option value="">全部</option>
+                        <option value="0">待审核</option>
+                        <option value="1">待上架</option>
+                        <option value="2">在售</option>
+                        <option value="3">已下架</option>
+                        <option value="4">未发布</option>
+                        <option value="5">审核未通过</option>
+                    </select>
+                    </span>
+                </li>
+                <li>
+                    <span>商品ID：<input type="text" id="skuId" class="input_1" maxlength="25"/>
+                    </span>
+                </li>
+            </ul>
+            <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商品类目：</span>
+                <select class="sel_2" id="J_first_category">
+                    <option value ="">一级类目</option>
+                </select>
+                <select class="sel_2" id="J_second_category">
+                    <option value ="">二级类目</option>
+                </select>
+            ##                <select class="sel_2" id="J_third_category">
+            ##                    <option value ="">三级分类</option>
+            ##                </select>
+                <span>京东SKU：<input type="text" id="jdSkuId" class="input_1" maxlength="25"/>
+            </p>
+        </div>
+    </div>
+    <!--select_box end-->
+    <div class="commodities_information">
+        <div class="check_all">
+            <input type="checkbox" id="checkAll" style="vertical-align: middle; margin-left: 20px;">全选
+            <a href="javascript:void(0)" id="delItems" class="down_btn btn1" style="float: right;margin-top: 8px; margin-right:16px;width: 60px;">删除商品</a>
+        #* <a href="#" class="qylm_btn">批量迁移类目</a>
+        <a href="#" class="hsz_btn">批量移入回收站</a>*#
+        </div>
+        <table border="none" width="100%" class="table_1" id="itemListTable">
+            <tr>
+                <th width="40%" align="left" class="p_20">
+                    商品信息
+                </th>
+                <th width="15%" align="left">
+                    品牌
+                </th>
+                <th width="15%" align="left">
+                    京东后台价
+                </th>
+                <th width="15%" align="left">
+                    创建时间
+                </th>
+                <th width="15%" align="left">
+                    状态
+                </th>
+                <th width="15%" align="left">
+                    操作
+                </th>
+            </tr>
+        </table>
+    </div>
+    <div class="page" id="itemListPage">
+    </div>
+</div>
+
+<!-- pop start-->
+<div class="bgpop">
+
+</div>
+<div class="pop" id="importExcel">
+    <div class="poptop">
+        <span class="popname">商品导入</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <div class="popcontent">
+        <div class="addsometh">
+            <span class="addtext">上传附件：</span>
+        ##            <span class="addfilea">添加附件</span>
+            <a class="addfileb">添加附件</a>
+            <input type="file"  name="itemTemplate" style="display:none"></div>
+    </div>
+</div>
+<div class="pop poploading">
+    <div class="poptop">
+        <span class="popname">商品导入</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <div class="loadingdiv">
+        <div class="loadingbg"></div>
+        <div style="width: 0px !important;background: #009AFE;"></div>
+    </div>
+</div>
+<div class="pop popend">
+    <div class="poptop">
+        <span class="popname">导入结果</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <div id="importResult">
+        <div class="list_report">
+            <span class="list_spanname">导入时间：</span><span class="list_time"></span>
+            <br />
+            <span class="list_spanname">应导入商品数量：</span><span class="list_num"></span><span class="list_spanname">导入成功数量：</span><span class="list_suc"></span><span class="list_spanname">导入失败数量：</span><span class="list_fail"></span>
+        </div>
+        <table class="list_table">
+            <thead class="list_tablehd">
+            <tr>
+                <td style="width:34%">商品序列</td>
+                <td style="width:36%">商品SKU</td>
+                <td style="width:20%">失败原因</td>
+            </tr>
+            </thead>
+            <tbody class="" id="failSkuList">
+            </tbody>
+        </table>
+
+        <p class="list_table_prompt">提示：请在excel表格里修正上表中的失败商品信息，重新上传，直至全部导入成功。</p>
+    </div>
+    <div class="popfooter">
+        <button class="poptrue">重新上传</button>
+    </div>
+</div>
+<!-- pop end -->
+<script type="text/javascript"  src="$!{basePath}/static/js/item/importItem.js"></script>
+<script type="text/javascript"  src="$!{basePath}/static/js/super/itemManage.js"></script>

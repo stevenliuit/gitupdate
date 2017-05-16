@@ -1,0 +1,98 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/index.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/indexpop.css" />
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/pageManage/activeManage.js"></script>
+<style>
+    .right {
+        margin: 0 10px 0 111px;
+    }
+</style>
+
+<!--right start-->
+<div class="right">
+    <div class="right_tit clearfix">
+        <p>
+            <b>活动页管理</b>
+        </p>
+    </div>
+    <div class="commodities_list">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a id="showAddActiveWin"  class="dr_btn dr_btn_2 btn_4">新增活动页</a></div>
+            <span>活动页设置</span></div>
+        <div class="table_2 no_bor">
+            <table>
+                <thead>
+                <tr>
+                    <th width="20%">编码</th>
+                    <th width="20%">文本内容地址</th>
+                    <th width="20%">创建时间</th>
+                    <th width="20">修改时间</th>
+                    <th width="20%">操作</th></tr>
+                </tr>
+                </thead>
+                <tbody id="activeList">
+                    #if("" != $!baseResponseVo.data && $!baseResponseVo.data.size() > 0)
+                        #foreach($!active in $!baseResponseVo.data)
+                        <tr>
+                            <td width="20%">$!active.code</td>
+                            <td width="20%">$!active.contentUrl</td>
+                            <td width="20%">$!date.format('yyyy-MM-dd',$!active.created)</td>
+                            <td width="20%">$!date.format('yyyy-MM-dd',$!active.modified)</td>
+                            <td width="20%" class="cz_a">
+                                <a href="http://i360mall.com/active/$!active.code" target="_blank" >预览</a>|
+                                <a href="javascript:void(0);" onclick="toUpdateActive('$!active.id','$!active.code')">修改</a>|
+                                <a href="javascript:void(0);" onclick="deleteActive($!active.id)">删除</a>
+                            </td>
+                        </tr>
+                        #end
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="bgpop">
+
+</div>
+
+<div class="pop pop_ad active" style="height: auto;margin-top: -150px;">
+    <div class="poptop">
+        <span class="popname">新建活动页</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form id="editActiveForm" method="post" action="">
+        <div class="popcontent" style="margin: 0 0 0 60px;height: auto;">
+            <table style="margin: 0;">
+                <tbody>
+                <tr>
+                    <td class="poptablename">编码&nbsp;：</td>
+                    <input type="text" style="display:none;" name="id" value="">
+                    <input type="hidden" name="clientType" value="1">
+                    <td class="poptabletd">&nbsp;<input type="text" placeholder="请输入编码" name="code"/>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">页面代码&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<textarea id="htmlStr" name="htmlStr" placeholder="请输入页面代码" class="layui-textarea" style="width: 310px;height:200px"></textarea>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">头部&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<input type="checkbox" id="isHead" name="isHead" value="1" class="mr_check"><b>有页面头部</b>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="popfooter">
+            <button class="poptrue" type="submit">确&nbsp;定</button>
+            <button class="popcancle" type="button">取&nbsp;消</button>
+        </div>
+    </form>
+</div>

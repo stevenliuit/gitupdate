@@ -1,0 +1,224 @@
+  <div id="topback"></div>
+  <div class="downloadbox isdownload" style="display:none">
+   <span class="closebtn"> <img src="${staticWebDomain}/h5/images/close.png" /> </span>
+   <p class="downtext">
+    <a href="javascript:;" onclick="return false;" data-monitor="h5_v1home_banner_download">
+     <span class="dlogo">
+      <img src="${staticWebDomain}/h5/images/download-logo.png" />
+     </span>
+     <span class="dt">
+      <em class="dname">下载手机客户端</em>
+      <em class="dtclient">首次登录就送<strong>188</strong>元现金券</em>
+     </span>
+    </a>
+   </p>
+   <a href="#" class="downloadbtn">下载领取</a> 
+  </div> 
+  <!--搜索栏 start--> 
+  <div class="fixsearch" style="display:none">
+   <div class="bar"> 
+    <button class="icon-back js-btn-back"></button> 
+    <input type="text" name="search_keyword" id="search_keyword" placeholder="搜索商品" />
+    <button class="js-btn-search">搜索</button> 
+   </div> 
+   <div class="fixsearch-suggester fullscreen" style="display: none;"> 
+    <ul></ul> 
+   </div> 
+   <div class="fixsearch-predictor fullscreen" style="display: none;"> 
+    <ul></ul> 
+   </div> 
+  </div> 
+  <!--搜索栏 end--> 
+  <!--焦点图 start--> 
+  <div class="mod-slider clearfix"> 
+   <div class="swiper-container swiper-container-horizontal swiper-container-2">
+       <div class="swiper-wrapper">
+         #foreach($item in $mallBanners)
+              #set($index = $velocityCount + 1)
+             <div class="swiper-slide" style="width: 375px;">
+                 <a href="$!item.link">
+                     <img data-echo-quality="80" src="$!{item.imgSrc}"/>
+                 </a>
+             </div>
+         #end
+    </div> 
+    <div class="swiper-pagination" data-monitor="h5_v1home_loop_change">
+    </div> 
+   </div> 
+  </div> 
+  <!--焦点图 start--> 
+  <!--广告位 start-->
+
+  #foreach($bannerAd in $appads)
+     <p class="menu-ad" style="display:none" > <a data-monitor="h5_v1home_ad_1" href="$!bannerAd.link"> <img style="height: 45px" src="$!bannerAd.imgSrc"/> </a> </p>
+  #end
+  <!--广告位 end-->
+  <!--导航 start--> 
+  ##<nav class="qlink flexBox">
+    ###foreach($bannerAd in $shortCut)
+        ##<a href="$!bannerAd.link" class="flex" data-monitor="h5_v1home_menu_1"> <img height="45px" src="$!bannerAd.imgSrc"/> <span>$!bannerAd.name</span> </a>
+    ###end
+  ##</nav>
+  <!--导航 end--> 
+  <!--头条 start--> 
+  <div class="first-news"> 
+   <span class="firsticon"><img src="${staticWebDomain}/h5/images/360pic.png" /></span>
+   <div class="scrolltext"> 
+    <div class="first" id="marqueebox" data-monitor="h5_v1home_toutiao_toutiao" >
+      #foreach($news in $topnews)
+          <a href="$news.articleUrl"><i>$news.title</i></a>
+      #end
+    </div>
+   </div> 
+  </div> 
+  <!--头条 end--> 
+  <!--广告位 start--> 
+
+  <!--广告位 end--> 
+  <!--抢购 start--> 
+
+  <!--抢购 end--> 
+  <!--掌上抢 start--> 
+
+  <!--掌上抢 end-->
+  <!--广告位 start--> 
+  <!--广告位 end-->
+  <!--明星商品 start--> 
+  <div class="star-product"> 
+   <h2 class="floor-title"><em>—</em> 明星单品 <em>—</em></h2>
+      #foreach($star in $starRcmd)
+          #if($velocityCount%2==1)
+            <ul class="star-plist flexBox">
+          #end
+              <li data-monitor="h5_v1home_star_$velocityCount">
+                  #set($link = $!star.mallAd.link)
+                  #if($star.mallAd.itemId)
+                      #set($link = "item.html?itemId="+$star.mallAd.itemId)
+                  #end
+                  <a href="$link">
+                      <span class="star-tips">
+                          <img src="${staticWebDomain}/h5/images/t013b3ce2157e4d7ef0.png" />
+                          #if(${star.mallAd.adWords.split(";").size()} > 0)
+                              <em class="price-favorable">${star.mallAd.adWords.split(";")[1]}</em>
+                          #end
+                      </span>
+                      <span class="pimg">
+                          <img data-original="$star.mallAd.imgSrc" class="ui-imglazyload" />
+                      </span>
+                      #if(${star.mallAd.adWords.split(";").size()} > 0)
+                          <span class="start-title">${star.mallAd.adWords.split(";")[0]}</span>
+                      #end
+                      #if(${star.mallAd.adWords.split(";").size()} > 2)
+                          #set($price = ${star.mallAd.adWords.split(";")[2]})
+                          #set($Double = 0.00)
+                          <span class="start-price" data-itemId="$!star.mallAd.itemId" id="item_price_$!star.mallAd.itemId" name="item_price">
+                              ##if($Double.parseDouble($price)<0) 暂无报价 #else <b class="pdot">￥</b>${price} #end
+                          </span>
+                      #end
+                  </a>
+              </li>
+          #if($velocityCount%2==0)
+             </ul>
+          #end
+      #end
+  </div>
+  <!--明星商品 end--> 
+  <!--顶级尖货 start--> 
+  <div class="top-level" data-monitor="h5_v1home_jianhuo_jianhuo"> 
+   <h2 class="floor-title"><em>—</em> 新品上市 <em>—</em></h2> 
+   <ul>
+       #if(${fullRecommends.size()}>0)
+           #foreach($rcmd in $fullRecommends)
+               <li>
+                   #set($link = $!rcmd.mallAd.link)
+                   #if($rcmd.mallAd.itemId)
+                       #set($link = "item.html?itemId="+$rcmd.mallAd.itemId)
+                   #end
+                   <a href="${link}">
+                        <span>
+                            <img data-original="${rcmd.mallAd.imgSrc}" class="ui-imglazyload">
+                            #if(${rcmd.mallAd.adWords.split(";").size()} > 2)
+                                <i class="price-r" data-itemId="$!rcmd.mallAd.itemId" id="item_price_$!rcmd.mallAd.itemId" name="item_price">
+                                    ##￥${rcmd.mallAd.adWords.split(";")[2]}
+                                </i>
+                            #end
+                        </span>
+
+                       #if(${rcmd.mallAd.adWords.split(";").size()} > 0)
+                           <strong class="ds-1">${rcmd.mallAd.adWords.split(";")[0]}</strong>
+                       #end
+
+                       #if(${rcmd.mallAd.adWords.split(";").size()} > 1)
+                           <p class="ds-2">${rcmd.mallAd.adWords.split(";")[1]}</p>
+                       #end
+                   </a>
+               </li>
+           #end
+       #end
+   </ul>
+  </div> 
+  <!--顶级尖货 end-->
+
+
+
+  <!--楼层广告start-->
+
+#foreach($floor in $mallFloors)
+<div class="mobile-floor">
+    <span class="floor-title"><em>—</em> $!floor.name<em>—</em></span>
+    #*广告*#
+    #set($floorAds = $floorAdsNormalMap.get($!floor.id))
+    #if($floorAds.size() >0)
+        <div class="floor-bigimg" data-floor-id="${floor.id}" data-ad-type="${floorAds.get(0).mallAd.adType}" data-mid="${floorAds.get(0).mallAd.id}" data-monitor="h5_v1home_floor1_datu">
+            <a href="${floorAds.get(0).mallAd.link}"> <img alt="${floorAds.get(0).mallAd.adWords}" data-original="${floorAds.get(0).mallAd.imgSrc}" class="ui-imglazyload" data-echo="" /> </a>
+        </div>
+    #end
+    #*商品*#
+    #set($floorAdRcmds = $floorAdsRecommendMap.get($!floor.id))
+    #if($floorAdRcmds.size() > 0)
+        <div class="plist" data-monitor="h5_v1home_floor1_danpin">
+            #foreach($mallad in $floorAdRcmds)
+                 #if($velocityCount%2==1)
+                   <ul class="star-plist flexBox">
+                 #end
+                       <li>
+                           #set($link = $!mallad.link)
+                           #if($mallad.itemId)
+                               #set($link = "item.html?itemId="+$mallad.itemId)
+                           #end
+                            <a href="$link" data="${mallad.id}">
+                                <span class="pimg"> <img data-original="${mallad.imgSrc}" style="max-height: 183px;max-width: 183px" class="ui-imglazyload" /></span>
+                                <span class="start-title">${mallad.adWords.split(";")[0]}</span>
+
+                                #if(${mallad.adWords.split(";").size()} > 1)
+                                    <p class="product-norms">${mallad.adWords.split(";")[1]}</p>
+                                #end
+
+                                #if(${mallad.adWords.split(";").size()} > 2)
+                                    #set($price = ${mallad.adWords.split(";")[2]})
+                                    #set($Double = 0.00)
+                                    <span class="start-price" data-itemId="$!mallad.itemId" id="item_price_$!mallad.itemId" name="item_price">
+                                        ##if($Double.parseDouble($price)<0) 暂无报价 #else <b class="pdot">￥</b>${price} #end
+                                    </span>
+                                #end
+
+                            </a>
+                       </li>
+                 #if($velocityCount%2==0)
+                   </ul>
+                 #end
+            #end
+        </div>
+    #end
+
+</div>
+#end
+  <script>
+      $(function() {
+          $("img.ui-imglazyload").lazyload({
+              placeholder : "${staticWebDomain}/h5/images/default_img.jpg",
+              effect : "fadeIn"
+          });
+      });
+  </script>
+

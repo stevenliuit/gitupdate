@@ -1,0 +1,104 @@
+<style type="text/css">
+    .head{font-size:20px;}
+    .subhead{font-size:15px;}
+    table { border-collapse: collapse; font-size: 12px;}
+    .tableStyle {border-bottom: 1px solid #bfbfbf; border-top: 1px solid #bfbfbf; color: #666; width:100%;}
+    .tableStyle td{border-left:1px solid #bfbfbf; border-right:1px solid #bfbfbf; border-top:1px solid #bfbfbf; border-bottom:1px solid #bfbfbf; font-size:12px; padding:5px;}
+    .tableStyle .tdBottomBorder{border-bottom: 1px solid #bfbfbf;}
+    .clsTableHeader
+    {
+        background-color: #6dd0f7; /* blue */
+        font-size:20px;
+        color: #FFF;
+    }
+    .head{font-size:20px;margin-left:10px;}
+</style>
+<head>
+    <meta http-equiv="refresh" content="10">
+</head>
+<div id="content">
+    <h1 class="head">MQ详细信息</h1>
+</div>
+<br/>
+    <div style="text-align:left;margin-left:10px;margin-right:10px;">
+        <table class="tableStyle">
+            <colgroup>
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="20%" />
+            </colgroup>
+            <tr>
+                <td colspan="5" align="left" class="clsTableHeader">基本信息</td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left">IP地址:$!mqInfoBean.ip</td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left">版本:$mqInfoBean.version</td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left">存储空间占用:$mqInfoBean.storeUsed%</td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left">内存空间占用:$mqInfoBean.memoryUsed%</td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left">临时空间占用:$mqInfoBean.tempUsed%</td>
+            </tr>
+            <tr>
+                <td colspan="5" align="left" class="clsTableHeader">队列监控</td>
+            </tr>
+            <tr class="clsTableHeader" >
+                <td>名称</td>
+                <td>队列积压数</td>
+                <td>消费者数目</td>
+                <td>排队消息数</td>
+                <td>出列消息数</td>
+            </tr>
+
+            #foreach($bean in $!queueList)
+                <tr>
+                    <td>$bean.name</td>
+                    <td>$bean.numOfPending</td>
+                    <td>$bean.nunOfCusmor</td>
+                    <td>$bean.messageEnqueued</td>
+                    <td>$bean.messageDequeued</td>
+                </tr>
+            #end
+        </table>
+        <br/>
+        <table class="tableStyle">
+            <colgroup>
+                <col width="25%"/>
+                <col width="25%"/>
+                <col width="25%"/>
+                <col width="25%"/>
+            </colgroup>
+            <tr>
+                <td colspan="4" align="left" class="clsTableHeader">主题监控</td>
+            </tr>
+            <tr class="clsTableHeader" >
+                <td>名称</td>
+                <td>消费者数目</td>
+                <td>排队消息数</td>
+                <td>出列消息数</td>
+            </tr>
+            #foreach($bean in $!topicList)
+                <tr>
+                    <td>$bean.name</td>
+                    <td>$bean.nunOfCusmor</td>
+                    <td>$bean.messageEnqueued</td>
+                    <td>$bean.messageDequeued</td>
+                </tr>
+            #end
+        </table>
+    </div>
+<script type="text/javascript">
+    $(function()
+    {
+        setTimeout("top.frames['contentFrame'].location.reload()",20000);
+
+    });
+</script >

@@ -1,0 +1,116 @@
+<style>
+    .right {
+        margin: 0 10px 0 111px;
+    }
+    .select_btn {
+        float: right;
+        padding-left: 18px;
+        border-left: 1px dotted #ccc;
+        height: 120px;
+    }
+    .select_left ul li {
+        float: left;
+        width: 286px;
+        padding-bottom: 15px;
+        height: 35px;
+    }
+    .select_left ul {
+        overflow: hidden;
+        margin-left: 0px;
+    }
+    .select_time {
+        display: inline;
+        position: relative;
+        width: 180px;
+        height: 100px;
+    }
+    .select_time div {
+        float: left;
+    }
+    .settime, .selectto {
+        line-height: 30px;
+    }
+    .selectto {
+        line-height: 30px;
+        margin: 0 5px;
+    }
+    .select_time input {
+        float: left;
+    }
+    .form-control {
+        display: inline;
+        width: 25%;
+        height: 37px;
+        padding: 6px;
+        font-size: 12px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #e7e7eb;
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .form-control, .input-group-addon {
+        background: white !important;
+        border-radius: 0;
+    }
+    .ui-calendar1 tbody tr {
+        height: 5px;
+    }
+    .ui-calendar2 tbody tr {
+        height: 5px;
+    }
+</style>
+
+<!--right start-->
+<div class="right">
+    <div class="right_tit clearfix">
+        <p>
+            意见反馈 / 意见
+        </p>
+    </div>
+    <div class="commodities_list">
+        <div class="sp_tit clearfix">
+            <span>导入任务列表</span>
+        </div>
+        <div class="select_box clearfix" id="importStatus">
+            <div class="select_btn">
+                <a  class="cx_btn" id="search">查 询</a>
+                <a  class="cz_btn" id="reset">重 置</a>
+            </div>
+            <div class="select_left">
+                <ul>
+                    <li>
+                        <span>手机号：<input type="text" id="mobile" class="input_1" maxlength="20"/>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="table_2">
+                <table id="feedbackListTable">
+                    <thead>
+                    <tr>
+                        <th width="5%">序号</th>
+                        <th width="20%">手机号</th>
+                        <th width="45%">反馈内容</th>
+                        <th width="20%">创建时间</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodyList">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="feedbackListPage">
+    </div>
+    <!--right end-->
+</div>
+<script type="text/javascript"  src="$!{basePath}/static/js/mall/feedback/feedback.js"></script>

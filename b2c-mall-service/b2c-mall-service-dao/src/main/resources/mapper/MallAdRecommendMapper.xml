@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcloud.b2c.mall.service.mapper.MallAdRecommendMapper">
+  <resultMap id="BaseResultMap" type="com.jcloud.b2c.mall.service.domain.MallAdRecommend">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="tenant_id" jdbcType="BIGINT" property="tenantId" />
+    <result column="client_type" jdbcType="TINYINT" property="clientType" />
+    <result column="ad_id" jdbcType="BIGINT" property="adId" />
+    <result column="recommend_type" jdbcType="TINYINT" property="recommendType" />
+    <result column="sort_num" jdbcType="TINYINT" property="sortNum" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="modified" jdbcType="TIMESTAMP" property="modified" />
+    <association property="mallAd" javaType="com.jcloud.b2c.mall.service.domain.MallAd">
+      <id property="id" column="ad_id" />
+      <result property="adWords" column="ad_words" />
+      <result property="itemId" column="item_id" />
+      <result property="imgSrc" column="img_src"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tenant_id, client_type, ad_id, recommend_type, sort_num, created, modified
+  </sql>
+  <sql id="Where_Condition">
+    <where>
+      <if test="tenantId != null">and tenant_id = #{tenantId,jdbcType=BIGINT}</if>
+      <if test="clientType != null">and client_type = #{clientType,jdbcType=TINYINT}</if>
+      <if test="adId != null">and ad_id = #{adId,jdbcType=BIGINT}</if>
+      <if test="recommendType != null">and recommend_type = #{recommendType,jdbcType=TINYINT}</if>
+      <if test="sortNum != null">and sort_num = #{sortNum,jdbcType=TINYINT}</if>
+      <if test="created != null">and created = #{created,jdbcType=TIMESTAMP}</if>
+      <if test="modified != null">and modified = #{modified,jdbcType=TIMESTAMP}</if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mall_ad_recommend
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend">
+    delete from mall_ad_recommend
+    where id = #{id,jdbcType=BIGINT} and tenant_id = #{tenantId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend">
+    insert into mall_ad_recommend (id, tenant_id, client_type, 
+      ad_id, recommend_type, sort_num, 
+      created, modified)
+    values (#{id,jdbcType=BIGINT}, #{tenantId,jdbcType=BIGINT}, #{clientType,jdbcType=TINYINT}, 
+      #{adId,jdbcType=BIGINT}, #{recommendType,jdbcType=TINYINT}, #{sortNum,jdbcType=TINYINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend">
+    insert into mall_ad_recommend
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tenantId != null">
+        tenant_id,
+      </if>
+      <if test="clientType != null">
+        client_type,
+      </if>
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="recommendType != null">
+        recommend_type,
+      </if>
+      <if test="sortNum != null">
+        sort_num,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="modified != null">
+        modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="clientType != null">
+        #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="adId != null">
+        #{adId,jdbcType=BIGINT},
+      </if>
+      <if test="recommendType != null">
+        #{recommendType,jdbcType=TINYINT},
+      </if>
+      <if test="sortNum != null">
+        #{sortNum,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified != null">
+        #{modified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend">
+    update mall_ad_recommend
+    <set>
+      <if test="tenantId != null">
+        tenant_id = #{tenantId,jdbcType=BIGINT},
+      </if>
+      <if test="clientType != null">
+        client_type = #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="adId != null">
+        ad_id = #{adId,jdbcType=BIGINT},
+      </if>
+      <if test="recommendType != null">
+        recommend_type = #{recommendType,jdbcType=TINYINT},
+      </if>
+      <if test="sortNum != null">
+        sort_num = #{sortNum,jdbcType=TINYINT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified != null">
+        modified = #{modified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend">
+    update mall_ad_recommend
+    set tenant_id = #{tenantId,jdbcType=BIGINT},
+      client_type = #{clientType,jdbcType=TINYINT},
+      ad_id = #{adId,jdbcType=BIGINT},
+      recommend_type = #{recommendType,jdbcType=TINYINT},
+      sort_num = #{sortNum,jdbcType=TINYINT},
+      created = #{created,jdbcType=TIMESTAMP},
+      modified = #{modified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryWithMallAd" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend" >
+    select mar.`id`,mar.`ad_id`,mar.`sort_num`,ma.`ad_words`,ma.`item_id`,ma.`img_src`,ma.`link`
+    from mall_ad_recommend mar left join mall_ad ma on mar.`ad_id`=ma.`id`
+    where mar.`tenant_id`=#{tenantId,jdbcType=BIGINT}
+    and mar.`client_type`=#{clientType,jdbcType=TINYINT}
+    and ma.`state`=1
+    and ma.`client_type`=#{clientType,jdbcType=TINYINT}
+    and mar.`recommend_type`=#{recommendType,jdbcType=TINYINT} ORDER BY mar.`sort_num` asc, mar.modified desc
+  </select>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="com.jcloud.b2c.mall.service.domain.MallAdRecommend" >
+    select mar.`id`,mar.`ad_id`,mar.`sort_num`,ma.`ad_words`,ma.`item_id`,ma.`img_src`
+    from mall_ad_recommend mar left join mall_ad ma on mar.`ad_id`=ma.`id`
+    where mar.`tenant_id`=#{tenantId,jdbcType=BIGINT}
+    and ma.`state`=1
+    and mar.`id`=#{id,jdbcType=TINYINT}
+  </select>
+</mapper>

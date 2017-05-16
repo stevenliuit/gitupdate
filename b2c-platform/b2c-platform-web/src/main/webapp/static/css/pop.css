@@ -1,0 +1,380 @@
+.bgpop{
+    position: fixed;
+    background: #000;
+    filter: alpha(opacity=40);
+    opacity: .4;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 100;
+    display: none;
+}
+.pop{
+    width: 520px;
+    
+    background: #FFFFFF;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -260px;
+    margin-top: -130px;
+    z-index: 101;
+    display: none;
+    border: 1px solid #F3F3F3;
+    border-radius: 5px;
+}
+.poptop{
+    width: 100%;
+    height: 48px;
+    background: #FAFAFA;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+}
+.popname{
+    float: left;
+    font-size: 16px;
+
+    color: #3F3F3F; 
+    margin-left: 25px;
+    line-height: 48px;
+}
+.popnameclose{
+    float: right;
+    margin-right: 16px;
+    font-size: 29px;
+    line-height: 48px;
+    color: #7A7A7A;
+    cursor: pointer;
+}
+.popcontent{
+    height: 130px;
+    margin-top: 50px;
+    margin-left: 56px;
+}
+.kuang img{
+	width:30px;
+	height:30px;
+}
+.addsometh span{
+     font-size: 13px;
+}
+.addtext{
+    
+    color: #A0A0A0;
+}
+.addfilea{
+    padding-left: 32px;
+    background: url(../images/add1.png) no-repeat 14px 7px;
+    color: #808080;
+    border:  #D9D9D9 solid 1px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+}
+.addfileb{
+    padding-left: 32px;
+    background: url(../images/add2.png) no-repeat 14px 7px;
+    color: #009AFE;
+    border: #009AFE solid 1px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+}
+.filediv{
+    margin-top: 8px;
+    margin-left: 68px;
+}
+.filediv img{
+    vertical-align: middle;
+    margin-left: 3px;
+    margin-right: 4px;
+}
+.addfilediv1,.addfilediv2{
+    width: 330px;
+    height: 22px;
+    vertical-align: middle;
+}
+.addfilediv1{
+    background: #FAFAFA;
+    overflow: hidden;
+}
+.filename{
+    color: #009AFE;
+}
+.addfileclose{
+    float: right;
+    margin-right: 6px;
+    font-size: 10px;
+    color: #A0A0A0;
+    cursor: pointer;
+}
+.popfooter{
+    height: 50px;
+    background: #FAFAFA;
+    border-top: #E5E5E5 solid 1px;
+    overflow: hidden;
+
+}
+.poptrue,.popcancle{
+    float: right;
+    width: 76px;
+    height: 28px;
+    border: solid 1px #D9D9D9;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 28px;
+    margin-top: 9px;
+    margin-right: 10px;
+}
+.poptrue{
+    background: #009AFE;
+    color: white;
+}
+.poploading{
+    z-index: 102;
+    display: none;
+}
+.loadingdiv{
+    height: 210px;
+}
+.loadingdiv div{
+    position: absolute;
+    width: 365px;
+    height: 3px; 
+    top: 145px;
+    left: 43px;
+}
+.loadingbg{
+    background: #EEEEEE;
+}
+.loading{
+    width: 150px !important;
+    background: #009AFE;
+}
+.popend{
+    z-index: 103;
+    display: none;
+}
+.popcontent table{
+    font-size: 13px;
+    margin-left: 80px;
+}
+.poptablename{
+    color: #A8A8A8;
+    text-align: right;
+}
+.poptabletd1{
+    color: #353535;
+}
+.poptabletd2{
+    color: #F1B53C;
+}
+.poptabletd3{
+    color: #85B744;
+}
+.poptabletd4{
+    color: #DB7472;
+}
+.popgoods{
+    width: 724px;
+    display:none;
+    margin-left: -362px;
+    
+}
+.popgoodstips{
+    line-height: 48px;
+    color: #E9797B;
+}
+.sel_2pop{
+    width: 124px;
+}
+.input_1pop{
+    width: 152px;
+}
+.popselectli{
+    width: auto !important;
+    float: left;
+    margin-right: 42px;
+}
+.select_leftp{
+    margin-bottom: 12px;
+    padding-left: 20px;
+}
+.select_btn_pop{
+    height: 96px;
+    padding-left: 47px;
+}
+.cx_btn_pop{
+    margin-top: 38px !important;
+}
+.poptable{
+    padding: 15px;
+    margin: 15px;
+    border: 1px solid #E7E7EB;
+    background: #F7F7F7;
+    width: 694px;
+}
+.poptable thead{
+    
+   
+}
+
+.checkbox-inline{
+    cursor: pointer;
+    margin-left: 21px;
+}
+.icheckbox_polaris {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 5px 0 0;
+    padding: 0;
+    width: 14px;
+    height: 15px;
+    background: url(../images/polaris.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+.icheckbox_polaris {
+    background-position: -7px -7px;
+}
+.checked {
+    background-position: -69px -7px;
+}
+#j_category_homeshow{
+    /*position: absolute;
+    top: 20%;
+    left: 20%;*/
+    display: block;
+   
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    opacity: 0;
+    background: rgb(255, 255, 255);
+}
+
+.tbalethpop{
+    padding: 15px;
+}
+
+
+.poptable_thead tr,td{
+   
+    padding: 15px;
+    
+}
+.poptable thead, .poptable tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+.poptable thead tr{
+    border-bottom: 1px solid #E7E7EB;
+}
+.poptable thead td{
+    border-right: 1px solid #E7E7EB;
+}
+.poptable tbody{
+    width: 692px;
+    /*border: 1px solid #E7E7EB;*/
+    display:block;
+    height:354px;
+    overflow-y:scroll;
+    overflow-x: hidden;
+    background: #FFFFFF;
+}
+.poptable tbody tr{
+    width: 692px;
+}
+.poptable_tbody td{
+    padding: 15px;
+    border-right: 1px solid #E7E7EB;
+    border-bottom: 1px solid #E7E7EB;
+}
+.poptable_tbody img{
+    margin-right: 8px;
+}
+.poptable_tbody tr:hover{
+    background: #FAFAFA;
+}
+.poptable_confirm{
+    display: block;
+    width: 80px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    -webkit-border-radius: 4px;
+}
+.thisdemo{
+    color: #15A1FE !important;
+}
+
+
+
+
+.list_report{
+    padding: 15px;
+}
+.list_spanname{
+    color: #C2C2C2;
+}
+.list_time{
+    color: #383838;
+}
+.list_num{
+    color: #EFAF2B;
+    margin-right: 45px;
+}
+.list_suc{
+    color: #8BBA4D;
+    margin-right: 45px;
+}
+.list_fail{
+    color: #D76461;
+}
+.list_table{
+    width: 94%;
+    margin: 15px;
+    border: solid 1px #E7E7EB;
+    border-collapse: collapse;
+}
+.list_table thead{
+    display: block;
+   
+    /*border: solid 1px #E7E7EB;*/
+}
+.list_table tr{
+    
+}
+
+.list_table tbody{
+    display: block;
+    width: 488px;
+    height: 150px;
+    overflow: scroll;
+    overflow-x: hidden;
+    
+}
+.list_table tbody td{
+    border: solid 1px #E7E7EB;
+    border-left: 0;
+}
+.list_table tbody tr{
+    height: 50px;
+}
+.list_tablehd{
+    background: #FAFAFA;
+}
+.list_table_prompt{
+    
+    padding: 15px;
+    color: #EF4C4C;
+}

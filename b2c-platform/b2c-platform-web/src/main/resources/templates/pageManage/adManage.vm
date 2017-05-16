@@ -1,0 +1,360 @@
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/indexpop.css"/>
+<div class="right_tit clearfix">
+    <p>页面管理 / PC首页 /
+        <b>
+            #if($type == 2)
+                设置楼层广告
+            #else
+                设置频道广告
+            #end
+        </b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+        <div class="tit_btn">
+            <a href="#" class="dr_btn dr_btn_2 btn1" >新建广告</a></div>
+        <span>设置广告</span></div>
+    <div class="table_2 no_bor">
+        <table>
+            <thead>
+            <tr>
+                <th width="10%">广告ID</th>
+                <th width="10%">广告排序</th>
+                <th width="13%">广告图片</th>
+                <th width="10%">广告标题</th>
+                <th width="10%">广告副标题</th>
+                <th width="15%">广告第二副标题</th>
+                <th width="20%">链接</th>
+                <th width="12%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                #foreach($ad in $mallAdVos)
+                <tr>
+                    <td width="10%">$!ad.id</td>
+                    <td width="10%">$!ad.sortNum</td>
+                    <td width="13%"><img src="$!ad.imgSrc" width="106px"></td>
+                    <td width="10%">
+                        #if(${ad.adWords.split(";").size()} > 0)
+                        $!{ad.adWords.split(";")[0]}
+                    #end</td>
+                    <td width="10%">
+                        #if(${ad.adWords.split(";").size()} > 1)
+                        $!{ad.adWords.split(";")[1]}
+                    #end</td>
+                    <td width="15%">
+                        #if(${ad.adWords.split(";").size()} > 2)
+                        $!{ad.adWords.split(";")[2]}
+                    #end
+                    </td>
+                    <td width="20%"><p>$!ad.link</p></td>
+                    <td width="12%" class="cz_a">
+                        <a href="javascript:void(0)" data-id="$!ad.id" data-type="$!type" name="editLink">编辑</a>|
+                        <a href="javascript:void(0)" data-id="$!ad.id" data-type="$!type" name="deleteLink">删除</a>
+                    </td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+    <!--table_2 end-->
+</div>
+
+
+<div class="bgpop">
+
+</div>
+<!-- 创建频道 -->
+<div class="pop pop_ad" style="height: auto;margin-top: -230px;">
+    <div class="poptop">
+        <span class="popname">新建广告</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form name="editAdForm" id="editAdForm" action="/mall/mallAd/add">
+    <div class="popcontent" style="margin: 0 0 0 60px;height: auto;">
+            <input type="hidden" value="$!type" name="type">
+            <input type="hidden" value="$!principalId" name="principalId">
+            <input type="text" name="rId" value="" style="display:none;">
+            <table style="margin: 0;">
+                <tbody>
+                <tr>
+                    <td class="poptablename" width="120">广告排序&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<input type="text" placeholder="大于0的数字" name="sortNum"/>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">广告标题&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<input type="text" placeholder="不超过20个字符" name="name"/>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">广告副标题&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<input type="text" name="subName1" placeholder="不超过20个字符"/>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">广告第二副标题&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<input type="text" name="subName2" placeholder="若没有第二副标题可不填"/>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                <tr class="h_30">
+                    <td class="poptablename">广告图片&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;&nbsp;&nbsp;&nbsp;（文件格式gif、jpg、jpeg、png、webp，不大于3M）</td>
+                </tr>
+                <tr>
+                    <td class="poptablename"></td>
+                    <td><a href="#" class="sclogo_bg" name="fileA"></a>
+                        <span class="cxsc">
+                            <img name="imgView" src="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=" width="120" height="120">
+                            <a href="#" class="sc_btn">重新上传</a>
+                        </span>
+                    </td>
+                    <td>
+                        <input type="text" name="imgSrc" style="display:none;">
+                        <div class="errorMessage imgInput"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="poptablename">广告图片链接&nbsp;：</td>
+                    <td class="poptabletd">&nbsp;<input type="text" name="link" placeholder="请输入链接"/>
+                        <div class="errorMessage"></div>
+                    </td>
+                </tr>
+                #*<tr>
+                    <td class="poptablename">广告商品SKU&nbsp;：</td><td class="poptabletd">&nbsp;<input type="text" /></td>
+                </tr>*#
+                </tbody>
+            </table>
+
+
+    </div>
+    <div class="popfooter">
+        <button class="poptrue" name="adConfirm" type="submit">确&nbsp;定</button>
+        <button class="popcancle" type="button">取&nbsp;消</button>
+    </div>
+    </form>
+    <form>
+        <input type="file" name="fileImage" class="file-ipt" style="display: none">
+    </form>
+
+</div>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+
+
+<script>
+    var upLoadImage = {
+        url: "/mall/mallAd/uploadImg",
+        dataType: 'json',
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png|webp)$/i,
+        maxFileSize: 3 * 1024 * 1024,
+        done: function (e, data) {
+            var jsonResult = data.result;
+            try {
+                var jsobObj = jsonResult;
+                if (jsobObj.success == 1) {
+                    $("a[name='fileA']").hide();
+                    $(".cxsc").show();
+                    $("img[name='imgView']").attr("src", jsobObj.fileUrl);
+                    $("input[name='imgSrc']").val(jsobObj.fileUrl);
+                } else {
+                    alert("上传失败");
+                }
+            } catch (e) {
+                alert("图片上传失败" + e);
+            }
+        },
+        fail: function (e, data) {
+            alert("图片上传失败！");
+        }
+    };
+    $(function () {
+        $("a[name='fileA']").on("click", function () {
+            $("input[name=fileImage]").trigger("click");
+        });
+        $(".cxsc").on("click", function () {
+            $("input[name=fileImage]").trigger("click");
+        });
+
+        $("input[name=fileImage]").fileupload(upLoadImage).on('fileuploadprocessalways', function (e, data) {
+            if (data.files.error) {
+                if (data.files[0].error == "File is too large") {
+                    alert("文件过大");
+                } else if (data.files[0].error == "File type not allowed") {
+                    alert("文件类型有误");
+                } else {
+                    alert(data.files[0].error);
+                }
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+
+        });
+        $(".btn1").click(function () {
+            $("a[name='fileA']").show();
+            $(".cxsc").hide();
+            openPop($(".pop_ad"), "新建广告", editAdForm);
+        });
+        var editAdForm = $("#editAdForm").validate({
+            rules: {
+                sortNum: {
+                    required: true,
+                    digits: 0,
+                    min:1
+                },
+                name: {
+                    required: true,
+                    maxlength: 20,
+                    isEmpty:true
+                },
+                subName1: {required: true,
+                    maxlength: 20,
+                    isEmpty:true
+                },
+                subName2: {required: false,
+                    maxlength: 20,
+                    isEmpty:true
+                },
+                imgSrc: {required: true},
+                link: {
+                    required: true,
+                    isUrl: true,
+                },
+            },
+            messages: {
+                sortNum: {
+                    required: "请输排序序号",
+                    digits: "请输入大于0的数字",
+                    min:"请输入大于0的数字"
+                },
+                name: {
+                    required: "请输入广告标题",
+                    maxlength: "不超过20个中文",
+                    isEmpty:"请填写正确的字符"
+
+                },
+                subName1: {required: "请输入广告副标题",
+                    maxlength: "不超过20个中文",
+                    isEmpty:"请填写正确的字符"
+                },
+                subName2: {required: "请输入广告第二副标题",
+                    maxlength: "不超过20个中文",
+                    isEmpty:"请填写正确的字符"
+                },
+                imgSrc: {required: "请上传图片"},
+                link: {
+                    required: "请输入广告图片链接",
+                    isUrl: "请输入正确的图片链接",
+                },
+            },
+            submitHandler: function (form) {
+                $("[type='submit']").attr("disabled",true);
+                var id = $(form).find("[name='rId']").val();
+                if (id == "" || id == null) {
+                    addAndUpd("/mall/mallAd/add", $(form));
+                } else {
+                    addAndUpd("/mall/mallAd/edit", $(form));
+                }
+            },
+            errorPlacement: function (error, element) {
+                error.appendTo(element.next());
+            },
+            ignore:[],
+        });
+
+        $("a[name='deleteLink']").on("click", function () {
+            var id = $(this).data("id");
+            var type = $(this).data("type");
+            layer.confirm('确定删除？', {
+                btn: ['确定','取消']
+            }, function(){
+                $.ajax({
+                    url: "/mall/mallAd/delete" + "?time=" + (new Date()).getTime(),
+                    cache: false,
+                    dataType: "json",
+                    type: "POST",
+                    data: {id: id, type: type},
+                    success: function (data) {
+                        if (data.success == 1) {
+                            window.location.reload(true);
+                        } else {
+                            alert("服务端异常");
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("服务端异常:" + textStatus);
+                    }
+                });
+            }, function(){
+            });
+        });
+        $("a[name='editLink']").on("click", function () {
+            editAdForm.resetForm();
+            var id = $(this).data("id");
+            var type = $(this).data("type");
+            $.ajax({
+                url: "/mall/mallAd/toEdit" + "?time=" + (new Date()).getTime(),
+                cache: false,
+                dataType: "json",
+                type: "POST",
+                data: {rId: id, type: type},
+                success: function (data) {
+                    if (data.success == 1) {
+                        debugger
+                        var form = $("form[name='editAdForm']");
+                        form.attr("action", "/mall/mallAd/edit");
+                        form.find("input[name='sortNum']").val(data.data.sortNum);
+                        form.find("input[name='rId']").val(id);
+                        try {
+                            form.find("input[name='name']").val(data.data.adWords.split(";")[0]);
+                            form.find("input[name='subName1']").val(data.data.adWords.split(";")[1]);
+                            form.find("input[name='subName2']").val(data.data.adWords.split(";")[2]);
+                        } catch (e) {
+                        }
+                        form.find("img[name='imgView']").attr("src", data.data.imgSrc);
+                        form.find("input[name='imgSrc']").val(data.data.imgSrc);
+                        form.find("input[name='link']").val(data.data.link);
+                        $("a[name='fileA']").hide();
+                        $(".cxsc").show();
+                        $(".bgpop").css("display","block");
+                        $(".pop_ad").css("display","block");
+                        $(".popname").text("编辑广告");
+                        parent.find(".errorMessage").text("");
+                    } else {
+                        alert("服务端异常");
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("服务端异常:" + textStatus);
+                }
+            });
+        });
+    });
+
+    function openPop(parent, title, validate) {
+        parent.find(".popname").text(title);
+        //parent.find("form")[0].reset();
+        validate.resetForm();
+        var imgView = parent.find("[name='imgView']");
+        if (imgView != undefined) {
+            imgView.attr("src", "");
+        }
+        parent.css("display", "block");
+    }
+    function addAndUpd(url, form) {
+        $.post(url, form.serializeArray(), function (obj) {
+            if (!obj) {
+                layer.alert("dev:操作失败");
+                location.reload(true);
+            } else {
+                location.reload(true);
+            }
+        }, "json");
+    }
+</script>

@@ -1,0 +1,451 @@
+.shortcut {
+	height: 29px;
+	line-height: 29px;
+	border-bottom: 1px solid #eee;
+	background: #f6f6f6;
+	color: #666;
+	position: relative;
+	z-index: 50;
+	font-family: \5b8b\4f53
+}
+
+.login-info {
+	float: left
+}
+
+.login-info a {
+	color: #005ea7
+}
+
+.login-info .cut {
+	color: #ddd;
+	padding: 0 5px
+}
+
+.cut {
+	color: #ddd
+}
+
+.quick-menu {
+	float: right
+}
+
+.quick-menu li {
+	float: left;
+	position: relative;
+	padding: 0 12px
+}
+
+.quick-menu li.q-menu {
+	padding: 0 24px 0 29px;
+	border-left: 1px solid #f6f6f6;
+	border-right: 1px solid #f6f6f6
+}
+
+.quick-menu li.cut {
+	padding: 0;
+	font-family: arial, \5b8b\4f53
+}
+
+.quick-menu li a {
+	color: #666
+}
+
+.quick-menu b,
+.quick-menu i {
+	display: block;
+	position: absolute;
+	background: url(i/m-icon.png) no-repeat
+}
+
+.quick-menu i.scj-icon {
+	top: 8px;
+	left: 13px;
+	width: 11px;
+	height: 11px;
+	background-position: -50px -50px
+}
+
+.quick-menu i.cart-icon {
+	top: 6px;
+	left: 9px;
+	width: 16px;
+	height: 16px;
+	background-position: 0 -50px
+}
+
+.quick-menu b {
+	top: 12px;
+	right: 13px;
+	width: 8px;
+	height: 4px;
+	background-position: -100px -50px;
+	transition: transform .2s
+}
+
+.cart-num {
+	font-weight: 700;
+	color: #be0a00
+}
+
+.sub-bd {
+	display: none;
+	position: absolute;
+	top: 30px;
+	left: -1px;
+	z-index: 40;
+	background: #fff
+}
+
+.quick-menu li.hover {
+	height: 30px;
+	padding: 0 24px 0 29px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	background: #fff
+}
+
+.sn-short .quick-menu li.hover {
+	border-color: #ddd
+}
+
+.quick-menu li.hover .sub-bd {
+	display: block
+}
+
+.quick-menu li.hover i.scj-icon {
+	background-position: -50px -70px
+}
+
+.quick-menu li.hover b {
+	background-position: -150px -70px
+}
+
+.favorite .sub-bd {
+	width: 89px;
+	padding: 5px 0;
+	border: 1px solid #ddd;
+	border-top: 0;
+	text-align: center
+}
+
+.favorite .sub-bd a {
+	display: block;
+	height: 24px;
+	margin: 2px 0;
+	line-height: 24px;
+	text-align: center
+}
+
+.favorite .sub-bd a:hover {
+	background: #f5f5f5
+}
+
+.cart .sub-bd {
+	left: auto;
+	right: -1px;
+	border: 1px solid #ddd;
+	border-top: 0
+}
+
+.cart .sub-bd .hd {
+	padding: 5px 10px;
+	border-bottom: 1px dotted #ccc;
+	text-align: right
+}
+
+.cart .sub-bd .bd {
+	overflow-y: auto;
+	position: relative;
+	max-height: 285px
+}
+
+.cart strong {
+	font-family: Verdana
+}
+
+.cart .sub-bd li {
+	padding: 10px;
+	border-bottom: 1px dotted #ccc;
+	width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box
+}
+
+.cart .sub-bd .img {
+	float: left;
+	margin-right: 10px
+}
+
+.cart .sub-bd .img img {
+	border: 1px solid #eee
+}
+
+.cart .sub-bd .txt {
+	overflow: hidden;
+	line-height: 15px
+}
+
+.cart .sub-bd .txt p.tt {
+	overflow: hidden;
+	height: 30px;
+	text-overflow: ellipsis
+}
+
+.cart .sub-bd .txt p.bt {
+	padding-top: 5px
+}
+
+.cart .sub-bd .txt p.bt a {
+	color: #005ea7
+}
+
+.cart .sub-bd .txt p.bt a:hover {
+	text-decoration: underline
+}
+
+.fl {
+	float: left
+}
+
+.fr {
+	float: right
+}
+
+.cart .sub-bd .ft {
+	padding: 8px;
+	text-align: right;
+	background: #f6f6f6
+}
+
+.cart .sub-bd .ft a {
+	display: inline-block;
+	width: 98px;
+	height: 34px;
+	background: #be0a00;
+	line-height: 34px;
+	color: #fff;
+	text-align: center
+}
+
+.cart .sub-bd .ft a:hover {
+	background: #CB3B33
+}
+
+.cart .y-goods {
+	width: 243px
+}
+
+.cart .n-goods {
+	padding: 20px;
+	width: 235px
+}
+
+.cart .n-goods i {
+	position: relative;
+	background: url(i/m-icon.png) no-repeat -100px -250px;
+	width: 38px;
+	height: 37px;
+	display: inline-block;
+	vertical-align: middle
+}
+
+.quick-menu li.z-product {
+	padding: 0 24px 0 15px
+}
+
+.z-product .sub-bd {
+	left: auto;
+	right: -1px;
+	width: 831px;
+	border: 1px solid #ddd;
+	border-top: 0;
+	padding-bottom: 3px
+}
+
+.z-product .sub-bd dl {
+	float: left;
+	overflow: hidden;
+	padding-bottom: 5px;
+	width: 277px;
+	zoom: 1
+}
+
+.z-product .sub-bd dt {
+	clear: both;
+	padding: 3px 8px 0;
+	font-weight: 700
+}
+
+.z-product .sub-bd dl.dl-1 dt a {
+	color: #ef717b
+}
+
+.z-product .sub-bd dl.dl-2 dt a {
+	color: #6b78d8
+}
+
+.z-product .sub-bd dl.dl-3 dt a {
+	color: #5ab6de
+}
+
+.z-product .sub-bd dl.dl-4 dt a {
+	color: #3192e7
+}
+
+.z-product .sub-bd dl.dl-5 dt a {
+	color: #fa557f
+}
+
+.z-product .sub-bd dl.dl-6 dt a {
+	color: #6860a4
+}
+
+.z-product .sub-bd dd {
+	display: inline;
+	float: left;
+	margin: 3px 0 3px -1px;
+	padding: 0 8px;
+	border-left: 1px solid #ddd;
+	line-height: 14px
+}
+
+.z-product .sub-bd dd a {
+	color: #999
+}
+
+.z-product .sub-bd a:hover {
+	color: #CB3B33
+}
+
+.z-clear {
+	clear: both;
+	height: 0;
+	font-size: 0;
+	overflow: hidden
+}
+
+.quick-menu li.area-txt {
+	padding: 0 3px 0 17px
+}
+
+.quick-menu i.area-icon {
+	width: 11px;
+	height: 17px;
+	background-position: 0 -300px;
+	top: 7px;
+	left: 0
+}
+
+.quick-menu li.area-tab {
+	padding: 0 24px 0 10px
+}
+
+.area-tab .sub-bd {
+	left: auto;
+	right: -1px;
+	width: 360px;
+	border: 1px solid #DDD;
+	border-bottom: 0;
+	border-top: 0
+}
+
+.s-area-choose-title {
+	color: #666;
+	font-weight: 700;
+	background: #fff;
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #E3DFE3;
+	padding-left: 10px
+}
+
+.s-area-choose dl {
+	border-bottom: 1px solid #E3DFE3;
+	overflow: hidden;
+	zoom: 1
+}
+
+.s-area-choose dl dt {
+	width: 68px;
+	height: 28px;
+	line-height: 28px;
+	float: left;
+	background: #F5ECEF;
+	color: #333;
+	border-right: 1px solid #E3DFE3;
+	text-align: center
+}
+
+.s-area-choose dl dd {
+	float: left;
+	background: #fff;
+	width: 290px;
+	overflow: hidden
+}
+
+.s-area-choose dl dd a {
+	float: left;
+	height: 14px;
+	padding: 2px 3px;
+	margin: 5px;
+	line-height: 14px;
+	color: #666
+}
+
+.s-area-choose dl dd a:hover {
+	background: #bf0a01;
+	color: #fff
+}
+
+.qrcode .sub-bd {
+	padding: 10px 0;
+	left: auto;
+	right: -1px;
+	border: 1px solid #ddd;
+	border-top: 0
+}
+
+.qrcode .qr-box {
+	line-height: 16px;
+	padding: 10px 40px
+}
+
+.qrcode .qr-box.brt-dot {
+	border-bottom: 1px dashed #ddd
+}
+
+.qrcode .qr-box img {
+	vertical-align: top
+}
+
+.qrcode .qr-box .text {
+	margin-bottom: 10px;
+	text-align: center;
+	color: #666;
+	font-size: 14px;
+	line-height: 18px
+}
+
+.quick-menu i.qr-icon {
+	background: url(i/qr-icon.png) no-repeat;
+	width: 9px;
+	height: 14px;
+	position: absolute;
+	top: 7px;
+	left: 12px
+}
+
+.textL {
+	text-align: left
+}
+
+.cart .sub-bd .more {
+	text-align: center;
+	line-height: 30px
+}
+
+.cart .sub-bd .more a:hover {
+	color: #CB3B33
+}

@@ -1,0 +1,275 @@
+<!-- ${createTime}-->
+<!-- commonFooter.vm  start-->
+<div class="mod-footer">
+    <div class="foot-bannerw">
+        <div class="foot-banner clearfix">
+            <div class="banner-item"><i class="icon1">7</i>7天无理由退货</div>
+            <div class="banner-item"><i class="icon2">15</i>15天免费换货</div>
+            <div class="banner-item"><i class="icon3">包</i>满99元包邮</div>
+            #*<div class="banner-item"><i class="icon4">服</i>手机特色服务</div>*#
+        </div>
+    </div>
+    <div class="foot-containerw">
+        <div class="foot-container clearfix">
+            <dl class="foot-con">
+                <dt data-monitor='home_foot_freshman'>帮助中心</dt>
+            #*<dd data-monitor='home_help_freshman'>
+                <a target="_blank" href="http://mall.360.com/help/show?id=helpcontent_32c2c1641fce863c6644f3b0586b98ab"
+                   rel="nofollow">用户注册</a></dd>*#
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toLoginForgotPassword"
+                       rel="nofollow">用户登录与密码找回</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toRegisterAgreement"
+                       rel="nofollow">用户注册协议</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toBuyingGuide"
+                       rel="nofollow">购买指南</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toPaymentMethod"
+                       rel="nofollow">支付方式</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toExpressInstructions"
+                       rel="nofollow">配送与说明</a></dd>
+            </dl>
+            <dl class="foot-con">
+                <dt data-monitor='home_foot_help'>售后服务</dt>
+                <dd data-monitor='home_help_help'>
+                    <a target="_blank" href="${mallWebDomain}/help/toSevenDaysReturn"
+                       rel="nofollow">7日无理由退货</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toFifteemDaysExchange"
+                       rel="nofollow">质量问题15日内换货</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toWarrantyClause"
+                       rel="nofollow">保修条款</a></dd>
+                <dd><a target="_blank"
+                       href="${mallWebDomain}/help/toAfterSaleService"
+                       rel="nofollow">售后服务运费规则</a></dd>
+            #*<dd><a target="_blank"
+                   href="http://mall.360.cn/help/show?id=helpcontent_cb7bcabc741d372350d7fcceefbba3bf"
+                   rel="nofollow">服务流程</a></dd>
+            <dd><a target="_blank"
+                   href="http://mall.360.cn/help/show?id=helpcontent_cd2440c9bbb1d5ff8b5d7aefbeda45e0"
+                   rel="nofollow">安迷之家</a></dd>*#
+            </dl>
+        #*<dl class="foot-con">
+            <dt data-monitor='home_foot_guide'>特色服务</dt>
+            <dd data-monitor='home_help_guide'><a target="_blank"
+                                                  href="http://mall.360.cn/help/show?id=helpcontent_c8f1421544bce489096c17a24923e27c"
+                                                  rel="nofollow">F码通道</a></dd>
+            <dd><a target="_blank"
+                   href="http://mall.360.cn/help/show?id=helpcontent_073f7b9ffce194e182bd931873f787fe"
+                   rel="nofollow">360 生态</a></dd>
+        </dl>
+        <dl class="foot-con">
+            <dt data-monitor='home_foot_tuiguang'>推广合作</dt>
+            <dd data-monitor='home_help_try'><a target="_blank"
+                                                href="http://mall.360.cn/help/show?id=helpcontent_ff0d456a829c36f2f0580431b69fe913"
+                                                rel="nofollow">商品入驻</a></dd>
+            <dd><a target="_blank"
+                   href="http://http:${mallWebDomain}/"
+                   rel="nofollow">大客户采购</a></dd>
+        </dl>
+        <dl class="foot-con">
+            <dt data-monitor='home_foot_try'>关注360商城</dt>
+            <dd data-monitor='home_help_try'><a target="_blank"
+                                                href="http://mall.360.cn/help/show?id=helpcontent_14f1b541d8b87874021d0f6185fe7376"
+                                                rel="nofollow">360商城大事记</a></dd>
+        </dl>*#
+            <dl class="foot-con contactus">
+                <dt>联系我们</dt>
+                <dd><span class="call-number">400-6822-360</span></dd>
+                <dd><span class="call-number">400-0111-366<span class="beizhu">（手机类产品）</span></span></dd>
+                <dd class="call-time">
+                    周一至周日 9:00-18:00<br>
+                    （仅收市话费）
+                </dd>
+            </dl>
+            <dl class="foot-con foot-con-2">
+                <dd class="servicebox">
+                    <p> <a class="weixin"><img src="${staticWebDomain}/mall/images/weixin_icon.png">
+                        <span class="wxtips">
+                <img src="${staticWebDomain}/mall/images/t01d06b994b8798623c.jpg" height="80" width="80">
+                </span>
+                    </a>
+                    </p>
+                    <p><a class="weibo" data-monitor="home_foot_weibo" href="http://weibo.com/qikoo360" target="_blank">
+                        <img src="${staticWebDomain}/mall/images/weibo_icon.png">
+                        <span class="wxtips">
+                 <img src="${staticWebDomain}/mall/images/wbewm.jpg" height="80" width="80">
+                </span>
+                    </a>
+                    </p>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="footer-copyright"><p>360商城©2013-2017 360公司版权所有 京ICP备17017089号 京公网安备11000002000006号</p>
+        #*<p>公司名：奇酷互联网络科技（深圳）有限公司 | 联系电话：0755-61898999 | 联系地址：深圳市南山区学苑大道1001号南山智园A2栋</p>*#
+    </div>
+</div>
+<div class="slidebar" id="slidebar">
+    <ul>
+        <li class="rfeedback" style="visibility: hidden;"><a target="_blank" href="//mall.360.com/feedback" data-monitor="right_fankui_click">用户体验</a></li>
+
+        <li class="rtips rWeChat"><a>微信关注</a>
+            <div class="rtipscont rWeChattips">
+                <span class="arrowr-bg"></span>
+                <span class="arrowr"></span>
+                <img src="${staticWebDomain}/mall/images/t01d06b994b8798623c.jpg">
+                <p class="tiptext">扫码关注官方微信<br>先人一步知晓促销活动</p>
+            </div>
+        </li>
+        <li class="rtips rstore"><a>手机商城</a>
+            <div class="rtipscont rstoretips">
+                <span class="arrowr-bg"></span>
+                <span class="arrowr"></span>
+                <img src="${staticWebDomain}/mall/images/qcode_app.jpg">
+            </div>
+        </li>
+        <li class="topback" style="visibility: hidden;"><a data-monitor="right_top_click" href="javascript:;" class="gotop">返回顶部</a></li>
+    </ul>
+</div>
+<div id="serviceSelectorMask"></div>
+<div class="fixed dialog" id="serviceSelector">
+    <span class="icon close" onclick="hideServiceSelector();"></span>
+    <p class="title">产品咨询</p>
+    <p class="description">咨询时间 <em>8:00-22:00</em></p>
+    <ul class="flex">
+        <li class="phone" onclick="openNtalker(true);">360手机&amp;配件</li>
+        <li class="watch" onclick="openNtalker();">360儿童手表</li>
+        <li class="recorder" onclick="openNtalker();">360行车记录仪</li>
+        <li class="camera" onclick="openNtalker();">360智能摄像头</li>
+        <li class="more" onclick="openNtalker();">其他产品</li>
+    </ul>
+    <div class="bg-shadow"></div>
+</div>
+<!--footer end-->
+
+
+
+
+<script src="${staticWebDomain}/mall/js/common/jquery.lazyload.min.js?v=${staticVersion}"></script>
+<script src="${staticWebDomain}/mall/js/common/utils.js?v=${staticVersion}"></script>
+<script src="${staticWebDomain}/mall/js/common/jq-suggest.js?v=${staticVersion}"></script>
+#*<script src="//localhost/mall/js/common/jq-suggest-client.js"></script>*#
+<style>
+    /* 解决luyou.mall.360.com主样式表覆盖在线客服频道选择框的问题 */
+    #page_mall360footer {
+        overflow: visible;
+    }
+</style>
+#*<div class="quc-mask quc-mask-panel">
+    <!--[if lte IE 6]>
+    <iframe class="quc-ie6-iframe" src="about:blank" border="0" frameborder="0"></iframe>
+    <div class="quc-mask-inner"></div><![endif]-->
+</div>*#
+
+
+<script type="text/javascript">
+    $(window).scroll(function(){
+        if($(document).scrollTop() >= 300){
+            $(".topback").css("visibility","visible");
+        } else{
+            $(".topback").css("visibility","hidden");
+        }
+    });
+    $(function(){
+        $(".xian").hover(function(){
+
+
+            $(".sublistbox"+$(this).attr("data-type")).stop().animate({"height":"230px","opacity":"1"},500).fadeIn("fast");
+
+        },function(){
+
+            $(".sublistbox"+$(this).attr("data-type")).stop().fadeOut("fast");
+
+
+        });
+        $(".sublistbox").hover(function(){
+            $(this).stop().animate({"height":"230px","opacity":"1"},500);
+        },function(){
+            $(this).stop().animate({"height":"0px","opacity":"0"},500);
+            $(this).delay(350).hide(0);
+        });
+
+        $(".topshopcart").hover(function(){
+
+            $(".header-cart").addClass('cart-hover');
+            $(".header-cart-popup").css("display","block");
+            $(".cart-info").css("display","block");
+        },function(){
+
+            $(".header-cart").removeClass('cart-hover');
+            $(".header-cart-popup").css("display","none");
+            $(".cart-info").css("display","none");
+        });
+        $("#__mall_search_kw__").focus(function(event){
+            $(".__mall_suggest__").css("display","block");
+            $(this).attr("placeholder","");
+            event.stopPropagation();
+            $(".__mall_suggest__").css("display","block");
+        }).click(function(e){
+            e.stopPropagation();
+        });
+        $("#__mall_search_kw__").blur(function(e){
+            $(this).attr("placeholder", $(this).attr("data"));
+            e.stopPropagation();
+        });
+        $("body").focus(function(event){
+            $(".__mall_suggest__").css("display","none");
+        }).click(function(){
+            $(".__mall_suggest__").css("display","none");
+        });
+
+
+//        $(".quc-wrapper").hide();
+        $(".quc-mask-panel").hide();
+        /*$(".nloginWrap").click( function () {
+            $(".quc-wrapper").show();
+            $(".quc-mask-panel").show();
+        });*/
+        $(".quc-panel-close").click( function () {
+//            $(".quc-wrapper").hide();
+            $(".quc-mask-panel").hide();
+        });
+
+        $('.quc-main2').hide();
+        $('.quc-sign-in-nav a').click(function() {
+            var i = $(this).index();
+            $(this).addClass('quc-current').siblings().removeClass('quc-current');
+            $(".quc-main").eq(i).show().siblings().hide();
+            $(".quc-footer").show();
+            $(".quc-tip-wrapper").show();
+        });
+
+        /*$(".navloginbox").hover(function(){
+            $(".loginbefore").css("display","none");
+            $(".loginafter").css("display","block");
+            // $(".topuserbox").css("display","block");
+            $(".popbox").css("display","block");
+        },function(){
+            $(".loginbefore").css("display","block");
+            $(".loginafter").css("display","none");
+            // $(".topuserbox").css("display","none");
+            $(".popbox").css("display","none");
+        });*/
+        $(".__mall_suggest__").find("li").hover(function(){
+            $(this).addClass('hover');
+        },function(){
+            $(this).removeClass('hover');
+        }).click(function(event){
+            event.stopPropagation();
+        });
+
+        $(".topback").on("click", function() {
+            $('body,html').animate({scrollTop:0}, 200);
+        });
+    })
+    function  go_search(self) {
+        window.location.href="${mallWebDomain}/search/?q="+$(self).attr("data");
+        $(".__mall_suggest__").css("display","none");
+    }
+</script>
+<!-- commonFooter.vm  end -->

@@ -1,0 +1,242 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/index.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/pop.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/bootstrap-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/article_c.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/pagination/pagination.css" />
+<script type="text/javascript" src="$!{basePath}/static/js/mall/imgUpload.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-dateFormat.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.tmpl.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/pagination/jquery.pagination.js"></script>
+
+<style>
+    .articletable{
+        width: 97%;
+        height: auto;
+    }
+    select_time {
+        width: 580px;
+    }
+
+    .commodities_list {
+        min-height: 1012px;
+        height: auto;
+    }
+    td.full_add{
+      max-width: 120px; overflow: hidden;
+    }
+
+    .select_left {
+        width: 990px;
+    }
+    .select_left ul li {
+        width: 300px;
+    }
+    .detail{
+        background: #F7F7F7;
+    }
+    .pop {
+        width: 1020px;
+        left: 39%;
+    }
+    .popcontent table {
+        margin-left: 0px;
+    }
+</style>
+<!--right start-->
+<div class="right_tit clearfix">
+    <p>
+        订单管理/
+        <b>订单查询</b>
+    </p>
+</div>
+<div class="commodities_list">
+
+    <div class="sp_tit clearfix">
+        <span class="bugspan">订单查询</span>
+    </div>
+
+    <div class="select_box">
+        <form action="/mall/order/list" method="get" id="selectForm">
+            <div class="select_btn article_btn">
+                <a href="javascript:void(0);" id="order_select" class="cx_btn">查 询</a>
+                <a href="javascript:$('#reset_btn').click();" class="cz_btn">重 置</a>
+                <input type="reset" id="reset_btn" style="display: none">
+            </div>
+            <div class="select_left">
+
+                <ul>
+                    <li>
+                        <span>订单编号：
+                            <input type="text" style="float: none;" name="orderId" class="input_1" maxlength="30">
+                        </span>
+                    </li>
+                    <li>
+                        <span>买家ID：
+                            <input type="text" style="float: none;" name="userRequest.buyerId" class="input_1" maxlength="30">
+                        </span>
+                    </li>
+                    <li>
+                        <span>订单状态：
+                            <select class="sel_1" id="two" name="orderState">
+                                <option value ="">全部</option>
+                                #foreach($od in $orders.entrySet())
+                                    <option value ="${od.key}">${od.value}</option>
+                                #end
+                            </select>
+                        </span>
+                    </li>
+
+                </ul>
+                <ul>
+                    <li style="width: 600px;">
+                        <div class="select_time">
+                            <div class="settime">创建时间：</div>
+                            <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input onclick="WdatePicker({skin:'twoer'})" name="startDate" class="form-control" size="16" type="text" value="$!date.format('yyyy-MM-dd',$!article.Created)"
+                                       name="created" eadonly=""><span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <div class="selectto">至</div>
+                            <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                <input onclick="WdatePicker({skin:'twoer'})" name="endDate"  class="form-control" size="16" type="text" value="$!date.format('yyyy-MM-dd',$!article.AfterDate)"
+                                       name="afterDate" readonly="">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </form>
+        <input type="hidden" name="childId" value=""/>
+    </div>
+    <!--select_box end-->
+
+    <!-- article start -->
+    <table class="articletable">
+        <thead class="articleth">
+        <tr>
+            <td>序号</td> <td>订单编号</td> <td>客户ID</td> <td>收货人</td>  <td class="full_add">全地址</td> <td>总价格</td> <td>支付方式</td><td>支付价格</td>  <td>订单日期</td> <td>状态</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody id="item_list">
+
+        </tbody>
+    </table>
+    <div style="display: inline-block;width: 100%;"><div class="M-box"></div></div>
+
+    <!-- article end -->
+</div>
+
+<!-- pop start-->
+<div class="bgpop"></div>
+<div id="detail_div"></div>
+
+<script type="text/x-jquery-tmpl" id="order_item">
+    <tr>
+        <td>${$index}</td> <td>${orderId}</td> <td>{{= buyerId}}</td> <td>{{= name}}</td>  <td class="full_add">{{= fullAddress}}</td> <td>{{= totalPrice}}</td>
+        <td>
+            {{if paymentType==1}}
+                货到付款
+            {{else paymentType==3}}
+               	自提
+            {{else paymentType==4}}
+               在线支付
+            {{else paymentType==5}}
+                公司转帐
+            {{else paymentType==8}}
+                分期付款
+            {{else paymentType==18}}
+                社区自提
+            {{else paymentType==19}}
+                自提柜
+            {{else}}
+                ${paymentType}
+            {{/if}}
+        </td>
+
+        <td>{{= paymentPrice}}</td>
+        <td>
+            {{pretty_datetime orderTime}}
+        </td>
+        <td>
+            {{if state==1}} 待付款 {{else state==2}}  已付款
+            {{else state==3}}  正在出库 {{else state==4}}  已出库
+            {{else state==5}}  商品配送 {{else state==6}}  配送退货
+            {{else state==7}}  已取消 {{else state==8}}  已完成
+            {{else state==9}}   未知 {{else state==10}}  锁定
+            {{else}}  ${state} {{/if}}
+        </td>
+        <td><a href="javascript:void(0);" onclick="order_.detail('${orderId}')">查看商品</a></td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="order_item_detail">
+        <div class="pop" id="item_detail_${orderId}">
+        <div class="poptop">
+            <span class="popname">商品详情(${orderId})</span>
+            <span class="popnameclose"  onclick="javascript:$('#item_detail_${orderId}').hide();">×</span>
+        </div>
+        <div class="popcontent" style="margin-top:1px;margin-bottom: 200px;">
+            <table class="articletable">
+                <thead class="articleth">
+                    <tr>
+                         <td>skuId</td> <td class="full_add">商品名称</td> <td>促销前原价</td> <td>购买数量</td>#*<td>操作</td>*#
+                    </tr>
+                </thead>
+                <tbody id="item_list">
+                     {{each(i,item) items}}
+                          <tr>
+                            <td>${item.skuId}</td> <td class="full_add">${item.skuName}</td> <td>${item.primitivePrice}</td> <td>${item.num}</td>#*<td><a>商品详情</a></td>*#
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>
+<script>
+
+    function Order() {
+        this.page=new PageTool();
+    }
+    Order.prototype.detail=function (orderid) {
+        $("#item_detail_"+orderid).show();
+    }
+    Order.prototype.select=function (pageindex,pagesize) {
+        $("#item_list").html('');
+        var self=this;
+        var obj={
+            pageSize:pagesize||25,
+            pageNum:pageindex||1
+        }
+        var form = $("#selectForm").serialize();
+        $.ajax({
+            url:"/mall/order/list",
+            data:$.param(obj)+'&'+form,
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                if(data.isSuccess){
+                    $('#order_item').tmpl(data.data.orders).appendTo('#item_list');
+                    $('#order_item_detail').tmpl(data.data.orders).appendTo('#detail_div');
+                    self.page.init("M-box",data.data.totalNum,data.data.pageSize,data.data.pageNum,function(index){
+                        self.select(index)
+                    });
+                }else{
+                    alert(data.message);
+                }
+
+            }
+        });
+    }
+    var order_;
+    $(function () {
+        order_=order_||new Order();
+        $("#order_select").click(function () {
+           order_.select();
+        });
+    });
+</script>
+

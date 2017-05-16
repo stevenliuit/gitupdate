@@ -1,0 +1,686 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/indexlistpop.css"/>
+##<link rel="stylesheet" href="$!{basePath}/static/icon/iconjian/iconfont.css"/>
+<link rel="stylesheet" href="$!{basePath}/static/icon/iconfontadd/iconfont.css"/>
+##<link rel="stylesheet" type="text/css" href="$!{basePath}/static/icon/iconfont/iconfont.css">
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/css/indexlist.css">
+
+<link rel="stylesheet" href="$!{basePath}/static/css/goodslist/classifyDB.css"/>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/goodslist/base.css" source="widget"/>
+
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/goodslist/common.css" source="widget"/>
+
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/iconfont/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/iconfont1/iconfont.css" />
+
+<div class="right_tit clearfix">
+    <p>
+        运营类目管理/
+        <b>设置类目</b>
+    </p>
+</div>
+<div class="commodities_list">
+    <div class="sp_tit clearfix">
+        <span>
+            #if($!{clientType}==1)
+                #if($!{channelId}==0)
+                    PC首页类目设置
+                #else
+                    频道类目设置
+                #end
+            #elseif($!{clientType}==3)
+                #if($!{channelId}==0)
+                    APP类目设置
+                #end
+            #end
+        </span>
+    </div>
+    <div class="gr-bd" id="categoryList" style="margin:0 10px 0 0;border:none">
+        <table class="table classify-tbl" id="categoryListTable">
+            <colgroup>
+                <col width="10%">
+                <col width="40%">
+                <col width="30%">
+                <col width="0%">
+                <col width="0%">
+                <col width="20%">
+            </colgroup>
+            <thead>
+            <tr class="table-btnbox">
+                <th colspan="6">
+                    #*<input style="vertical-align:middle" class="fang" type="checkbox" name="picture" value="Bike"/><span
+                        style="font-weight:580;margin-left:6px;margin-right:3px;">有图模式</span>*#
+                    <a class="btn btn-blue btn-sm" id="j_save_category_add1" name="save_category_data" style="display: none;">保存更改</a>
+
+                    <button type="button" class="btn btn-black btn-sm pull-right edit_category" id="J_add_category1"
+                            name="add_new_category" data="add-0-0"><i class="iconfont icon-jia"></i>添加一级类目
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>分类</th>
+                <th class="text-center">移动</th>
+                <th></th>
+                <th></th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="j_category_body">
+
+            </tbody>
+        </table>
+        <!--/ /widget/classifyDP/classifyDP.vm -->
+    </div>
+</div>
+<!--commodities_list end-->
+<!--
+    作者：hunter
+    时间：2017-02-23
+    描述：弹框
+-->
+<div class="bgpop" style="display: none;">
+
+</div>
+<div class="pop" style="display: none;height:424px">
+    <div class="poptop">
+        <span class="popname">添加分类</span>
+        <span class="popnameclose">×</span>
+    </div>
+    <form name="editCategoryForm" id="editCategoryForm">
+        <input type="hidden" name="id" value="">
+        <input type="hidden" name="parentId" value="">
+        <input type="hidden" name="beforeSort" value="">
+
+        <input type="hidden" name="clientType" value="">
+        <input type="hidden" name="channelId" value="">
+        <div class="popcontent" style="height:272px;">
+            <div class="kuang">
+                <div class="kuang1">
+                    <span class="text">类目名称：</span>
+                    <input class="form-control" style="width:35%;" name="name"  placeholder="请输入类目名称" type="text" value=""
+                           id="" maxlength="9">
+                    <div class="errorMessage" ></div>
+
+                    <input style="margin-left:10px;margin-top:8px;margin-right:10px;" type="checkbox" name="heighlight">
+                    <span class="text">高亮显示</span>
+                    <br>
+                </div>
+                <div class="kuang2">
+                    <span class="text">排序序号：</span>
+                    <input class="form-control" style="width:50%; margin-top:12px;" name="sortNum"
+                           type="text" value="" id=""  placeholder="请输入大于0的数字" maxlength="5">
+                    <div class="errorMessage"></div>
+
+                </div>
+                <div class="kuang3">
+                    <span class="text"">上传图片：</span>
+                    <div class="square ">
+                        <i class="iconfont icon-jia"
+                           style="position:absolute;left:55px;top:50px;color: #cacaca;width:20px;height:20px"></i>
+                        <img src="" name="imgview" style="display: none;width:120px;height:120px">
+                        <a style="position:absolute;left:30px;top:80px;border:0" href="javascript:;" class="file">选择文件
+                            <input type="file" name="fileImage" id="">
+                        </a>
+                    </div>
+                    <input type="hidden" name="imgSrc" value="">
+                    <div class="errorMessage imgInput"></div>
+                </div>
+
+                <div style="float:left;margin-left:66px;color:#a9a9a9;margin-top:13px">一级分类图片尺寸为26x26,二类图片为42x42</div>
+            </div>
+        </div>
+        <div class="popfooter">
+            <button class="poptrue" type="submit">保存</button>
+            <button class="popcancle" type="button">取消</button>
+        </div>
+    </form>
+</div>
+
+<table id="j_category_body_template" style="display: none;">
+    <tr class="table-btnbox CatTr_1" id="1000449" name="CatTr_1" level="1">
+        <td>
+
+        </td>
+        <td>
+            <div class="col-1 control-line">
+                <a href="javascript:void(0);"><span class="caret before" data="fa1" style="display: none;"></span></a>
+            </div>
+            <div class="col-8">
+                <txt style="position: absolute; z-index: 2; line-height: 32px; margin-left: 7px; margin-top: 0px; font-size: 12px; font-family: 'Microsoft YaHei'; color: rgb(204, 204, 204); display: none;"></txt>
+                <input class="form-control" value="一级类目" placeholder=" " type="text" name="j_category_name"　maxlength="20">
+            </div>
+        </td>
+        <td class="text-center">
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('top',this)"><i class="iconfont text-blue icon-jiantouzhiding"></i></a>
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('up',this)"><i class="iconfont text-blue icon-arrowup"></i></a>
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('bottom',this)" id="j_category_bottom"><i class="iconfont text-blue icon-jiantouzhidi"></i></a>
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('down',this)" id="j_category_down"><i class="iconfont text-blue icon-arrowdown"></i></a>
+        </td>
+        <td>
+            #*<label class="checkbox-inline">
+                <div class="icheckbox_polaris checked" style="position: relative;"><input type="checkbox" checked="" id="j_category_homeshow" style="position: absolute; top: 20%; left: 20%; display: block; width: 60%; height: 60%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: 20%; left: 20%; display: block; width: 60%; height: 60%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+            </label>*#
+        </td>
+        <td>
+           #* <label class="checkbox-inline">
+                <div class="icheckbox_polaris checked" style="position: relative;"><input type="checkbox" checked="" id="j_category_expand" style="position: absolute; top: 20%; left: 20%; display: block; width: 60%; height: 60%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: 20%; left: 20%; display: block; width: 60%; height: 60%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+            </label>*#
+        </td>
+        <td>
+            <a href="javascript:void(0);" class="text-blue pop-ask edit_category" id="j_category_delete"
+               name="del_current_category">编辑</a>
+            <a href="javascript:void(0);" class="text-blue del_category" name="view-item">删除</a>
+            #if($!{clientType} == 1)
+                <a href="javascript:void(0);" class="text-blue toAddAd" name="view-item" target="_blank">设置广告</a>
+            #end
+        </td>
+    </tr>
+    <tr class="table-btnbox CatTr_2" name="CatTr_2" id="1000451" level="2" data-class="fa1_1" subtr="subtr">
+        <td>
+        </td>
+        <td>
+            <div class="col-3 control-line text-right">
+                #if($!{clientType} == 1 && $!{channelId} == 0)
+                    <span class="caret develop" style="margin-left: 66px;float:right"></span>
+                #end
+            </div>
+            <div class="col-8">
+                <txt style="position: absolute; z-index: 2; line-height: 32px; margin-left: 7px; margin-top: 0px; font-size: 12px; font-family: 'Microsoft YaHei'; color: rgb(204, 204, 204); display: none;"></txt>
+                <input class="form-control" placeholder=" " type="text" value="二级类目" name="j_category_name"
+                       maxlength="20"></div>
+        </td>
+        <td class="text-center">
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('up',this)"><i class="iconfont text-grey icon-xiangshangjiantou"></i></a>
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('down',this)" id="j_category_down"><i class="iconfont text-blue icon-xiangxiajiantou"></i></a>
+        </td>
+        <td>
+            #*<label class="checkbox-inline">
+            </label>*#
+        </td>
+        <td>
+            #*<label class="checkbox-inline">设计广告
+            </label>*#
+        </td>
+        <td>
+            <a href="javascript:void(0);" class="text-blue pop-ask edit_category" id="j_category_delete"
+               name="del_current_category">编辑</a>
+            <a href="javascript:void(0);" class="text-blue del_category" name="view-item">删除</a>
+        #if($!{maxLevel}==2)
+            <a href="javascript:void(0);" target="_blank" class="text-blue" name="add-item">关联商品</a>
+        #end
+        </td>
+    </tr>
+    <tr class="table-btnbox CatTr_3" name="CatTr_3" id="1000450" level="2" data-class="fa1_1" subtr="subtr" >
+        <td>
+        </td>
+        <td>
+            <div class="col-3 control-line text-right" style="margin-left:30px">
+                <span class="classify-line"></span>
+            </div>
+            <div class="col-8">
+                <txt style="position: absolute; z-index: 2; line-height: 32px; margin-left: 7px; margin-top: 0px; font-size: 12px; font-family: 'Microsoft YaHei'; color: rgb(204, 204, 204); display: none;"></txt>
+                <input class="form-control" placeholder=" " type="text" value="三级类目" name="j_category_name"
+                       maxlength="20"></div>
+        </td>
+        <td class="text-center">
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('up',this)" id="j_category_up"><i class="iconfont text-blue icon-xiangshangjiantou"></i></a>
+
+            <a href="javascript:void(0);" class="move" data="" onclick="move_caret('down',this)" id="j_category_down"><i class="iconfont text-blue icon-xiangxiajiantou"></i></a>
+        </td>
+        <td>
+            #*<label class="checkbox-inline">
+            </label>*#
+        </td>
+        <td>
+            #*<label class="checkbox-inline">
+            </label>*#
+        </td>
+        <td>
+            <a href="javascript:void(0);" class="text-blue pop-ask edit_category" id="j_category_delete"
+               name="del_current_category">编辑</a>
+            <a href="javascript:void(0);" class="text-blue del_category" name="view-item">删除</a>
+            <a href="javascript:void(0);" target="_blank" class="text-blue" name="add-item">关联商品</a>
+        </td>
+    </tr>
+    <tr class="table-btnbox AddCatTr_1" id="1000449" fadatasubid="fa1_1">
+        <td></td>
+        <td>
+            <div class="col-1 control-line text-right"><span class="classify-line"></span></div>
+            <button type="button" class="btn btn-default btn-sm edit_category" id="j_add_level2"
+                    name="add_category_level2"><i class="iconfont icon-jia"></i>添加子分类
+            </button>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    #if($!{maxLevel}==3)
+        <tr class="table-btnbox AddCatTr_2" id="1000449" fadatasubid="fa1_1">
+            <td></td>
+            <td>
+                <div class="col-3 control-line text-right"><span class="classify-line"></span></div>
+                <button type="button" class="btn btn-default btn-sm edit_category" id="j_add_level2"
+                        name="add_category_level2"><i class="iconfont icon-jia"></i>添加子分类
+                </button>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    #end
+</table>
+<div style="display: none;" id="catMap">$!{catMap}</div>
+<script type="text/javascript" src="$!{basePath}/static/js/mall/category/category.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$!{basePath}/static/js/common/jquery-validate-methods.js"></script>
+<link type="text/css" rel="stylesheet" href="$!{basePath}/static/css/manage_patch.css"/>
+
+<script type="text/javascript">
+    var catMap = {};
+    var maxLevel = $!{maxLevel};
+    var clientType = $!{clientType};
+    var clientTypeName = '$!{clientTypeName}';
+    var channelId = $!{channelId};
+    var upLoadImage = {
+        url: "/mall/mallAd/uploadImg",
+        dataType: 'json',
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize: 200 * 1024,
+        done: function (e, data) {
+            var jsonResult = data.result;
+            try {
+                var jsobObj = jsonResult;
+                if (jsobObj.success == 1) {
+                    //$("a[name='fileA']").hide();
+                    $("img[name='imgview']").attr("src", jsobObj.fileUrl);
+                    $("img[name='imgview']").show();
+                    $("input[name='imgSrc']").val(jsobObj.fileUrl);
+                } else {
+                    alert("上传失败："+jsobObj.info);
+                }
+            } catch (e) {
+                alert("图片上传失败" + e);
+            }
+        },
+        fail: function (e, data) {
+            alert("图片上传失败！");
+        }
+    };
+
+    // 收缩展开效果
+    $(document).ready(function () {
+        catMap = JSON.parse($('#catMap').text());
+        category.tree.gen(catMap, maxLevel);
+        $(".list_tit h2").click(function () {
+            $(this).next().slideToggle(300);
+        });
+        $('.list_tit h2').click(function (ev) {
+            $(this).children('.angle-down').toggleClass('hidden');
+            $(this).children('.angle-up').toggleClass('hidden');
+        });
+
+        $("div .control-line").click(function () {
+            var catTr = $(this).parent().parent();
+            var arr = catTr.find("span");
+            if (arr.hasClass("develop")) {
+                var next = catTr.next();
+                do {
+                    if (next.attr("level") <= catTr.attr("level")) {
+                        break;
+                    } else {
+                        next.hide();
+                        next = next.next();
+                        if (next.length == 0) {
+                            break;
+                        }
+                    }
+                } while (true);
+                arr.removeClass("develop");
+                arr.addClass("before");
+            } else if (arr.hasClass("before")) {
+                var next = catTr.next();
+                do {
+                    if (next.attr("level") <= catTr.attr("level")) {
+                        break;
+                    } else {
+                        next.show();
+                        next = next.next();
+                        if (next.length == 0) {
+                            break;
+                        }
+                    }
+                } while (true);
+                arr.removeClass("before");
+                arr.addClass("develop");
+            }
+            /** var parentId = $(this).parent().parent().attr("id");
+             var arr =  $(this).parent().parent().find("span");
+             //收起
+             if(arr.hasClass("develop")){
+                $("[parentId='"+parentId+"']").hide();
+                arr.removeClass("develop");
+                arr.addClass("before");
+            }else if(arr.hasClass("before")){
+                $("[parentId='"+parentId+"']").show();
+                arr.removeClass("before");
+                arr.addClass("develop");
+            }
+             **/
+        });
+
+        $("input[name=fileImage]").fileupload(upLoadImage).on('fileuploadprocessalways', function (e, data) {
+            if (data.files.error) {
+//                alert(data.files[0].error);
+                if (data.files[0].error == "File is too large") {
+                    alert("文件过大");
+                } else if (data.files[0].error == "File type not allowed") {
+                    alert("文件类型有误");
+                } else {
+                    alert(data.files[0].error);
+                }
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+
+        });
+
+        $(".edit_category").click(function () {
+            var data = $(this).attr("data").split("-");
+            var method = data[0];
+            var pId = data[1];
+            var id = data[2];
+            $.ajax({
+                url: "/mall/category/get" + "?time=" + (new Date()).getTime(),
+                cache: false,
+                dataType: "json",
+                type: "GET",
+                data: {id: id},
+                success: function (data) {
+                    var form = $("form[name='editCategoryForm']");
+                    form.find("input[name='id']").val(data.data.id);
+                    form.find("input[name='parentId']").val(pId);
+                    form.find("input[name='sortNum']").val(data.data.sortNum);
+                    form.find("input[name='beforeSort']").val(data.data.sortNum);
+                    form.find("input[name='name']").val(data.data.name);
+                    form.find("input[name='clientType']").val(clientType);
+                    form.find("input[name='channelId']").val(channelId);
+                    form.find("input[name='imgSrc']").val(data.data.imgSrc);
+                    if (data.data.imgSrc) {
+                        $("img[name='imgview']").attr("src", data.data.imgSrc);
+                        $("img[name='imgview']").show();
+                    } else {
+                        $("img[name='imgview']").attr("src", "");
+                        $("img[name='imgview']").hide();
+                    }
+                    //form.find("input[name='heighlight']").val(data.data.heighlight);
+                    form.find("input[name='heighlight']").val(1);
+                    if (data.data.heighlight == 1) {
+                        form.find("input[name='heighlight']").attr("checked", "checked");
+                    }
+
+                    $(".bgpop").css("display", "block");
+                    $(".pop").css("display", "block");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("服务端异常:" + textStatus);
+                }
+            });
+        });
+
+        var editCategoryForm = $("#editCategoryForm").validate({
+            rules: {
+                name: {required: true,isEmpty:true,maxlength:50 ,remote:{
+                    url:"/mall/category/isUniqueName",
+                    type:"POST",
+                    dataType:"json",
+                    data:{
+                        id:function() {return $("#editCategoryForm").find("input[name='id']").val()},
+                        name:function() {return $("#editCategoryForm").find("input[name='name']").val()},
+                        channelId:function() {return $("#editCategoryForm").find("input[name='channelId']").val()},
+                        clientType:function() {return $("#editCategoryForm").find("input[name='clientType']").val()},
+                        parentId:function() {return $("#editCategoryForm").find("input[name='parentId']").val()}
+                    },
+                }},
+                sortNum: {
+                    required: true,
+                    digits: true,
+                    min:1,
+                    remote:{
+                        url:"/mall/category/verifySortNum",
+                        type:"POST",
+                        dataType:"json",
+                        data:{
+                            id:function() {return $("#editCategoryForm").find("input[name='id']").val()},
+                            sortNum:function() {return $("#editCategoryForm").find("input[name='sortNum']").val()},
+                            channelId:function() {return $("#editCategoryForm").find("input[name='channelId']").val()},
+                            clientType:function() {return $("#editCategoryForm").find("input[name='clientType']").val()},
+                            parentId:function() {return $("#editCategoryForm").find("input[name='parentId']").val()}
+                        },
+                    }
+                },
+                imgSrc: {required: false}
+            },
+            messages: {
+                name: {required: "请输入类目名称",remote:"此类目名称已启用",isEmpty:"请填写正确的字符",maxlength: "不超过50个中文",},
+                sortNum: {
+                    required: "请输入排序序号",
+                    digits: "请输入大于0的数字",
+                    min:"请输入大于0的数字",
+                    remote:"已存在该序号"
+                },
+                imgSrc: {required: "请上传图片"}
+            },
+            submitHandler: function (form) {
+                $("[type='submit']").attr("disabled",true);
+                $(this).remove();
+                var url = "/mall/category/save";
+                var beforeSort = $("form[name='editCategoryForm']").find("input[name='beforeSort']").val();
+                $.ajax({
+                    url: url + "?beforeSort=" + beforeSort + "&time=" + (new Date()).getTime(),
+                    cache: false,
+                    dataType: "json",
+                    type: "POST",
+                    data: $("form[name='editCategoryForm']").serializeJson(),
+                    success: function (data) {
+                        if (data.success == 1) {
+                            window.location.reload(true);
+                        } else {
+                            alert("服务端异常");
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("服务端异常:" + textStatus);
+                    }
+                });
+            },
+            errorPlacement: function (error, element) {
+                error.appendTo(element.next());
+            },
+            ignore:[],
+        });
+
+        $(".del_category").on("click", function () {
+            //$(this).remove();
+            var data = $(this).prev().attr("data").split("-");
+            var method = data[0];
+            var pId = data[1];
+            var id = data[2];
+            layer.confirm('确定删除分类?', {title: '提示'}, function () {
+                var url = "/mall/category/del";
+                $.ajax({
+                    url: url + "?&time=" + (new Date()).getTime(),
+                    cache: false,
+                    dataType: "json",
+                    type: "POST",
+                    data: {"id": id},
+                    success: function (data) {
+                        if (data.success == 1) {
+                            window.location.reload(true);
+                        } else if (data.success == -1) {
+                            layer.alert("请先删除子分类", {title: '提示'});
+                        } else if (data.success == -2) {
+                            layer.alert("请先解除关联商品", {title: '提示'});
+                        } else {
+                            layer.alert("服务端异常", {title: '提示'});
+                            window.location.reload(true);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("服务端异常:" + textStatus);
+                    }
+                });
+            });
+        });
+
+        $("a[name='save_category_data']").on("click", function () {
+            //$(this).remove();
+            if ($("#j_category_body input[name='j_category_name']").length == 0) {
+                layer.alert("还未建分类", {title: '提示'});
+                return false;
+            }
+            $("#j_category_body input[name='j_category_name']").each(function () {
+                catMap[$(this).attr("id")].name = $(this).val();
+            });
+            var url = "/mall/category/saveBatch";
+            $.ajax({
+                url: url + "?&time=" + (new Date()).getTime(),
+                cache: false,
+                dataType: "json",
+                type: "POST",
+                data: {"catMapStr": JSON.stringify(catMap)},
+                success: function (data) {
+                    if (data.success == 1) {
+                        window.location.reload(true);
+                    } else {
+                        layer.alert("服务端异常");
+                        window.location.reload(true);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("服务端异常:" + textStatus);
+                }
+            });
+        });
+        $(".popnameclose").click(function () {
+            editCategoryForm.resetForm();
+            $(".bgpop").css("display", "none");
+            $(".pop").css("display", "none");
+        });
+        $(".popcancle").click(function () {
+            editCategoryForm.resetForm();
+            $(".bgpop").css("display", "none");
+            $(".pop").css("display", "none");
+            return false;
+        });
+    });
+    function move_caret(action,self){
+        var data = $(self).attr("data").split("-");
+        var id = data[0];
+        var pid = data[1];
+        var sort = data[2];
+        var level = $(self).parents("tr").attr("level");
+        var ee = $("tr[pid='"+pid+"'].CatTr_"+level+"");
+        var newSort = 1;
+        if(action=='top'){
+            var top = $(ee[0]);
+            //只有一个,且自己
+            if(top.attr("id")==id){
+                return false;
+            }
+            newSort = top.attr("sort");
+            if(sort==newSort){
+                newSort--;
+                if(newSort == 0){
+                    newSort == 1;
+                }
+            }
+        }else if(action == 'bottom'){
+            var bottom = $(ee[ee.length-1]);
+            //只有一个,且自己
+            if(bottom.attr("id")==id){
+                return false;
+            }
+            newSort = bottom.attr("sort");
+            if(sort==newSort){
+                newSort++;
+            }
+        }else if(action == 'up'){
+            var up = null;
+            for(var i = 0; i<ee.length; i++){
+                if($(ee[i]).attr("sort")<=sort && $(ee[i]).attr("id")!=id){
+                    up = $(ee[i]);
+                    break;
+                }
+            }
+            if(up == null){
+                return false;
+            }
+            newSort = up.attr("sort");
+            if(sort==newSort){
+                newSort--;
+                if(newSort == 0){
+                    newSort == 1;
+                }
+            }
+        }else if(action == 'down'){
+            var down = null;
+            for(var i = 0; i<ee.length; i++){
+                if($(ee[i]).attr("sort")>=sort && $(ee[i]).attr("id")!=id){
+                    down = $(ee[i]);
+                    break;
+                }
+            }
+            if(down==null){
+                return false;
+            }
+            newSort = down.attr("sort");
+            if(sort==newSort){
+                newSort++;
+            }
+        }
+        //return false;
+        $.ajax({
+            url:"/mall/category/move",
+            type:"post",
+            data:{
+                data:$(self).attr("data"),
+                action:action,
+                newSort:newSort
+            },
+            dataType:"json",
+            success:function (data) {
+                console.log(data);
+                if(!data.isSuccess){
+                    layer.alert(data.message)
+                }
+
+                window.location.href=window.location.href;
+            }
+        });
+    }
+
+    function updateMoveUp(self) {
+        $.ajax({
+            url:"/mall/category/updateMoveUp",
+            type:"post",
+            data:{
+                data:$(self).attr("data"),
+                 },
+            dataType:"json",
+            success:function (data) {
+                console.log(data);
+                if(!data.isSuccess){
+                    layer.msg(data.message, {skin: 'layer-ext-b2b layer-b2b-hui'});
+                }
+                window.location.href=window.location.href;
+            },
+            error: function (data) {
+                layer.msg('服务器打盹，请稍后再试。', {skin: 'layer-ext-b2b layer-b2b-hui'});
+            }
+        });
+
+    }
+
+</script>

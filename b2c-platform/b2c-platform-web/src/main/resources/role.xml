@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<roles>
+	
+	<!-- 
+		所有需要权限控制的函数都写这里。不进行代码入侵 
+		key: controller 类的全路径加上英文点号（.）加上函数名称组成
+		value: MallFunction 类中code属性值，多个code 值之间用英文逗号（,）分割 
+	-->
+	<role key="com.jcloud.b2c.platform.web.controller.item.ItemController.toItemList" value="TEST001,TEST002" />
+
+</roles>

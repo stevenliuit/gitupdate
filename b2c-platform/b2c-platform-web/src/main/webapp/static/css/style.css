@@ -1,0 +1,203 @@
+/* 选择器格式为：html #layui_layer_skin文件夹名stylecss，这一点非常重要 */
+html #layui_layer_skinb2bstylecss{display:none; position: absolute; width:1989px;}
+body .layer-ext-b2b{border-radius: 5px; border:1px solid #e5e5e5}
+body .layer-ext-b2b[type="dialog"] {
+    min-width: 480px;
+}
+body .layer-ext-b2b-msg[type="dialog"]{min-width:100px;-webkit-box-shadow:none; -moz-box-shadow:none; box-shadow:none;}
+body .layer-b2b-hui{min-width: 100px; background-color: #000; filter: alpha(opacity=60); background-color: rgba(0,0,0,.6); color: #fff; border: none;}
+body .layer-b2b-hui[type="dialog"]{min-width: 100px;}
+body .layer-b2b-hui .layui-layer-content{padding:15px 20px;}
+body .layer-b2b-loading{min-width: 180px;-webkit-box-shadow:none; -moz-box-shadow:none; box-shadow:none;}
+body .layer-b2b-loading .layui-layer-padding{padding:20px 20px 20px 55px;}
+body .layer-ext-b2b .layui-layer-title {
+    background: #f4f5f9;
+    color: #333;
+    font-size: 16px;
+    height: 46px;
+    line-height: 46px;
+    border-bottom: 1px solid #e5e5e5;
+}
+body .layer-ext-b2b .layui-layer-padding{
+    padding:50px 50px 50px 100px;
+
+}
+body .layer-ext-b2b .layui-layer-content .layui-layer-ico{
+    top:46px;
+    left:60px;
+}
+body .layer-ext-b2b .layui-layer-btn {
+padding:8px 12px;
+    background: #f4f5f9;
+    border-top: 1px #e5e5e5 solid;
+    border-radius: 0 0 5px 5px;
+    overflow:hidden;
+}
+body .layer-ext-b2b .layui-layer-dialog .layui-layer-content{padding:20px;}
+.layui-layer-tips .layui-layer-content{color: #333}
+
+body .layer-ext-b2b .layui-layer-btn a{
+    float:right;
+    display: inline-block;
+    min-width: 90px;
+    height: 38px;
+    overflow: visible;
+    line-height: 38px;
+    margin:0 5px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    font-size: 12px;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    filter:chroma(color=#000000);
+}
+
+body .layer-ext-b2b .layui-layer-btn a:focus,
+body .layer-ext-b2b .layui-layer-btn a:active:focus,
+body .layer-ext-b2b .layui-layer-btn a.active:focus,
+body .layer-ext-b2b .layui-layer-btn a.focus,
+body .layer-ext-b2b .layui-layer-btn a:active.focus,
+body .layer-ext-b2b .layui-layer-btn a.active.focus {
+    outline: none
+}
+body .layer-ext-b2b .layui-layer-btn a:hover,
+body .layer-ext-b2b .layui-layer-btn a:focus,
+body .layer-ext-b2b .layui-layer-btn a.focus {
+    color: #333333;
+    text-decoration: none;
+}
+
+body .layer-ext-b2b .layui-layer-btn a.disabled,
+body .layer-ext-b2b .layui-layer-btn a[disabled],
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn a {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #333333;
+    background-color: #ebebeb;
+    border-color:#e5e5e5 ;
+}
+body .layer-ext-b2b .layui-layer-btn a i{font-size: 12px;}
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1 {
+    color: #36aeff;
+    background-color: #ffffff;
+    border-color: #e5e5e5;
+}
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1:hover,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1:focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1:active,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.active{
+    color: #36aeff;
+    background-color: #ebebeb;
+}
+
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.disabled,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1[disabled],
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.disabled:hover,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1[disabled]:hover,
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1:hover,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.disabled:focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1[disabled]:focus,
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1:focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.disabled.focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1[disabled].focus,
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.disabled:active,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1[disabled]:active,
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1:active,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.disabled.active,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1[disabled].active,
+fieldset[disabled] body .layer-ext-b2b .layui-layer-btn .layui-layer-btn1.active {
+    color: #333333;
+    background-color: #ebebeb;
+    border-color:#e5e5e5 ;
+}
+
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn0 {
+    color: #ffffff;
+    background-color: #009afe;
+    border-color: #009afe;
+}
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn0:hover,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn0:focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn0.focus,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn0:active,
+body .layer-ext-b2b .layui-layer-btn .layui-layer-btn0.active{
+    color: #ffffff;
+    background-color: #008ae4;
+    border-color:#008ae4;
+}
+
+
+
+.pop-nt{ padding-top:55px;  text-align: center}
+.pop-nt i{font-size: 28px; vertical-align: middle}
+
+body .b2b-tips{margin-left:-14px;border:0; -webkit-box-shadow:0 0 3px rgba(240, 240, 240, .5); -moz-box-shadow:0 0 3px rgba(240, 240, 240, .5); box-shadow:0 0 3px rgba(240, 240, 240, .5);}
+.b2b-tips .layui-layer-content{box-shadow:none;border:1px solid #dce4eb;padding:2px 8px;}
+.b2b-tips i.layui-layer-TipsG{position:static;border:0;width:auto;height:auto;}
+.b2b-tips i.layui-layer-TipsG:after, .b2b-tips i.layui-layer-TipsG:before {
+    bottom: 100%;
+    left: 21px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.b2b-tips i.layui-layer-TipsG:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #fff;
+    border-width: 5px;
+    margin-left: -5px;
+}
+.b2b-tips i.layui-layer-TipsG:before {
+    border-color: rgba(220, 228, 235, 0);
+    border-bottom-color: #dce4eb;
+    border-width: 6px;
+    margin-left: -6px;
+}
+
+.b2b-tips i.layui-layer-TipsT:after, .b2b-tips i.layui-layer-TipsT:before{
+    top:100%;
+    bottom:auto;
+}
+
+.b2b-tips i.layui-layer-TipsT:after{
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color:#fff;
+}
+
+.b2b-tips i.layui-layer-TipsT:before{
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color:#dce4eb;
+}
+
+
+
+
+
+
+
+
+
+

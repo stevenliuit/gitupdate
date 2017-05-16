@@ -1,0 +1,143 @@
+<script type="text/javascript"  src="$!{basePath}/static/js/common/calendar.js"></script>
+<style>
+    .right {
+        margin: 0 10px 0 111px;
+    }
+    .select_btn {
+        float: right;
+        padding-left: 18px;
+        border-left: 1px dotted #ccc;
+        height: 120px;
+    }
+    .select_left ul li {
+        float: left;
+        width: 286px;
+        padding-bottom: 15px;
+        height: 35px;
+    }
+    .select_left ul {
+        overflow: hidden;
+        margin-left: 0px;
+    }
+    .select_time {
+        display: inline;
+        position: relative;
+        width: 180px;
+        height: 100px;
+    }
+    .select_time div {
+        float: left;
+    }
+    .settime, .selectto {
+        line-height: 30px;
+    }
+    .selectto {
+        line-height: 30px;
+        margin: 0 5px;
+    }
+    .select_time input {
+        float: left;
+    }
+    .form-control {
+        display: inline;
+        width: 25%;
+        height: 37px;
+        padding: 6px;
+        font-size: 12px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #e7e7eb;
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .form-control, .input-group-addon {
+        background: white !important;
+        border-radius: 0;
+    }
+    .ui-calendar1 tbody tr {
+        height: 5px;
+    }
+    .ui-calendar2 tbody tr {
+        height: 5px;
+    }
+</style>
+
+<!--right start-->
+<div class="right">
+    <div class="right_tit clearfix">
+        <p>
+            商品管理 /
+            <b>商品导入列表</b>
+        </p>
+    </div>
+    <div class="commodities_list">
+        <div class="sp_tit clearfix">
+            <div class="tit_btn">
+                <a href="#" class="down_btn">重新导入所有失败商品</a>
+            </div>
+            <span>商品导入列表</span>
+        </div>
+        <div class="select_box clearfix" id="importStatus">
+            <div class="select_btn">
+                <a  class="cx_btn" id="searchItemTaskList">查 询</a>
+                <a  class="cz_btn" id="resetItemTaskList">重 置</a>
+            </div>
+            <div class="select_left">
+                <ul>
+                    <li>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;批次号：<input type="text" id="batchCode" class="input_1" maxlength="20"/>
+                        </span>
+                    </li>
+                    <li>
+                       <span>京东SKU：<input type="text" id="skuId" class="input_1" maxlength="25"/>
+                        </span>
+                    </li>
+                    <li>
+                    <span>导入状态：
+                        <select class="sel_1" id="select">
+                            <option value ="1">成功</option>
+                            <option value ="2">失败</option>
+                        </select>
+                    </span>
+                    </li>
+                </ul>
+                <div class="select_time" >
+                    <div class="settime">创建时间：</div>
+                    <input id="calendar1" class="form-control" type="text">
+
+                    <div class="selectto">至</div>
+                    <input id="calendar2" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="table_2">
+                <table id="importTaskListTable">
+                    <thead>
+                    <tr>
+                        <th width="5%">序号</th>
+                        <th width="10%">SKU</th>
+                        <th width="15%">批次号</th>
+                        <th width="10%">导入状态</th>
+                        <th width="20%">创建时间</th>
+                        <th width="30%">失败原因</th>
+                        <th width="10%">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="thodyList">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="page" id="importTaskListPage">
+    </div>
+<!--right end-->
+</div>
+<script type="text/javascript"  src="$!{basePath}/static/js/item/importTaskList.js"></script>
+
