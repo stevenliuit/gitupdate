@@ -1,16 +1,19 @@
 package com.jcloud.b2c.mall.service.web;
 
-import java.util.List;
-
+import com.jcloud.b2c.common.common.vo.BaseResponseVo;
+import com.jcloud.b2c.mall.service.client.enums.YesNoEnum;
+import com.jcloud.b2c.mall.service.domain.MallFunction;
+import com.jcloud.b2c.mall.service.domain.MallOperator;
+import com.jcloud.b2c.mall.service.domain.MallRole;
+import com.jcloud.b2c.mall.service.service.MallRoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jcloud.b2c.common.common.vo.BaseResponseVo;
-import com.jcloud.b2c.mall.service.client.enums.YesNoEnum;
-import com.jcloud.b2c.mall.service.domain.MallRole;
-import com.jcloud.b2c.mall.service.service.MallRoleService;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Method: 角色管理
@@ -30,17 +33,41 @@ public class MallRoleController {
      */
     @RequestMapping(value = "/querySelective")
     public BaseResponseVo<List<MallRole>> querySelective(@RequestParam(value="tenantId") Long tenantId) {
-    	MallRole search = new MallRole();
+
+        MallRole search = new MallRole();
     	search.setTenantId(tenantId);
     	List<MallRole> roles = mallRoleService.querySelective(search);
     	BaseResponseVo<List<MallRole>> result = new BaseResponseVo<List<MallRole>>();
-        if(result != null){
-            result.setIsSuccess(true);
-            result.setData(roles);
+        if(roles == null || roles .size() == 0){
+            result.setIsSuccess(false);
+            return result;
         }
-        result.setIsSuccess(false);
+        result.setIsSuccess(true);
+        result.setData(roles);
         return result;
     }
+
+    /**
+     * 以角色ID查询权限
+     * @param tenantId
+     */
+    @RequestMapping(value = "/getByOrleFunction")
+    public BaseResponseVo<List<MallFunction>> getByOrleFunction(@RequestParam(value="tenantId") Long tenantId,
+                                                            @RequestParam(value="roleId") Long orleId) {
+        MallRole search = new MallRole();
+        search.setTenantId(tenantId);
+        search.setId(orleId);
+        List<MallFunction> functionList = mallRoleService.getByRoleKey(search);
+        BaseResponseVo<List<MallFunction>> result = new BaseResponseVo<List<MallFunction>>();
+        if(functionList == null || functionList .size() == 0){
+        	result.setFail("-1","没有权限");
+            return result;
+        }
+        result.setIsSuccess(true);
+        result.setData(functionList);
+        return result;
+    }
+
     /**
      * 根据 RoleId 查询角色
      * @param tenantId
@@ -56,7 +83,7 @@ public class MallRoleController {
     	search.setId(roleId);
     	
     	List<MallRole> role = mallRoleService.querySelective(search);
-    	if(org.apache.commons.collections.CollectionUtils.isEmpty(role)){
+    	if(role == null ||  role.size() == 0){
     		result.setFail("-1","角色不存在");
     		return result;
     	}
@@ -83,10 +110,13 @@ public class MallRoleController {
         mallRole.setTenantId(tenantId);
         mallRole.setName(roleName);
         mallRole.setDescription(description);
-        mallRole.setStatus(YesNoEnum.YES.getValue());
+        mallRole.setState(YesNoEnum.YES.getValue());
+        mallRole.setCreated(new Date());
+        mallRole.setModified(new Date());
         boolean flag = mallRoleService.insertRole(mallRole);
         if(!flag){
             result.setFail("-1","insertRole error.");
+            return result;
         }
         result.setIsSuccess(true);
         result.setData(flag);
@@ -105,6 +135,7 @@ public class MallRoleController {
         boolean flag = mallRoleService.updateRoleFunction(roleId,tenantId,functionIds);
         if (!flag){
             result.setFail("-1","updateRoleFunction error");
+            return result;
         }
     	result.setIsSuccess(true);
     	result.setData(Boolean.TRUE);
@@ -122,20 +153,49 @@ public class MallRoleController {
      */
     @RequestMapping(value="/updateRole")
     public BaseResponseVo<Boolean> updateRole(@RequestParam(value="tenantId")Long tenantId,@RequestParam(value="roleId")Long roleId,@RequestParam(value="roleName")String roleName,@RequestParam(value="description") String description,@RequestParam(value="status") int status){
-    	// 具体业务逻辑需要完善
+
     	BaseResponseVo<Boolean> result = new BaseResponseVo<Boolean>();
         MallRole mallRole = new MallRole();
         mallRole.setId(roleId);
-        mallRole.setName(roleName);
-        mallRole.setDescription(description);
-        mallRole.setStatus(status);
+        if(StringUtils.isNotBlank(roleName)){
+        	mallRole.setName(roleName);
+        }
+        if(StringUtils.isNotBlank(description)){
+        	mallRole.setDescription(description);
+        }
+        if(status >= 0){
+        	mallRole.setState(status);
+        }
+        mallRole.setModified(new Date());
         boolean flag = mallRoleService.updateRole(mallRole);
         if (!flag){
-            result.setFail("-1","updateRoleFunction error");
+            result.setFail("-1","updateRole error");
+            result.setIsSuccess(false);
+            return result;
         }
         result.setIsSuccess(true);
         result.setData(Boolean.TRUE);
         return result;
     }
 
+    /**
+     * 根据角色id查询拥有这个角色的所有操作员
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/getByRoleAllOperator")
+    public BaseResponseVo<List<MallOperator>> getByRoleAllOperator(@RequestParam(value="tenantId")Long tenantId, @RequestParam(value="roleId") Long roleId) {
+
+        BaseResponseVo<List<MallOperator>> result = new BaseResponseVo<List<MallOperator>>();
+        MallRole mallRole = new MallRole();
+        mallRole.setId(roleId);
+        mallRole.setTenantId(tenantId);
+        List<MallOperator> operatorList = mallRoleService.getByRoleAllOperator(mallRole);
+        if (operatorList != null){
+            result.setIsSuccess(true);
+            result.setData(operatorList);
+        }
+        result.setIsSuccess(Boolean.FALSE);
+        return result;
+    }
 }

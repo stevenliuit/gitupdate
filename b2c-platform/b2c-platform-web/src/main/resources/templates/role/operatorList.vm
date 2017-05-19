@@ -10,27 +10,199 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		操作员列表
+        <span class="pull-right">
+        	<button id="addOperBtn" class="btn btn-xs btn-success">
+        		<i class="glyphicon glyphicon-plus"></i>
+        	</button>
+		</span>
 	</div>
 	<table class="table">
 		<thead>
 			<tr>
 				<th></th>
 				<th>姓名</th>
+				<th>ERP</th>
 				<th>是否停用</th>
 				<th>角色</th>
 				<th>新建时间</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			#foreach($operator in $list)
 				<tr>
-					<td>$!{velocityCount}</td>
-					<td>$!{operator.name}</td>
-					<td>$!{operator.stateName}</td>
-					<td>$!{operator.roles}</td>
-					<td>$!{operator.created}</td>
+                    <td>$!{velocityCount}</td>
+                    <td id="name$!{operator.id}">$!{operator.realName}</td>
+                    <td id="userErp$!{operator.id}">$!{operator.userErp}</td>
+                    <td id="state$!{operator.id}">
+                        #if($operator.state == 1)
+				                            否
+				        #else
+				                            是
+                        #end
+                    </td>
+                    <td id="roles$!{operator.id}">
+                    	#foreach($iitem in $operator.roleList)
+                    		$!{iitem.name}
+                    		<input type="hidden" value="$!{iitem.id}" />
+                    	#end
+                    </td>
+                    <td>
+                        $!date.format('yyyy-MM-dd HH:mm:ss',$!operator.created)
+                    </td>
+					<td>
+                        <a class="stateBtn" state="$!{operator.state}" id="state$!{operator.id}" operatorId="$!{operator.id}" href="javascript:void(0);" >
+                            #if($operator.state == 1)
+                              	 停用
+                            #else
+                              	 启用
+                            #end
+                        </a>
+                        &nbsp;&nbsp;
+                        <a class="updateOperatorBtn" operatorId="$!{operator.id}" href="javascript:void(0);">修改</a>
+                        &nbsp;&nbsp;
+                        <a class="toupdateOperatorRoleBtn" operatorId="$!{operator.id}" href="javascript:void(0);">授权</a>
+                    </td>
 				</tr>
 			#end
 		</tbody>
 	</table>
 </div>
+
+<!-- 修改或增加操作员弹出面板 -->
+<div id="editOperPage" style="display:none;background:#fff;padding:10px;">
+    <form id="addOperform">
+        <div class="form-group">
+            <label>姓名<span class="empty">*</span></label>
+            <input type="text" class="form-control" name="realName" id="realName" placeholder="请输入用户姓名">
+        </div>
+        <div class="form-group">
+            <label>ERP<span class="empty">*</span></label>
+            <input type="text" class="form-control" name="userErp" id="userErp" placeholder="请输入用户ERP">
+        </div>
+        <button type="button" id="addOperatorBtn" class="btn btn-success">确定提交</button>
+	</from>
+</div>
+
+<!-- 修改角色弹出面板 -->
+<div id="updateOperatorRole" style="display:none;background:#fff;padding:10px;">
+	<div style="width:100%;margin-bottom:20px;">
+		#foreach($item in $roles)
+			<label>
+				<input class="allRoleCheckbox" type="checkbox" value="$!{item.id}" />
+				$!{item.name}
+			</label>
+		#end
+	</div>
+	<button class="btn btn-sm btn-success" id="updateOperatroRoleContfrimBtn" type="chekbox">
+		确定提交
+	</button>
+</div>
+
+
+<script type="text/javascript" src="$!{basePath}/static/js/role/operator.js"></script>
+
+<script>
+    //操作员启用停用操作
+    function updateStatus(obj,operatorId,state){
+        $.ajax({
+            url:"/operator/updateStatus",
+            data:"operatorId="+operatorId,
+            type:"post",
+            success:function (data) {
+                if(data.code == "0") {
+                    updateOperAttr(obj,operatorId,state);
+                }else{
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+
+    //修改显示信息
+    function updateOperAttr(obj,operatorId,state){
+        if(state==10){//启用
+            $(obj).parents("tr:first").children("td:eq(2)").text("启用");
+            $(obj).val("停用");
+            $(obj).removeAttr("onclick");
+            $(obj).attr("onclick","updateStatus(this,"+operatorId+",20)");
+        }else if(state==20){//禁用
+            ;$(obj).parents("tr:first").children("td:eq(2)").text("停用");
+            $(obj).val("启用");
+            $(obj).removeAttr("onclick");
+            $(obj).attr("onclick","updateStatus(this,"+operatorId+",10)");
+        }
+    }
+
+    $(function(){
+        //授权
+        $(".toUpdate").click(function(){
+            // 设置 值遍历设置CheckBox
+            if($(this).attr("rolesId")) {
+                var roles = $(this).attr("rolesId").split(",");
+                if ($("#eidtRolesform input[name='roleIds']")) {
+                    $.each(roles, function (index, ele) {
+                        $("#eidtRolesform input[name='roleIds']").each(function (DomElc) {
+                            if ($(DomElc).val() == ele) {
+                                $(DomElc).attr("checked", true);
+                            }
+                        });
+                    });
+                }
+            }
+            layer.open({
+                type: 1,title:'修改角色',
+                closeBtn:1,area: '516px',
+                content: $('#editRolesPage')
+            });
+        });
+        
+       
+    //修改状态
+        $(".stateBtn").click(function(){
+            var that = $(this);
+            var vhtml =that.html();
+            if(vhtml == '修改中...'){
+                return false;
+            }
+            var _state = that.attr('state');
+            that.html('修改中...');
+            var stateId = that.attr('operatorId');
+            $.getJSON('/operator/updateStatus', {"operatorId":stateId},function(data){
+                if(data.code == 0){
+                    $("#state"+stateId).html(_state == "1" ? "是":"否");
+                    that.html(_state == "1"?"启用":"停用");
+                    that.attr("state",_state == "1" ?"0":"1");
+                }else{
+                    layer.msg('修改失败：'+data.msg);
+                    that.html(vhtml);
+                    that.removeAttr("disabled");
+                }
+            });
+        });
+        
+        //修改角色
+        $("#editRolesBtn").click(function(){
+            var that = $(this);
+            $("#eidtRolesform input[name='operatorId']").val(that.attr("operatorId"));
+            that.attr('disabled',"true");
+            var _state = that.attr('state');
+            var vhtml =that.html();
+            var operId = $("#eidtRolesform input[name='operatorId']").val();
+            var roles = $("#eidtRolesform input[name='roleIds']").val();
+            that.html('修改中...');
+            $.getJSON('/operator/updateOperatorRole', {"operatorId":operId,"roleIds":roles}
+            ,function(data){
+                if(data.code == 0){
+                    alert("修改成功！");
+                    window.location.reload();
+                }else{
+                    layer.msg('修改失败：'+data.msg);
+                    that.html(vhtml);
+                    that.removeAttr("disabled");
+                }
+            });
+        });
+    });
+
+</script>

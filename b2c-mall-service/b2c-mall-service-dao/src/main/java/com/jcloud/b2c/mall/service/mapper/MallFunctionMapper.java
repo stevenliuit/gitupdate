@@ -15,11 +15,6 @@ public interface MallFunctionMapper {
 
     MallFunction getByFunctionKey(MallFunction mallFunctionn);
 
-    /**
-     *
-     * @param mallFunctionn
-     * @return
-     */
     List<MallFunction> querySelective(MallFunction mallFunctionn);
 
     int insertFunction(MallFunction mallFunctionn);

@@ -5,7 +5,24 @@
 		所有需要权限控制的函数都写这里。不进行代码入侵 
 		key: controller 类的全路径加上英文点号（.）加上函数名称组成
 		value: MallFunction 类中code属性值，多个code 值之间用英文逗号（,）分割 
+		
+		<role key="com.jcloud.b2c.platform.web.controller.item.ItemController.toItemList" value="TEST001,TEST002" />
 	-->
-	<role key="com.jcloud.b2c.platform.web.controller.item.ItemController.toItemList" value="TEST001,TEST002" />
-
+	<role key="com.jcloud.b2c.platform.web.controller.item.ItemController.toItemList" value="P001" />
+	<role key="com.jcloud.b2c.platform.web.controller.category.PlatCategoryController.toCategoryManage" value="P002" />
+	<role key="com.jcloud.b2c.platform.web.controller.item.ItemImportTaskController.toImportTaskList" value="P003" />
+	<role key="com.jcloud.b2c.platform.web.controller.item.ItemController.toBrandCusManager" value="P004" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallPcIndexController.toManage" value="A001" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallPcIndexController.toAppManage" value="A002" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallPcIndexController.toMManage" value="A003" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallPcIndexController.toAppFlashManage" value="A004" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallCategoryController.list" value="L001,L003" />
+	<role key="com.jcloud.b2c.platform.web.controller.hotWords.HotWordsController.toHotWordsManage" value="S001"/>
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallArticleController.toCategoryManage" value="W001" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallArticleController.toArticleManage" value="W002" />
+	<role key="com.jcloud.b2c.platform.web.controller.mall.MallOrderManagerController.index"  value="D001" />
+	<role key="com.jcloud.b2c.platform.web.controller.role.MallOperatorController.toOperatorList" value="C001" />
+	<role key="com.jcloud.b2c.platform.web.controller.role.MallRoleController.toList" value="C002" />
+	<role key="com.jcloud.b2c.platform.web.controller.role.MallFunctionController.toList" value="C003" />
+	
 </roles>

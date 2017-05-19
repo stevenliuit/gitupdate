@@ -1,16 +1,10 @@
-package com.jcloud.b2c.mall.service.domain;
+package com.jcloud.b2c.mall.service.client.vo;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-/**
- * @Method:
- * @Author:zhangjian
- * @Date: 2017/5/15
- */
-public class MallRole {
-
-    /**
+public class MallRoleVo implements Serializable {
+	/**
      * '用户角色表ID，主键
      */
     private Long id;
@@ -34,6 +28,8 @@ public class MallRole {
      * 角色状态：0：不可用，1：可用
      */
     private Integer state;
+    
+    private String stateName;
 
     /**
      * 创建时间
@@ -45,22 +41,20 @@ public class MallRole {
      */
     private Date modified;
 
-    /**
-     * 关联用户
-     */
-    private List<MallOperator> operatorList;
-
-    /**
-     * 关联权限
-     */
-    private List<MallFunction> functionList;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
     }
 
     public String getName() {
@@ -103,39 +97,12 @@ public class MallRole {
         this.modified = modified;
     }
 
-    public Long getTenantId() {
-        return tenantId;
-    }
+	public String getStateName() {
+		return stateName;
+	}
 
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
 
-    public List<MallOperator> getOperatorList() {
-        return operatorList;
-    }
-
-    public void setOperatorList(List<MallOperator> operatorList) {
-        this.operatorList = operatorList;
-    }
-
-    public List<MallFunction> getFunctionList() {
-        return functionList;
-    }
-
-    public void setFunctionList(List<MallFunction> functionList) {
-        this.functionList = functionList;
-    }
-
-    @Override
-    public String toString() {
-        return "MallRole{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", state=" + state +
-                ", created=" + created +
-                ", modified=" + modified +
-                '}';
-    }
 }

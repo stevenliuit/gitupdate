@@ -1,15 +1,18 @@
 package com.jcloud.b2c.mall.service.service.impl;
 
 
-import com.jcloud.b2c.mall.service.client.enums.YesNoEnum;
 import com.jcloud.b2c.mall.service.domain.MallFunction;
 import com.jcloud.b2c.mall.service.domain.MallOperator;
+import com.jcloud.b2c.mall.service.domain.MallRole;
 import com.jcloud.b2c.mall.service.mapper.MallOperatorMapper;
 import com.jcloud.b2c.mall.service.service.MallOperatorService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Method:
@@ -45,7 +48,7 @@ public class MallOperatorServiceImpl implements MallOperatorService {
         mallOperator.setTenantId(tenantId);
         mallOperator.setId(operatorId);
         int flag = mallOperatorMapper.deleteByOperatorOrleKey(mallOperator);
-        if(flag > 0){
+        if(flag >= 0){
             String[] roleIdss = roleIds.split(",");
             List<Long> roleId = new ArrayList<Long>();
             for (int i = 0; i <roleIdss.length ; i++) {
@@ -71,12 +74,19 @@ public class MallOperatorServiceImpl implements MallOperatorService {
      * 查询用户所拥有的权限
      */
     @Override
-    public List<MallFunction> queryFunction(MallOperator mallOperator){
-        return mallOperatorMapper.queryFunction(mallOperator);
+    public List<MallFunction> queryFunction(Map<String,Object> map){
+        return mallOperatorMapper.queryFunction(map);
     }
 
     /**
-     * 添加用户
+     * 查询
+     */
+    @Override
+    public List<MallRole> queryOperatorRole(MallOperator operator){
+    	return mallOperatorMapper.queryOperatorRole(operator);
+    }
+    /**
+     * 添加用户用户所拥有的所有角色
      */
     @Override
     public  boolean insertOperator(MallOperator mallOperator) {
@@ -88,28 +98,20 @@ public class MallOperatorServiceImpl implements MallOperatorService {
      */
     @Override
     public  boolean addOperatorRole(Long operatorId,String roleIds) {
-        String[] roleIdss = roleIds.split(",");
-        List<Long> roleId= new ArrayList<Long>();
-        for (int i = 0; i <roleIdss.length ; i++) {
-            roleId.add(Long.valueOf(roleIdss[i]));
+        MallOperator mallOperator = new MallOperator();
+        mallOperator.setId(operatorId);
+        int flag = mallOperatorMapper.deleteByOperatorOrleKey(mallOperator);
+        if (flag >= 0){
+            String[] roleIdss = roleIds.split(",");
+            List<Long> roleId= new ArrayList<Long>();
+            for (int i = 0; i <roleIdss.length ; i++) {
+                roleId.add(Long.valueOf(roleIdss[i]));
+            }
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("operatorId",operatorId);
+            map.put("roleIds",roleId);
+            return mallOperatorMapper.addOrUpdateOperatorRole(map) == roleIdss.length ? true : false;
         }
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("operatorId",operatorId);
-        map.put("roleIds",roleId);
-        return mallOperatorMapper.addOrUpdateOperatorRole(map) == roleIdss.length ? true : false;
+        return false;
     }
-
-    /**
-     * 禁用用户
-     */
-    @Override
-    public boolean deleteByOperatorKey(MallOperator mallOperator) {
-        Date time =new Date();
-        mallOperator.setModified(time);
-        mallOperator.setStatus(YesNoEnum.NO.getValue());
-        return mallOperatorMapper.deleteByOperatorKey(mallOperator) == 1 ? true : false;
-    }
-
-
-
 }

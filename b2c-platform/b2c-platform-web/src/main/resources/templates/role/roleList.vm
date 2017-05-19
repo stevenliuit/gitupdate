@@ -1,0 +1,67 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/bootstrap-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" />
+
+<div class="right_tit clearfix">
+    <p>权限管理/<b>角色管理</b> </p>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		角色列表
+		<span class="pull-right">
+			<button class="btn btn-xs btn-success" id="addBtn"><i class="glyphicon glyphicon-plus"></i></button>
+		</span>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>角色名称</th>
+				<th>角色描述</th>
+				<th>角色状态</th>
+				<th>新建时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($item in $list)
+				<tr>
+					<td>$!{velocityCount}</td>
+					<td id="rname$!{item.id}">$!{item.name}</td>
+					<td id="rdesc$!{item.id}">$!{item.description}</td>
+					<td id="state$!{item.id}">$!{item.stateName}</td>
+					<td>$!date.format('yyyy-MM-dd HH:mm:ss',$!item.created)</td>
+					<td>
+						<a class="stateBtn" roleId="$!{item.id}" state="$!{item.state}" href="javascript:void(0);" >
+							#if($item.state == 1)
+								停用
+							#else
+								启用
+							#end
+						</a>
+						&nbsp;&nbsp;
+						<a class="toupdate" roleId="$!{item.id}" href="javascript:void(0);">修改</a>
+						&nbsp;&nbsp;
+						<a href="/role/toUpdateFunction?roleId=$!{item.id}">授权</a>
+					</td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+</div>
+
+<!-- 增加、修改面板 -->
+<div id="addModelPage" style="display:none;background:#fff;padding:10px;">
+	<form id="addform">
+		 <div class="form-group">
+		    <label for="name">角色名称<span class="empty">*</span></label>
+		    <input type="text" class="form-control" id="name" placeholder="请输入角色名称" maxlength="50">
+		  </div>
+		  <div class="form-group">
+		    <label for="rdescription">角色描述<span class="empty">*</span></label>
+		    <input type="text" class="form-control" id="rdescription" placeholder="请输入角色描述" maxlength="100">
+		  </div>
+		  <button type="button" id="addRoleBtn" class="btn btn-success">确定提交</button>
+	</from>
+</div>
+
+<script type="text/javascript" src="$!{basePath}/static/js/role/role.js"></script>

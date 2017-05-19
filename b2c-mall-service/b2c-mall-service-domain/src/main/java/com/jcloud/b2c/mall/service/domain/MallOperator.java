@@ -32,7 +32,7 @@ public class MallOperator {
     /**
      * 状态：0、不可用，1、可禁用
      */
-    private Integer status;
+    private Integer state;
 
     /**
      * 创建时间
@@ -73,12 +73,12 @@ public class MallOperator {
         return realName;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getState() {
+        return state;
     }
 
     public void setCreated(Date created) {
@@ -119,7 +119,7 @@ public class MallOperator {
                 "id=" + id +
                 ", userErp='" + userErp + '\'' +
                 ", realName='" + realName + '\'' +
-                ", status=" + status +
+                ", state=" + state +
                 ", created=" + created +
                 ", modified=" + modified +
                 '}';

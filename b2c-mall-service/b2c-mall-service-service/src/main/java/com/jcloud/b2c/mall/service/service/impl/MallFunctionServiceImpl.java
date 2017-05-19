@@ -3,12 +3,11 @@ package com.jcloud.b2c.mall.service.service.impl;
 import com.jcloud.b2c.mall.service.domain.MallFunction;
 import com.jcloud.b2c.mall.service.mapper.MallFunctionMapper;
 import com.jcloud.b2c.mall.service.service.MallFunctionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Method:
@@ -24,29 +23,27 @@ public class MallFunctionServiceImpl implements MallFunctionService {
     @Override
     public MallFunction getByFunctionKey(MallFunction mallFunction) {
 
-        return null;
+        return  mallFunctionMapper.getByFunctionKey(mallFunction);
     }
 
     @Override
     public List<MallFunction> querySelective(MallFunction mallFunctionn){
-        return null;
+        return mallFunctionMapper.querySelective(mallFunctionn);
     }
 
     @Override
     public  boolean insertFunction(MallFunction mallFunctionn) {
-
-        return true;
+        Date time = new Date();
+        mallFunctionn.setCreated(time);
+        mallFunctionn.setModified(time);
+        return mallFunctionMapper.insertFunction(mallFunctionn) == 1 ? true : false;
     }
 
     @Override
     public boolean updateByFunctionKey(MallFunction mallFunctionn) {
-
-        return true;
+        Date time = new Date();
+        mallFunctionn.setModified(time);
+        return mallFunctionMapper.updateByFunctionKey(mallFunctionn) == 1 ? true : false;
     }
 
-    @Override
-    public boolean deleteByFunctionKey(MallFunction mallFunctionn) {
-
-        return true;
-    }
 }

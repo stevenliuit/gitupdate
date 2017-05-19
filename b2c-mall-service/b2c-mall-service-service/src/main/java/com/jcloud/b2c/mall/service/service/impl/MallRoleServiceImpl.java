@@ -1,5 +1,7 @@
 package com.jcloud.b2c.mall.service.service.impl;
 
+import com.jcloud.b2c.mall.service.domain.MallFunction;
+import com.jcloud.b2c.mall.service.domain.MallOperator;
 import com.jcloud.b2c.mall.service.domain.MallRole;
 import com.jcloud.b2c.mall.service.mapper.MallRoleMapper;
 import com.jcloud.b2c.mall.service.service.MallRoleService;
@@ -20,7 +22,15 @@ public class MallRoleServiceImpl implements MallRoleService {
     private MallRoleMapper mallRoleMapper;
 
     /**
-     * 询所有角色
+     * 以角色id查询权限
+     */
+    @Override
+    public List<MallFunction> getByRoleKey(MallRole mallRole){
+        return mallRoleMapper.getByRoleKey(mallRole);
+    }
+
+    /**
+     * 查询所有角色
      */
     @Override
     public List<MallRole> querySelective(MallRole mallRole){
@@ -46,16 +56,22 @@ public class MallRoleServiceImpl implements MallRoleService {
         MallRole mallRole = new MallRole();
         mallRole.setId(roleId);
         mallRole.setTenantId(tenantId);
-        mallRoleMapper.deleteByRoleFunction(mallRole);
-        String[] functionIdss = functionIds.split(",");
-        List<Long> list = new ArrayList<Long>();
-        for (int i = 0; i <functionIdss.length ; i++) {
-            list.add(Long.valueOf(functionIdss[i]));
+        int flag = mallRoleMapper.deleteByRoleFunction(mallRole);
+        if (flag >= 0){
+            String[] functionIdss = functionIds.split(",");
+            List<Long> list = new ArrayList<Long>();
+            for (int i = 0; i <functionIdss.length ; i++) {
+                list.add(Long.valueOf(functionIdss[i]));
+            }
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("roleId",roleId);
+            map.put("functionIds",list);
+            
+            int row = mallRoleMapper.addOrUpdateRoleFunction(map);
+            
+            return  row == functionIdss.length;
         }
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("roleId",roleId);
-        map.put("functionIds",list);
-        return mallRoleMapper.addOrUpdateRoleFunction(map) > 0 ? true :false;
+        return false;
     }
 
     /**
@@ -67,4 +83,13 @@ public class MallRoleServiceImpl implements MallRoleService {
         mallRole.setModified(time);
         return mallRoleMapper.updateRole(mallRole) == 1 ? true : false;
     }
+
+    /**
+     * 根据角色id查询拥有这个角色的所有操作员
+     */
+    @Override
+    public  List<MallOperator> getByRoleAllOperator(MallRole mallRole) {
+        return mallRoleMapper.getByRoleAllOperator(mallRole);
+    }
+
 }

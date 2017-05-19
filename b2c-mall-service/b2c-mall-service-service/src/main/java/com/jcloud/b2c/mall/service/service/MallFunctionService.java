@@ -18,6 +18,4 @@ public interface MallFunctionService {
     boolean insertFunction(MallFunction mallFunctionn);
 
     boolean updateByFunctionKey(MallFunction mallFunctionn);
-
-    boolean deleteByFunctionKey(MallFunction mallFunctionn);
 }

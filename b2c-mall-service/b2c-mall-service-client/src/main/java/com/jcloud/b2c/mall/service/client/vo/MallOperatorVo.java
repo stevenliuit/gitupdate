@@ -1,8 +1,10 @@
-package com.jcloud.b2c.platform.domain.vo;
+package com.jcloud.b2c.mall.service.client.vo;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class MallOperatorVo {
+public class MallOperatorVo implements Serializable {
 	
 	/**
      * 操作员ID，主键
@@ -25,11 +27,13 @@ public class MallOperatorVo {
     private String realName;
 
     /**
-     * 状态：10、可用，20、禁用
+     * 状态：0、不可用，1、可用
      */
-    private Integer status;
+    private Integer state;
 
-    /**
+
+
+	/**
      * 创建时间
      */
     private Date created;
@@ -38,6 +42,28 @@ public class MallOperatorVo {
      * 修改时间
      */
     private Date modified;
+
+	/**
+	 * 角色
+	 */
+	private List<MallRoleVo> roleList;
+	
+	/**
+	 * 所有角色
+	 * @author cyy
+	 * @date 2017年5月19日
+	 * @return
+	 */
+	private List<MallFunctionTypeVo> functionList;
+	
+
+	public List<MallRoleVo> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<MallRoleVo> roleList) {
+		this.roleList = roleList;
+	}
 
 	public Long getId() {
 		return id;
@@ -63,12 +89,12 @@ public class MallOperatorVo {
 		this.realName = realName;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public Integer getState() {
+		return state;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	public Date getCreated() {
@@ -94,4 +120,13 @@ public class MallOperatorVo {
 	public void setTenantId(Long tenantId) {
 		this.tenantId = tenantId;
 	}
+
+	public List<MallFunctionTypeVo> getFunctionList() {
+		return functionList;
+	}
+
+	public void setFunctionList(List<MallFunctionTypeVo> functionList) {
+		this.functionList = functionList;
+	}
+	
 }

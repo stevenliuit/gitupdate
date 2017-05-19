@@ -1,6 +1,17 @@
 <div class="content clearfix">
     <div class="left_list">
         <div class="list_tit">
+        	
+        	#foreach($item in $userFunctions)
+        		<h2><span class="$!{item.icon}"></span>$!{item.functionTypeName}<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
+        		<ul class="list_menu">
+        			#foreach($func in $item.functions)
+        				<li><a href="$!{func.funcUrl}">$!{func.name}</a></li>
+        			#end
+            	</ul>
+        	#end
+        	
+        	<!--
             <h2><span class="spgl"></span>商品管理<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
             <ul class="list_menu">
                 <li><a href="/item/toItemList">商品列表</a></li>
@@ -37,9 +48,10 @@
             <h2><span class="wzgl"></span>权限管理<i class="angle-down"></i><i class="angle-up hidden"></i></h2>
             <ul class="list_menu">
             	<li><a href="/operator/toList">操作员管理</a></li>
-            	<li><a href="#">角色管理</a></li>
-            	<li><a href="#">功能管理</a></li>
+            	<li><a href="/role/roleList">角色管理</a></li>
+            	<li><a href="/function/toList">功能管理</a></li>
             </ul>
+            -->
             
             #*<h2><span class="tjbb"></span>统计报表<i class='angle-down'></i><i class='angle-up hidden'></i></h2>
             <ul class="list_menu">

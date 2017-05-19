@@ -2,8 +2,10 @@ package com.jcloud.b2c.mall.service.service;
 
 import com.jcloud.b2c.mall.service.domain.MallFunction;
 import com.jcloud.b2c.mall.service.domain.MallOperator;
+import com.jcloud.b2c.mall.service.domain.MallRole;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Method:用户管理
@@ -20,12 +22,14 @@ public interface MallOperatorService {
 
     List<MallOperator> querySelective(MallOperator mallOperator);
 
-    List<MallFunction> queryFunction(MallOperator mallOperator);
+    List<MallFunction> queryFunction(Map<String,Object> map);
+    
+    List<MallRole> queryOperatorRole(MallOperator operator);
 
     boolean insertOperator(MallOperator mallOperator);
 
     boolean addOperatorRole(Long operatorId,String roleIds);
 
-    boolean deleteByOperatorKey(MallOperator mallOperator);
+
 
 }

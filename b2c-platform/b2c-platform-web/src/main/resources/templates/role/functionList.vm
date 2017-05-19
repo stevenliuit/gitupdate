@@ -1,0 +1,92 @@
+<link rel="stylesheet" type="text/css" href="$!{basePath}/static/bootstrap-master/sample in bootstrap v3/bootstrap/css/bootstrap.min.css" />
+
+<div class="right_tit clearfix">
+    <p>权限管理/<b>功能管理</b> </p>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		功能列表
+		<!--
+		<span class="pull-right">
+			<button class="btn btn-xs btn-success" id="addBtn"><i class="glyphicon glyphicon-plus"></i></button>
+		</span>
+		-->
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th>权限名称</th>
+				<th>权限分类</th>
+				<th>权限code</th>
+				<th>URL</th>
+				<th>描述</th>
+				<th>状态</th>
+				<th>新建时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($item in $list)
+				<tr>
+					<td>$!{velocityCount}</td>
+					<td id="fname$!{item.id}">$!{item.name}</td>
+					<td id="ftypeId$!{item.id}">$!{item.funcTypeName}</td>
+					<td id="fcode$!{item.id}">$!{item.code}</td>
+					<td id="funcUrl$!{item.id}">$!{item.funcUrl}</td>
+					<td id="fdesc$!{item.id}">$!{item.description}</td>
+					<td id="state$!{item.id}">$!{item.stateName}</td>
+					<td>$!date.format('yyyy-MM-dd HH:mm:ss',$!item.created)</td>
+					<td>
+						<a class="stateBtn" functionId="$!{item.id}" state="$!{item.state}" href="javascript:void(0);" >
+							#if($item.state == 1)
+								停用
+							#else
+								启用
+							#end
+						</a>
+						<!-- 
+						&nbsp;&nbsp;
+						<a class="toupdate" functionId="$!{item.id}" typeId="$!{item.funcTypeID}" href="javascript:void(0);">修改</a>
+						-->
+					</td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+</div>
+
+<div id="addModelPage" style="display:none;background:#fff;padding:10px;">
+	<form id="addform">
+		 <div class="form-group">
+		    <label for="name">功能名称<span class="empty">*</span></label>
+		    <input type="text" class="form-control" id="name" placeholder="请输入权限名称">
+		  </div>
+		  <div class="form-group">
+		    <label for="funcCode">功能code<span class="empty">*</span></label>
+		    <input type="text" class="form-control" id="funcCode" placeholder="请输入权限code">
+		  </div>
+		  <div class="form-group">
+		    <label for="funcTypeId">功能分类<span class="empty">*</span></label>
+		    <select class="form-control" id="funcTypeId" placeholder="请选择功能分类">
+		    	<option value="-1">--请选择--</option>
+				#foreach($item in $funcTypes)
+					<option value="$!{item.value}">$!{item.name}</option>
+				#end
+		    </select>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="funcUrl">功能URL<span class="empty">*</span></label>
+		    <input type="text" class="form-control" id="funcUrl" placeholder="请输入功能URL">
+		  </div>
+		  <div class="form-group">
+		    <label for="funcUrl">功能描述</label>
+		    <input type="text" class="form-control" id="funcDescription" placeholder="请输入功能描述">
+		  </div>
+		  <button type="button" id="addFunctionBtn" class="btn btn-success">确定提交</button>
+	</from>
+</div>
+
+<script type="text/javascript" src="$!{basePath}/static/js/role/function.js"></script>

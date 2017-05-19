@@ -1,5 +1,7 @@
 package com.jcloud.b2c.mall.service.service;
 
+import com.jcloud.b2c.mall.service.domain.MallFunction;
+import com.jcloud.b2c.mall.service.domain.MallOperator;
 import com.jcloud.b2c.mall.service.domain.MallRole;
 
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public interface MallRoleService {
 
-
+    List<MallFunction> getByRoleKey(MallRole mallRole);
 
     List<MallRole> querySelective(MallRole mallRole);
 
@@ -21,9 +23,10 @@ public interface MallRoleService {
 
     boolean updateRole(MallRole mallRole);
 
+    List<MallOperator> getByRoleAllOperator(MallRole mallRole);
 
 
-   /* MallRole getByRoleKey(MallRole mallRole);
+   /*
     boolean updateByRoleKey(MallRole mallRole);
     boolean deleteByRoleKey(MallRole mallRole);
     boolean addRoleFunction(Long roleId,String functionIds);*/

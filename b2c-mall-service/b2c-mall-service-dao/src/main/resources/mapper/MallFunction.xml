@@ -48,6 +48,7 @@
 
     <sql id="Where_Condition">
         <where>
+            <if test="tenantId != null">and tenant_id = #{tenantId,jdbcType=BIGINT}</if>
             <if test="name != null">and name = #{name,jdbcType=VARCHAR}</if>
             <if test="code != null">and code = #{code,jdbcType=VARCHAR}</if>
             <if test="funcUrl != null">and func_url = #{funcUrl,jdbcType=VARCHAR}</if>
@@ -70,25 +71,16 @@
     </select>
 
     <insert id="insertFunction" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_function (tenant_id,name, code,func_url,func_type_id,description,
+        insert into sys_function (tenant_id,name,code,func_url,func_type_id,description,
         state, created, modified)
-        values (#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{funcUrl,jdbcType=VARCHAR},
+        values (#{tenantId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{funcUrl,jdbcType=VARCHAR},
           #{funcTypeID,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR},#{state,jdbcType=TINYINT},
         #{created,jdbcType=TIMESTAMP}, #{modified,jdbcType=TIMESTAMP})
     </insert>
 
     <update id="updateByFunctionKey" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction">
-        update sys_function
+        update sys_function  
         <include refid="Update_Selective_Column_Set" />
-        where id = #{id,jdbcType=BIGINT}
-        <if test="tenantId != null">
-            and tenant_id = #{tenantId,jdbcType=BIGINT}
-        </if>
-    </update>
-
-    <update id="deleteByFunctionKey" parameterType="com.jcloud.b2c.mall.service.domain.MallFunction">
-        update sys_function
-        set state = #{state,jdbcType=TINYINT},modified=#{modified,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=BIGINT}
         <if test="tenantId != null">
             and tenant_id = #{tenantId,jdbcType=BIGINT}

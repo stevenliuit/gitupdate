@@ -1,8 +1,9 @@
-package com.jcloud.b2c.platform.domain.vo;
+package com.jcloud.b2c.mall.service.client.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MallFunctionVo {
+public class MallFunctionVo implements Serializable {
 
 	/**
      * 功能权限表ID，主键
@@ -33,6 +34,8 @@ public class MallFunctionVo {
      * 权限分类
      */
     private Long funcTypeID;
+    
+    private String funcTypeName;
 
     /**
      * 功能描述
@@ -40,9 +43,11 @@ public class MallFunctionVo {
     private String description;
 
     /**
-     * 功能状态：10：可用，20：作废
+     * 功能状态：0：不可用，1：不可用
      */
-    private Integer status;
+    private Integer state;
+    
+    private String stateName;
 
     /**
      * 创建时间
@@ -53,6 +58,11 @@ public class MallFunctionVo {
      * 修改时间
      */
     private Date modified;
+    
+    /**
+     * 当前角色是否已经拥有该角色
+     */
+    private boolean checked;
 
 	public Long getId() {
 		return id;
@@ -110,12 +120,12 @@ public class MallFunctionVo {
 		this.description = description;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public Integer getState() {
+		return state;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	public Date getCreated() {
@@ -132,6 +142,30 @@ public class MallFunctionVo {
 
 	public void setModified(Date modified) {
 		this.modified = modified;
+	}
+
+	public String getFuncTypeName() {
+		return funcTypeName;
+	}
+
+	public void setFuncTypeName(String funcTypeName) {
+		this.funcTypeName = funcTypeName;
+	}
+
+	public String getStateName() {
+		return stateName;
+	}
+
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 	
 }
